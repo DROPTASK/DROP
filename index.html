@@ -139,5 +139,12 @@
             window.location.href = url;
         }
     </script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        Telegram.WebApp.expand(); // Expands to full screen
+        Telegram.WebApp.ready(); // Tells Telegram the Mini App is ready
+    });
+</script>
 </body>
 </html>
