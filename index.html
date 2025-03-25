@@ -3,148 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DROP TASK MANAGER</title>
-    <style>
-        /* Global Styles */
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background-image: url('bg.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            color: #fff;
-            text-align: center;
-            padding: 0 20px;
-        }
-
-        /* Header Styles */
-        h1 {
-            font-size: 4.8em;
-            margin: 0;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-            padding-bottom: 20px;
-        }
-
-        h2 {
-            font-size: 1.6em;
-            margin: 20px 0;
-            font-weight: 500;
-            letter-spacing: 1px;
-        }
-
-        /* Button Styles */
-        .task-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 14px 20px;
-            font-size: 1.6em;
-            font-weight: bold;
-            color: #fff;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            margin: 15px;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 320px;
-            gap: 12px;
-        }
-
-        .task-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Circular Logo Inside Button */
-        .logo {
-            width: 50px;
-            height: 50px;
-            background-color: #fff;
-            color: #333;
-            font-size: 0.8em;
-            font-weight: bold;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-transform: uppercase;
-        }
-
-        /* Different Button Colors */
-        .blue { background-color: #3498db; }
-        .red { background-color: #e74c3c; }
-        .green { background-color: #2ecc71; }
-        .orange { background-color: #e67e22; }
-        .purple { background-color: #9b59b6; }
-        .yellow { background-color: #f1c40f; color: #333; }
-
-        .blue:hover { background-color: #2980b9; }
-        .red:hover { background-color: #c0392b; }
-        .green:hover { background-color: #27ae60; }
-        .orange:hover { background-color: #d35400; }
-        .purple:hover { background-color: #8e44ad; }
-        .yellow:hover { background-color: #f39c12; }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 600px) {
-            h1 { font-size: 3.5em; }
-            h2 { font-size: 1.4em; }
-            .task-btn { font-size: 1.4em; padding: 12px 18px; }
-            .logo { width: 40px; height: 40px; font-size: 0.7em; }
-        }
-    </style>
+    <title>Testnet Portfolio Manager</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>DROP TASK MANAGER</h1>
-    <h2>Organize Your Tasks Easily</h2>
+    <div class="container">
+        <header>
+            <h1>Testnet Portfolio</h1>
+            <div class="target">
+                <span>Target Earnings:</span>
+                <input type="number" id="targetEarnings" placeholder="Set target (USDT)">
+                <button onclick="saveTarget()">Save</button>
+            </div>
+            <div class="total-earned">
+                <span>Total Earned:</span>
+                <span id="totalEarnings">0 USDT</span>
+            </div>
+        </header>
 
-    <!-- Example Buttons -->
-    <button class="task-btn blue" onclick="openPage('task1.html')">
-        <span class="logo">T1</span> Task 1
-    </button>
-    
-    <button class="task-btn red" onclick="openPage('task2.html')">
-        <span class="logo">T2</span> Task 2
-    </button>
+        <main>
+            <button class="add-btn" onclick="openModal()">+ Add Testnet</button>
+            <div id="testnetList" class="testnet-list"></div>
+        </main>
+    </div>
 
-    <button class="task-btn green" onclick="openPage('task3.html')">
-        <span class="logo">T3</span> Task 3
-    </button>
+    <!-- Modal for Adding Testnet -->
+    <div id="testnetModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Add Testnet</h2>
+            <input type="text" id="testnetName" placeholder="Testnet Name">
+            <input type="date" id="testnetDate">
+            <input type="text" id="testnetExpectation" placeholder="Expectation (USDT)">
+            <button onclick="addTestnet()">Add</button>
+        </div>
+    </div>
 
-    <button class="task-btn orange" onclick="openPage('task4.html')">
-        <span class="logo">T4</span> Task 4
-    </button>
-
-    <button class="task-btn purple" onclick="openPage('task5.html')">
-        <span class="logo">T5</span> Task 5
-    </button>
-
-    <button class="task-btn yellow" onclick="openPage('task6.html')">
-        <span class="logo">T6</span> Task 6
-    </button>
-
-    <script>
-        function openPage(url) {
-            window.location.href = url;
-        }
-    </script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        Telegram.WebApp.expand(); // Expands to full screen
-        Telegram.WebApp.ready(); // Tells Telegram the Mini App is ready
-    });
-</script>
+    <script src="script.js"></script>
 </body>
 </html>
