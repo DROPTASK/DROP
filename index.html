@@ -13,33 +13,17 @@
         <h1>Crypto Project Tracker</h1>
     </header>
 
-    <!-- Navigation Tabs -->
-    <nav>
-        <button class="tab-btn" onclick="openTab('home')">🏠</button>
-        <button class="tab-btn" onclick="openTab('analytics')">📊</button>
-        <button class="tab-btn" onclick="openTab('earnings')">💰</button>
-    </nav>
-
     <!-- Home Tab -->
     <section id="home" class="tab-content">
         <h2>Active Projects</h2>
-        <div class="project-list">
-            <!-- Dynamically insert projects -->
-        </div>
-    </section>
-
-    <!-- Analytics Tab -->
-    <section id="analytics" class="tab-content">
-        <h2>Analytics</h2>
-        <canvas id="earningsChart"></canvas>
-        <p id="userDescription">Analyzing last 3 months...</p>
+        <div class="project-list"></div>
     </section>
 
     <!-- Earnings Tab -->
     <section id="earnings" class="tab-content">
         <h2>Earnings & Investments</h2>
 
-        <!-- Earnings & Investments Summary -->
+        <!-- Total Earnings & Investments -->
         <div class="summary-container">
             <div class="summary-box">
                 <p>Investment</p>
@@ -62,6 +46,7 @@
     <div id="popupForm" class="popup">
         <div class="form-content">
             <h2>Add Entry</h2>
+            
             <label>Type:</label>
             <select id="entryType">
                 <option value="investment">Investment</option>
@@ -80,6 +65,12 @@
             <button onclick="saveEntry()">Save</button>
         </div>
     </div>
+
+    <!-- Navigation Bar at Bottom -->
+    <nav>
+        <button class="tab-btn" onclick="openTab('home')">🏠</button>
+        <button class="tab-btn" onclick="openTab('earnings')">💰</button>
+    </nav>
 
     <script src="script.js"></script>
 </body>
