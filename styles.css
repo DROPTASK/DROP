@@ -13,6 +13,10 @@ header {
     font-size: 20px;
 }
 
+.hidden {
+    display: none;
+}
+
 ul {
     list-style: none;
     padding: 0;
@@ -79,4 +83,4 @@ li {
 .tab.active {
     background: #007bff;
     color: white;
-    }
+}
