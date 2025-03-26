@@ -1,88 +1,65 @@
 document.addEventListener("DOMContentLoaded", function() {
-    loadProjects();
-    openTab('home');
-    resetTasksAtMidnight();
-});
-
-const projects = [
-        "Bless", "Dawn", "Grass", "Graident", "One Football",
-        "Teneo", "Nexus", "Nodepay", "Blockmesh", "Flow3",
-        "Mygate", "Treasury", "Layeredge", "Common", "Beamable",
-        "Giza", "Exhabits", "Sogni", "Solflare NFT", "Deshare [Cess]",
-        "Wonix", "Arch", "Dvin", "Blockscout", "Malda", "Somnia",
-        "Social Incentive", "Billions", "Pod [Dreamers]"
+    const projects = [
+        "Bless", "Dawn", "Grass", "Gradient", "One Football",
+        "Teneo", "Nexus", "Nodepay", "Blockmesh", "Flow3"
     ];
 
-let removedProjects = [];
+    const projectListDiv = document.querySelector('.project-list');
+    const removedListDiv = document.querySelector('.removed-list');
+    let removedProjects = JSON.parse(localStorage.getItem('removedProjects')) || [];
 
-function loadProjects() {
-    const projectListDiv = document.getElementById('project-list');
-    projectListDiv.innerHTML = "";
-    projects.forEach((name, index) => {
-        let div = document.createElement("div");
+    function updateProgress() {
+        let completed = document.querySelectorAll(".project-item.done").length;
+        document.getElementById("progress").innerText = `${completed} / ${projects.length} Completed`;
+    }
+
+    projects.forEach(name => {
+        const div = document.createElement('div');
         div.className = "project-item";
-        div.innerHTML = `
-            <span>${name}</span>
-            <button onclick="markDone(this)">✅</button>
-            <button onclick="removeProject(${index})">❌</button>
-            <button onclick="openDetails('${name}')">🔗</button>
-        `;
+        div.innerHTML = `<span>${name}</span>
+            <button class="details-btn">Details</button>
+            <button class="done-btn">✅</button>
+            <button class="remove-btn">❌</button>`;
+
+        div.querySelector(".done-btn").onclick = function() {
+            div.classList.toggle("done");
+            div.style.background = div.classList.contains("done") ? "lightgreen" : "white";
+            updateProgress();
+        };
+
+        div.querySelector(".remove-btn").onclick = function() {
+            removedProjects.push(name);
+            localStorage.setItem("removedProjects", JSON.stringify(removedProjects));
+            div.remove();
+            updateProgress();
+        };
+
         projectListDiv.appendChild(div);
     });
-    updateTaskCount();
-}
 
-function openTab(tabName) {
-    document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
-    document.getElementById(tabName).style.display = "block";
-}
+    removedProjects.forEach(name => {
+        const div = document.createElement('div');
+        div.className = "project-item";
+        div.innerHTML = `<span>${name}</span>
+            <button class="restore-btn">📥 Restore</button>`;
 
-function markDone(btn) {
-    let parent = btn.parentElement;
-    parent.classList.toggle("done");
-    updateTaskCount();
-}
+        div.querySelector(".restore-btn").onclick = function() {
+            removedProjects = removedProjects.filter(p => p !== name);
+            localStorage.setItem("removedProjects", JSON.stringify(removedProjects));
+            div.remove();
+        };
 
-function removeProject(index) {
-    removedProjects.push(projects[index]);
-    projects.splice(index, 1);
-    loadProjects();
-}
+        removedListDiv.appendChild(div);
+    });
 
-function openDetails(projectName) {
-    const links = {
-        "Bless": "https://example.com/bless",
-        "Dawn": "https://example.com/dawn"
-    };
-    if (links[projectName]) window.open(links[projectName], "_blank");
+    updateProgress();
+});
+
+function openTab(tab) {
+    document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
+    document.getElementById(tab).style.display = "block";
 }
 
 function openForm() {
     document.getElementById("popupForm").style.display = "block";
-}
-
-function saveEntry() {
-    let type = document.getElementById("entryType").value;
-    let amount = parseFloat(document.getElementById("entryAmount").value);
-    if (!amount) return;
-
-    let totalId = type === "investment" ? "investmentTotal" : "earningsTotal";
-    let total = parseFloat(document.getElementById(totalId).innerText.replace("$", "")) || 0;
-    document.getElementById(totalId).innerText = `$${total + amount}`;
-    
-    document.getElementById("popupForm").style.display = "none";
-}
-
-function updateTaskCount() {
-    let completed = document.querySelectorAll(".project-item.done").length;
-    document.getElementById("taskCount").innerText = `Completed: ${completed} / ${projects.length}`;
-}
-
-function resetTasksAtMidnight() {
-    let now = new Date();
-    let timeUntilMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0) - now;
-    setTimeout(() => {
-        loadProjects();
-        resetTasksAtMidnight();
-    }, timeUntilMidnight);
 }
