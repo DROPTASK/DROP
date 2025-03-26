@@ -13,13 +13,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     totalCount.textContent = tasks.length;
 
-    // Load task data from LocalStorage
+    // Load task status from LocalStorage or create an empty object
     let taskStatus = JSON.parse(localStorage.getItem("taskStatus")) || {};
-    let completedTasks = Object.values(taskStatus).filter(status => status).length;
-    completedCount.textContent = completedTasks;
-
-    // Create task buttons
+    
+    // Create task buttons dynamically
     tasks.forEach((task, index) => {
+        if (!(index in taskStatus)) {
+            taskStatus[index] = false;  // Default: Not completed
+        }
+
         const li = document.createElement("li");
         const button = document.createElement("button");
 
@@ -32,15 +34,20 @@ document.addEventListener("DOMContentLoaded", function () {
             taskStatus[index] = button.classList.contains("completed");
             localStorage.setItem("taskStatus", JSON.stringify(taskStatus));
 
-            // Update progress count
-            completedTasks = Object.values(taskStatus).filter(status => status).length;
-            completedCount.textContent = completedTasks;
-            saveDailyStats(completedTasks);
+            updateProgress();
         });
 
         li.appendChild(button);
         taskList.appendChild(li);
     });
+
+    updateProgress(); // Initial progress update
+
+    function updateProgress() {
+        let completedTasks = Object.values(taskStatus).filter(status => status).length;
+        completedCount.textContent = completedTasks;
+        saveDailyStats(completedTasks);
+    }
 
     function saveDailyStats(count) {
         const today = new Date().toISOString().split("T")[0]; // Format: YYYY-MM-DD
