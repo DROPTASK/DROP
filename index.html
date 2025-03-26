@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <h1>Crypto To-Do List</h1>
+        <h1 id="main-title">Crypto To-Do List</h1>
         <p><span id="completed">0</span> / <span id="total">0</span> Completed</p>
     </header>
 
@@ -29,17 +29,11 @@
     <div id="earnings-tab" class="tab-content hidden">
         <h2>💰 Earnings</h2>
         <div class="earning-summary">
-            <div class="summary-box">💰 Earnings: <span id="total-earnings">$0</span></div>
-            <div class="summary-box">📉 Investments: <span id="total-investments">$0</span></div>
+            <div class="summary-box">Earnings <br><span id="total-earnings">$0</span></div>
+            <div class="summary-box">Investments <br><span id="total-investments">$0</span></div>
         </div>
-        <button class="add-btn">➕</button>
+        <button class="add-btn" onclick="openAddPage()">➕</button>
         <div id="portfolio-list"></div>
-    </div>
-
-    <!-- Past Projects Tab -->
-    <div id="past-tab" class="tab-content hidden">
-        <h2>⏮️ Past Projects</h2>
-        <ul id="past-projects"></ul>
     </div>
 
     <!-- Bottom Navigation -->
@@ -47,7 +41,6 @@
         <button data-tab="home-tab">🏠</button>
         <button data-tab="analytics-tab">📊</button>
         <button data-tab="earnings-tab">💰</button>
-        <button data-tab="past-tab">⏮️</button>
     </nav>
 
     <script src="script.js"></script>
