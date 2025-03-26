@@ -1,7 +1,11 @@
 document.addEventListener("DOMContentLoaded", function() {
     const projects = [
-        "Bless", "Dawn", "Grass", "Gradient", "One Football",
-        "Teneo", "Nexus", "Nodepay", "Blockmesh", "Flow3"
+        "Bless", "Dawn", "Grass", "Graident", "One Football",
+        "Teneo", "Nexus", "Nodepay", "Blockmesh", "Flow3",
+        "Mygate", "Treasury", "Layeredge", "Common", "Beamable",
+        "Giza", "Exhabits", "Sogni", "Solflare NFT", "Deshare [Cess]",
+        "Wonix", "Arch", "Dvin", "Blockscout", "Malda", "Somnia",
+        "Social Incentive", "Billions", "Pod [Dreamers]"
     ];
 
     const projectListDiv = document.querySelector('.project-list');
