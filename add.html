@@ -4,36 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Investment / Earning</title>
-    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <div class="form-container">
-        <h2>Add Investment / Earning</h2>
-        <label>Type:</label>
-        <select id="type">
-            <option value="Earning">Earning</option>
-            <option value="Investment">Investment</option>
-        </select>
+<body style="display: flex; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(135deg, #f0f0f0, #d3e0ea); font-family: Arial, sans-serif;">
 
-        <label>Testnet Name:</label>
-        <select id="project">
-            <option>Bless</option>
-            <option>Dawn</option>
-            <option>Grass</option>
-            <option>Graident</option>
-            <option>One Football</option>
-            <option>Teneo</option>
-        </select>
+    <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15); width: 100%; max-width: 400px; text-align: center;">
+        <h2 style="color: #333; margin-bottom: 20px;">Add Investment / Earning</h2>
 
-        <label>Description:</label>
-        <textarea id="description" maxlength="300"></textarea>
+        <div style="margin-bottom: 15px; text-align: left;">
+            <label style="font-weight: 500; color: #555;">Type:</label>
+            <select id="type" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                <option value="Earning">Earning</option>
+                <option value="Investment">Investment</option>
+            </select>
+        </div>
 
-        <label>Amount ($):</label>
-        <input type="number" id="amount" min="1">
+        <div style="margin-bottom: 15px; text-align: left;">
+            <label style="font-weight: 500; color: #555;">Testnet Name:</label>
+            <select id="project" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                <option>Bless</option>
+                <option>Dawn</option>
+                <option>Grass</option>
+                <option>Graident</option>
+                <option>One Football</option>
+                <option>Teneo</option>
+            </select>
+        </div>
 
-        <button onclick="saveEntry()">Save</button>
+        <div style="margin-bottom: 15px; text-align: left;">
+            <label style="font-weight: 500; color: #555;">Description:</label>
+            <textarea id="description" maxlength="300" placeholder="Write details here..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; height: 80px;"></textarea>
+        </div>
+
+        <div style="margin-bottom: 15px; text-align: left;">
+            <label style="font-weight: 500; color: #555;">Amount ($):</label>
+            <input type="number" id="amount" min="1" placeholder="Enter amount" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+        </div>
+
+        <button onclick="saveEntry()" style="width: 100%; padding: 12px; background: linear-gradient(90deg, #6c5ce7, #00cec9); color: white; font-size: 16px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s;">
+            💾 Save Entry
+        </button>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        function saveEntry() {
+            alert("Entry Saved!");
+        }
+    </script>
 </body>
 </html>
