@@ -3,15 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Project To-Do List</title>
+    <title>Crypto To-Do List</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h2>Crypto Project To-Do List</h2>
-        <p id="progress">Completed: <span id="completed">0</span>/<span id="total">0</span></p>
-        <ul id="task-list"></ul>
+    <header>
+        <h1>Crypto To-Do List</h1>
+        <p><span id="completed">0</span> / <span id="total">0</span> Completed</p>
+    </header>
+
+    <ul id="task-list"></ul>
+
+    <!-- Bottom Navigation Tabs -->
+    <div class="bottom-nav">
+        <button id="home-tab" class="tab active">Home</button>
+        <button id="analytics-tab" class="tab">Analytics</button>
+        <button id="earnings-tab" class="tab">Earnings</button>
+        <button id="past-projects-tab" class="tab">Past Projects</button>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
