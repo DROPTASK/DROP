@@ -1,59 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Fantasy&family=Comic+Sans+MS&family=Copperplate&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-    color: #333;
+    font-family: 'Fantasy', 'Comic Sans MS', 'Copperplate', sans-serif;
+    background: linear-gradient(180deg, #6a11cb, #2575fc);
+    color: white;
     text-align: center;
     margin: 0;
     padding: 0;
 }
 
 header {
-    background: linear-gradient(135deg, #6a11cb, #2575fc);
-    color: white;
+    background: #333;
     padding: 15px;
-    font-size: 20px;
-    font-weight: bold;
 }
 
-nav {
-    display: flex;
-    justify-content: center;
+.project-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
     padding: 10px;
-    background: white;
-}
-
-.tab-btn {
-    font-size: 24px;
-    margin: 5px;
-    border: none;
-    background: lightgray;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 50%;
-}
-
-.tab-content {
-    display: none;
-    padding: 20px;
 }
 
 .project-item {
-    display: flex;
-    justify-content: space-between;
     background: white;
     padding: 10px;
     border-radius: 10px;
-    margin: 5px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.project-item.done {
-    background: #b0e57c;
+.project-item button {
+    margin-left: 10px;
 }
 
-button {
-    margin: 5px;
-    padding: 5px 10px;
+.summary-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.summary-box {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    color: black;
+}
+
+.add-btn {
+    background: purple;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
 }
 
 .popup {
@@ -64,4 +69,24 @@ button {
     transform: translate(-50%, -50%);
     background: white;
     padding: 20px;
+    border-radius: 10px;
+    color: black;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #333;
+    padding: 10px;
+}
+
+.tab-btn {
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
 }
