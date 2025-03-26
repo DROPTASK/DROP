@@ -5,64 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crypto Project Tracker</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
     <!-- Header -->
     <header>
         <h1>Crypto Project Tracker</h1>
+        <p id="taskCount">Completed: 0 / 0</p>
     </header>
 
-    <!-- Bottom Navigation Tabs -->
+    <!-- Navigation Tabs -->
     <nav>
         <button class="tab-btn" onclick="openTab('home')">🏠</button>
         <button class="tab-btn" onclick="openTab('analytics')">📊</button>
         <button class="tab-btn" onclick="openTab('earnings')">💰</button>
-        <button class="tab-btn" onclick="openTab('past-projects')">⏮️</button>
     </nav>
 
     <!-- Home Tab -->
     <section id="home" class="tab-content">
         <h2>Active Projects</h2>
-        <div class="project-list"></div>
+        <div id="project-list"></div>
     </section>
 
     <!-- Analytics Tab -->
     <section id="analytics" class="tab-content">
-        <h2>Project Completion Analytics</h2>
+        <h2>Analytics</h2>
         <canvas id="earningsChart"></canvas>
+        <div id="newsSection">
+            <h3>Latest News</h3>
+            <div id="newsContent"></div>
+        </div>
     </section>
 
     <!-- Earnings Tab -->
     <section id="earnings" class="tab-content">
         <h2>Earnings & Investments</h2>
+
         <div class="summary-container">
             <div class="summary-box">
-                <p>Total Investment</p>
+                <p>Total Invested</p>
                 <h3 id="investmentTotal">$0</h3>
             </div>
             <div class="summary-box">
-                <p>Total Earnings</p>
+                <p>Total Earned</p>
                 <h3 id="earningsTotal">$0</h3>
             </div>
         </div>
+
+        <button class="add-btn" onclick="openForm()">➕️</button>
         <div id="logs"></div>
     </section>
 
-    <!-- Past Projects Tab -->
-    <section id="past-projects" class="tab-content">
-        <h2>Completed Projects</h2>
-        <div id="completedProjects"></div>
-    </section>
-
-    <!-- Floating Add Button -->
-    <button class="add-btn" onclick="openForm()">➕</button>
-
-    <!-- Form Modal -->
+    <!-- Add Entry Form -->
     <div id="popupForm" class="popup">
         <div class="form-content">
-            <span class="close-btn" onclick="closeForm()">❎</span>
             <h2>Add Entry</h2>
             <label>Type:</label>
             <select id="entryType">
