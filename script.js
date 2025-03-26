@@ -13,18 +13,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     totalCount.textContent = tasks.length;
 
-    // Load task status from LocalStorage or create an empty object
     let taskStatus = JSON.parse(localStorage.getItem("taskStatus")) || {};
-    
-    // Create task buttons dynamically
+
     tasks.forEach((task, index) => {
         if (!(index in taskStatus)) {
-            taskStatus[index] = false;  // Default: Not completed
+            taskStatus[index] = false;
         }
 
         const li = document.createElement("li");
-        const button = document.createElement("button");
 
+        const button = document.createElement("button");
         button.textContent = task;
         button.classList.add("task-button");
         if (taskStatus[index]) button.classList.add("completed");
@@ -33,15 +31,34 @@ document.addEventListener("DOMContentLoaded", function () {
             button.classList.toggle("completed");
             taskStatus[index] = button.classList.contains("completed");
             localStorage.setItem("taskStatus", JSON.stringify(taskStatus));
+            updateProgress();
+        });
 
+        // Open project HTML if exists
+        button.addEventListener("dblclick", () => {
+            const filename = `${task.toLowerCase().replace(/\s+/g, '')}.html`;
+            fetch(filename)
+                .then(response => {
+                    if (response.ok) window.open(filename, "_blank");
+                });
+        });
+
+        const doneBtn = document.createElement("button");
+        doneBtn.textContent = "Done";
+        doneBtn.classList.add("done-btn");
+        doneBtn.addEventListener("click", () => {
+            button.classList.add("completed");
+            taskStatus[index] = true;
+            localStorage.setItem("taskStatus", JSON.stringify(taskStatus));
             updateProgress();
         });
 
         li.appendChild(button);
+        li.appendChild(doneBtn);
         taskList.appendChild(li);
     });
 
-    updateProgress(); // Initial progress update
+    updateProgress();
 
     function updateProgress() {
         let completedTasks = Object.values(taskStatus).filter(status => status).length;
@@ -50,17 +67,31 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function saveDailyStats(count) {
-        const today = new Date().toISOString().split("T")[0]; // Format: YYYY-MM-DD
+        const today = new Date().toISOString().split("T")[0];
         let stats = JSON.parse(localStorage.getItem("dailyStats")) || {};
-        
         stats[today] = count;
 
-        // Keep data for 90 days
         const keys = Object.keys(stats);
-        if (keys.length > 90) {
-            delete stats[keys[0]];
-        }
+        if (keys.length > 90) delete stats[keys[0]];
 
         localStorage.setItem("dailyStats", JSON.stringify(stats));
+    }
+
+    // Handle Tabs
+    document.getElementById("home-tab").addEventListener("click", () => switchTab("home"));
+    document.getElementById("analytics-tab").addEventListener("click", () => switchTab("analytics"));
+    document.getElementById("earnings-tab").addEventListener("click", () => switchTab("earnings"));
+    document.getElementById("past-projects-tab").addEventListener("click", () => switchTab("past-projects"));
+
+    function switchTab(tab) {
+        document.querySelectorAll(".tab").forEach(btn => btn.classList.remove("active"));
+        document.getElementById(tab + "-tab").classList.add("active");
+
+        if (tab === "home") {
+            taskList.style.display = "block";
+        } else {
+            taskList.style.display = "none";
+            alert(`This is a placeholder for the ${tab} section!`);
+        }
     }
 });
