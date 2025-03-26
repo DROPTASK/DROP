@@ -1,86 +1,63 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background: #f4f4f4;
+    text-align: center;
     margin: 0;
     padding: 0;
-    text-align: center;
 }
 
 header {
-    background-color: #007bff;
+    background: #333;
     color: white;
-    padding: 15px;
-    font-size: 20px;
+    padding: 10px;
+}
+
+h1 {
+    margin: 0;
+}
+
+button {
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.project-btn {
+    background: #ddd;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.done-btn {
+    background: #888;
+    color: white;
+}
+
+.done-btn.completed {
+    background: green;
 }
 
 .hidden {
     display: none;
 }
 
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 20px;
-}
-
-li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    margin: 5px 10px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.task-button {
-    flex: 1;
-    padding: 10px;
-    background: #e0e0e0;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: 0.3s;
-}
-
-.task-button.completed {
-    background: #28a745;
-    color: white;
-}
-
-.done-btn {
-    background: #dc3545;
-    color: white;
-    border: none;
-    padding: 8px;
-    margin-left: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-.bottom-nav {
+/* Navigation */
+nav {
     position: fixed;
     bottom: 0;
     width: 100%;
+    background: white;
     display: flex;
-    background: #fff;
-    padding: 10px;
+    justify-content: space-around;
+    padding: 10px 0;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.tab {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    background: #ddd;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.tab.active {
-    background: #007bff;
-    color: white;
+.shadowed-box {
+    padding: 15px;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
