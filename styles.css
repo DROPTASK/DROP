@@ -12,8 +12,11 @@ header {
     padding: 10px;
 }
 
-h1 {
+#main-title {
+    font-size: 24px;
+    font-weight: bold;
     margin: 0;
+    text-align: center;
 }
 
 button {
@@ -28,6 +31,9 @@ button {
     background: #ddd;
     padding: 8px 12px;
     border-radius: 5px;
+    font-size: 18px;
+    width: 90%;
+    text-align: left;
 }
 
 .done-btn {
@@ -37,10 +43,6 @@ button {
 
 .done-btn.completed {
     background: green;
-}
-
-.hidden {
-    display: none;
 }
 
 /* Navigation */
@@ -64,15 +66,39 @@ nav {
 
 .summary-box {
     background: white;
-    padding: 10px;
+    padding: 20px;
     border-radius: 8px;
+    width: 45%;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    font-size: 18px;
+    font-weight: bold;
 }
 
+/* Floating Add Button */
 .add-btn {
     background: purple;
     color: white;
-    position: absolute;
+    border-radius: 50%;
+    font-size: 24px;
+    padding: 15px;
+    position: fixed;
+    bottom: 20px;
     right: 20px;
-    top: 60px;
-    }
+    box-shadow: 0 0 10px rgba(128, 0, 128, 0.5);
+}
+
+/* Form Page */
+.form-container {
+    background: white;
+    padding: 20px;
+    width: 80%;
+    margin: 50px auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+input, select, textarea, button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 8px;
+    font-size: 16px;
+}
