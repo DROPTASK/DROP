@@ -1,104 +1,91 @@
 body {
     font-family: Arial, sans-serif;
-    background: #f4f4f4;
+    background-color: #f5f5f5;
+    color: #333;
     text-align: center;
     margin: 0;
     padding: 0;
 }
 
 header {
-    background: #333;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
     color: white;
-    padding: 10px;
-}
-
-#main-title {
-    font-size: 24px;
+    padding: 15px;
+    font-size: 20px;
     font-weight: bold;
-    margin: 0;
-    text-align: center;
 }
 
-button {
-    border: none;
-    padding: 10px;
-    margin: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.project-btn {
-    background: #ddd;
-    padding: 8px 12px;
-    border-radius: 5px;
-    font-size: 18px;
-    width: 90%;
-    text-align: left;
-}
-
-.done-btn {
-    background: #888;
-    color: white;
-}
-
-.done-btn.completed {
-    background: green;
-}
-
-/* Navigation */
 nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: white;
     display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    justify-content: center;
+    padding: 10px;
+    background: white;
 }
 
-/* Earnings UI */
-.earning-summary {
+.tab-btn {
+    font-size: 24px;
+    margin: 5px;
+    border: none;
+    background: lightgray;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.tab-content {
+    display: none;
+    padding: 20px;
+}
+
+.summary-container {
     display: flex;
     justify-content: space-around;
-    margin: 20px 0;
+    padding: 20px;
 }
 
 .summary-box {
     background: white;
     padding: 20px;
-    border-radius: 8px;
-    width: 45%;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-    font-size: 18px;
-    font-weight: bold;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    width: 40%;
 }
 
-/* Floating Add Button */
 .add-btn {
     background: purple;
     color: white;
-    border-radius: 50%;
-    font-size: 24px;
+    border: none;
     padding: 15px;
+    border-radius: 50%;
     position: fixed;
     bottom: 20px;
     right: 20px;
-    box-shadow: 0 0 10px rgba(128, 0, 128, 0.5);
+    font-size: 24px;
+    cursor: pointer;
 }
 
-/* Form Page */
-.form-container {
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background: white;
     padding: 20px;
-    width: 80%;
-    margin: 50px auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-input, select, textarea, button {
-    width: 100%;
-    margin: 10px 0;
-    padding: 8px;
-    font-size: 16px;
+.project-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    padding: 10px;
+}
+
+.project-item {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
