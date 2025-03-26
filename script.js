@@ -1,63 +1,59 @@
-document.addEventListener("DOMContentLoaded", loadTestnets);
+document.addEventListener("DOMContentLoaded", function () {
+    const tasks = [
+        "Bless", "Dawn", "Grass", "Graident", "One Football", "Teneo", "Nexus", 
+        "Nodepay", "Blockmesh", "Flow3", "Mygate", "Treasury", "Layeredge", "Common", 
+        "Beamable", "Giza", "Exhabits", "Sogni", "Solflare NFT", "Deshare [Cess]", 
+        "Wonix", "Arch", "Dvin", "Blockscout", "Malda", "Somnia", "Social Incentive", 
+        "Billions", "Pod [Dreamers]"
+    ];
 
-function openModal() {
-    document.getElementById("testnetModal").style.display = "flex";
-}
+    const taskList = document.getElementById("task-list");
+    const completedCount = document.getElementById("completed");
+    const totalCount = document.getElementById("total");
 
-function closeModal() {
-    document.getElementById("testnetModal").style.display = "none";
-}
+    totalCount.textContent = tasks.length;
 
-function saveTarget() {
-    let target = document.getElementById("targetEarnings").value;
-    localStorage.setItem("targetEarnings", target);
-    alert("Target Updated!");
-}
+    // Load task data from LocalStorage
+    let taskStatus = JSON.parse(localStorage.getItem("taskStatus")) || {};
+    let completedTasks = Object.values(taskStatus).filter(status => status).length;
+    completedCount.textContent = completedTasks;
 
-function addTestnet() {
-    let name = document.getElementById("testnetName").value;
-    let date = document.getElementById("testnetDate").value;
-    let expectation = document.getElementById("testnetExpectation").value;
+    // Create task buttons
+    tasks.forEach((task, index) => {
+        const li = document.createElement("li");
+        const button = document.createElement("button");
 
-    if (!name || !date || !expectation) {
-        alert("Please fill all fields");
-        return;
-    }
+        button.textContent = task;
+        button.classList.add("task-button");
+        if (taskStatus[index]) button.classList.add("completed");
 
-    let testnets = JSON.parse(localStorage.getItem("testnets")) || [];
-    testnets.push({ name, date, expectation, toDoList: [] });
-    localStorage.setItem("testnets", JSON.stringify(testnets));
+        button.addEventListener("click", () => {
+            button.classList.toggle("completed");
+            taskStatus[index] = button.classList.contains("completed");
+            localStorage.setItem("taskStatus", JSON.stringify(taskStatus));
 
-    closeModal();
-    loadTestnets();
-}
+            // Update progress count
+            completedTasks = Object.values(taskStatus).filter(status => status).length;
+            completedCount.textContent = completedTasks;
+            saveDailyStats(completedTasks);
+        });
 
-function loadTestnets() {
-    let testnets = JSON.parse(localStorage.getItem("testnets")) || [];
-    let container = document.getElementById("testnetList");
-    container.innerHTML = "";
-
-    testnets.forEach((testnet, index) => {
-        let div = document.createElement("div");
-        div.className = "testnet-item";
-        div.innerHTML = `
-            <h3>${testnet.name}</h3>
-            <p><strong>Date Joined:</strong> ${testnet.date}</p>
-            <p><strong>Expectation:</strong> ${testnet.expectation} USDT</p>
-            <button onclick="openToDo(${index})">To-Do List</button>
-        `;
-        container.appendChild(div);
+        li.appendChild(button);
+        taskList.appendChild(li);
     });
-}
 
-function openToDo(index) {
-    let testnets = JSON.parse(localStorage.getItem("testnets")) || [];
-    let testnet = testnets[index];
+    function saveDailyStats(count) {
+        const today = new Date().toISOString().split("T")[0]; // Format: YYYY-MM-DD
+        let stats = JSON.parse(localStorage.getItem("dailyStats")) || {};
+        
+        stats[today] = count;
 
-    let task = prompt("Add a To-Do for " + testnet.name);
-    if (task) {
-        testnet.toDoList.push(task);
-        localStorage.setItem("testnets", JSON.stringify(testnets));
-        alert("To-Do Added!");
+        // Keep data for 90 days
+        const keys = Object.keys(stats);
+        if (keys.length > 90) {
+            delete stats[keys[0]];
+        }
+
+        localStorage.setItem("dailyStats", JSON.stringify(stats));
     }
-}
+});
