@@ -1,39 +1,59 @@
-document.addEventListener("DOMContentLoaded", function () {
-    loadTasks();
-    updateCompletedCount();
+document.addEventListener("DOMContentLoaded", function() {
+    // Load Project List
+    const projects = [
+        "Bless", "Dawn", "Grass", "Graident", "One Football",
+        "Teneo", "Nexus", "Nodepay", "Blockmesh", "Flow3",
+        "Mygate", "Treasury", "Layeredge", "Common", "Beamable",
+        "Giza", "Exhabits", "Sogni", "Solflare NFT", "Deshare [Cess]",
+        "Wonix", "Arch", "Dvin", "Blockscout", "Malda", "Somnia",
+        "Social Incentive", "Billions", "Pod [Dreamers]"
+    ];
 
-    document.querySelectorAll("nav button").forEach(button => {
-        button.addEventListener("click", function () {
-            switchTab(this.getAttribute("data-tab"));
-        });
+    // Populate home page
+    const projectListDiv = document.querySelector('.project-list');
+    projects.forEach(name => {
+        const div = document.createElement('div');
+        div.className = "project-item";
+        div.innerText = name;
+        div.onclick = () => window.open(`${name}.html`, "_blank");
+        projectListDiv.appendChild(div);
     });
 
-    generateUserDescription();
+    // Populate dropdown
+    const projectSelect = document.getElementById("projectSelect");
+    projects.forEach(name => {
+        let option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+        projectSelect.appendChild(option);
+    });
+
+    openTab('home');
 });
 
-// Open Add Page
-function openAddPage() {
-    window.location.href = "add.html";
+function openTab(tabName) {
+    document.querySelectorAll(".tab-content").forEach(tab => {
+        tab.style.display = "none";
+    });
+    document.getElementById(tabName).style.display = "block";
 }
 
-// Save Investment or Earning
+function openForm() {
+    document.getElementById("popupForm").style.display = "block";
+}
+
 function saveEntry() {
-    const type = document.getElementById("type").value;
-    const project = document.getElementById("project").value;
-    const description = document.getElementById("description").value;
-    const amount = parseFloat(document.getElementById("amount").value);
+    const type = document.getElementById("entryType").value;
+    const project = document.getElementById("projectSelect").value;
+    const description = document.getElementById("entryDescription").value;
+    const amount = document.getElementById("entryAmount").value;
 
-    if (!amount) return;
+    if (!amount) return alert("Please enter an amount");
 
-    let totalId = type === "Earning" ? "total-earnings" : "total-investments";
-    let total = parseFloat(localStorage.getItem(totalId) || 0);
-    total += amount;
-    localStorage.setItem(totalId, total);
+    let logDiv = document.createElement("div");
+    logDiv.className = "summary-box";
+    logDiv.innerHTML = `<p>${type.toUpperCase()}</p><h3>$${amount}</h3><p>${project}</p>`;
     
-    window.location.href = "index.html";
-}
-
-// Generate user description
-function generateUserDescription() {
-    document.getElementById("user-description").textContent = `You have ${projects.length} projects in progress.`;
+    document.getElementById("logs").appendChild(logDiv);
+    document.getElementById("popupForm").style.display = "none";
 }
