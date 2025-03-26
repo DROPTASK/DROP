@@ -13,43 +13,39 @@
         <p><span id="completed">0</span> / <span id="total">0</span> Completed</p>
     </header>
 
-    <ul id="task-list"></ul>
+    <!-- Home Tab -->
+    <div id="home-tab" class="tab-content">
+        <ul id="task-list"></ul>
+    </div>
 
-    <div id="analytics" class="hidden">
+    <!-- Analytics Tab -->
+    <div id="analytics-tab" class="tab-content hidden">
         <h2>📊 Analytics</h2>
         <canvas id="analyticsChart"></canvas>
         <p id="user-description"></p>
     </div>
 
-    <div id="earnings" class="hidden">
-        <h2>💰 Total Earnings: <span id="total-earnings">0</span> INR</h2>
-        <h3>Investment: <span id="total-investment">0</span> INR</h3>
-        <button onclick="showForm('earning')">Add Earning</button>
-        <button onclick="showForm('investment')">Add Investment</button>
+    <!-- Earnings Tab -->
+    <div id="earnings-tab" class="tab-content hidden">
+        <h2>💰 Total Earnings</h2>
+        <div class="earning-box shadowed-box" id="total-earnings">₹0</div>
+        <button class="add-btn">➕</button>
+        <div id="portfolio-list"></div>
     </div>
 
-    <div id="past-projects" class="hidden">
+    <!-- Past Projects Tab -->
+    <div id="past-tab" class="tab-content hidden">
         <h2>⏮️ Past Projects</h2>
-        <ul id="past-project-list"></ul>
+        <ul id="past-projects"></ul>
     </div>
 
-    <div id="form-container" class="hidden">
-        <h2 id="form-title"></h2>
-        <form id="entry-form">
-            <select id="project-select"></select>
-            <input type="text" id="description" placeholder="Description" required>
-            <input type="date" id="date" required>
-            <input type="number" id="amount" placeholder="Amount" required>
-            <button type="submit">Save</button>
-        </form>
-    </div>
-
-    <div class="bottom-nav">
-        <button id="home-tab" class="tab active">🏠</button>
-        <button id="analytics-tab" class="tab">📊</button>
-        <button id="earnings-tab" class="tab">💰</button>
-        <button id="past-projects-tab" class="tab">⏮️</button>
-    </div>
+    <!-- Bottom Navigation -->
+    <nav>
+        <button data-tab="home-tab">🏠</button>
+        <button data-tab="analytics-tab">📊</button>
+        <button data-tab="earnings-tab">💰</button>
+        <button data-tab="past-tab">⏮️</button>
+    </nav>
 
     <script src="script.js"></script>
 </body>
