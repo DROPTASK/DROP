@@ -7,6 +7,7 @@ body {
     padding: 0;
 }
 
+/* Header */
 header {
     background: linear-gradient(135deg, #6a11cb, #2575fc);
     color: white;
@@ -15,13 +16,18 @@ header {
     font-weight: bold;
 }
 
+/* Bottom Navigation Bar */
 nav {
     display: flex;
     justify-content: center;
     padding: 10px;
     background: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
+/* Tab Buttons */
 .tab-btn {
     font-size: 24px;
     margin: 5px;
@@ -32,11 +38,13 @@ nav {
     border-radius: 50%;
 }
 
+/* Hide inactive tabs */
 .tab-content {
     display: none;
     padding: 20px;
 }
 
+/* Summary Boxes */
 .summary-container {
     display: flex;
     justify-content: space-around;
@@ -51,6 +59,7 @@ nav {
     width: 40%;
 }
 
+/* Add Button */
 .add-btn {
     background: purple;
     color: white;
@@ -58,12 +67,13 @@ nav {
     padding: 15px;
     border-radius: 50%;
     position: fixed;
-    bottom: 20px;
+    bottom: 70px;
     right: 20px;
     font-size: 24px;
     cursor: pointer;
 }
 
+/* Pop-up Form */
 .popup {
     display: none;
     position: fixed;
@@ -88,4 +98,16 @@ nav {
     border-radius: 10px;
     cursor: pointer;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Done Button */
+.done-btn {
+    background: green;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
 }
