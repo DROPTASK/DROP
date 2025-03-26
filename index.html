@@ -11,36 +11,18 @@
     <!-- Header -->
     <header>
         <h1>Crypto Project Tracker</h1>
-        <p id="taskCount">Completed: 0 / 0</p>
+        <p id="progress">0 / 0 Completed</p>
     </header>
 
-    <!-- Navigation Tabs -->
-    <nav>
-        <button class="tab-btn" onclick="openTab('home')">🏠</button>
-        <button class="tab-btn" onclick="openTab('analytics')">📊</button>
-        <button class="tab-btn" onclick="openTab('earnings')">💰</button>
-    </nav>
-
-    <!-- Home Tab -->
-    <section id="home" class="tab-content">
+    <!-- Main Content -->
+    <section id="home">
         <h2>Active Projects</h2>
-        <div id="project-list"></div>
+        <div class="project-list"></div>
     </section>
 
-    <!-- Analytics Tab -->
-    <section id="analytics" class="tab-content">
-        <h2>Analytics</h2>
-        <canvas id="earningsChart"></canvas>
-        <div id="newsSection">
-            <h3>Latest News</h3>
-            <div id="newsContent"></div>
-        </div>
-    </section>
-
-    <!-- Earnings Tab -->
-    <section id="earnings" class="tab-content">
+    <!-- Earnings Section -->
+    <section id="earnings">
         <h2>Earnings & Investments</h2>
-
         <div class="summary-container">
             <div class="summary-box">
                 <p>Total Invested</p>
@@ -51,12 +33,23 @@
                 <h3 id="earningsTotal">$0</h3>
             </div>
         </div>
-
-        <button class="add-btn" onclick="openForm()">➕️</button>
         <div id="logs"></div>
+        <button class="add-btn" onclick="openForm()">➕</button>
     </section>
 
-    <!-- Add Entry Form -->
+    <!-- Analytics Section -->
+    <section id="analytics">
+        <h2>News & Updates</h2>
+        <div id="news-container"></div>
+    </section>
+
+    <!-- Removed Projects Section -->
+    <section id="removed">
+        <h2>Removed Projects</h2>
+        <div class="removed-list"></div>
+    </section>
+
+    <!-- Pop-up Form -->
     <div id="popupForm" class="popup">
         <div class="form-content">
             <h2>Add Entry</h2>
@@ -78,6 +71,14 @@
             <button onclick="saveEntry()">Save</button>
         </div>
     </div>
+
+    <!-- Bottom Navigation Bar -->
+    <nav>
+        <button class="tab-btn" onclick="openTab('home')">🏠</button>
+        <button class="tab-btn" onclick="openTab('earnings')">💰</button>
+        <button class="tab-btn" onclick="openTab('analytics')">📊</button>
+        <button class="tab-btn" onclick="openTab('removed')">📥</button>
+    </nav>
 
     <script src="script.js"></script>
 </body>
