@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Investment / Earning</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="form-container">
+        <h2>Add Investment / Earning</h2>
+        <label>Type:</label>
+        <select id="type">
+            <option value="Earning">Earning</option>
+            <option value="Investment">Investment</option>
+        </select>
+
+        <label>Testnet Name:</label>
+        <select id="project">
+            <option>Bless</option>
+            <option>Dawn</option>
+            <option>Grass</option>
+            <option>Graident</option>
+            <option>One Football</option>
+            <option>Teneo</option>
+        </select>
+
+        <label>Description:</label>
+        <textarea id="description" maxlength="300"></textarea>
+
+        <label>Amount ($):</label>
+        <input type="number" id="amount" min="1">
+
+        <button onclick="saveEntry()">Save</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
