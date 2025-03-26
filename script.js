@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.querySelector(".add-btn").addEventListener("click", function () {
-        addPortfolioEntry();
+        showEarningsForm();
     });
 
     generateUserDescription();
@@ -67,31 +67,37 @@ function switchTab(tabId) {
     document.getElementById(tabId).classList.remove("hidden");
 }
 
-// Add portfolio entry (Earnings/Investment)
-function addPortfolioEntry() {
-    const type = prompt("Add Investment or Earning?");
+// Show earnings form
+function showEarningsForm() {
+    const type = prompt("Investment or Earning?");
     if (!type) return;
 
-    const project = prompt("Project Name:");
-    const amount = prompt("Amount:");
-    if (!project || !amount) return;
+    const project = prompt("Select Project Name:");
+    if (!projects.includes(project)) return;
+
+    const amount = prompt("Enter Amount:");
+    const description = prompt("Enter Description:");
+
+    if (!amount || !description) return;
 
     const entry = document.createElement("div");
     entry.classList.add("portfolio-entry");
-    entry.innerHTML = `<strong>${type}:</strong> ${project} - ₹${amount}`;
+    entry.innerHTML = `<span class="expandable">● ${project} - $${amount}</span>
+                        <p class="hidden">${description}</p>`;
+    entry.addEventListener("click", () => {
+        entry.querySelector("p").classList.toggle("hidden");
+    });
+
     document.getElementById("portfolio-list").appendChild(entry);
 
-    updateTotalEarnings();
+    updateTotalEarnings(type, amount);
 }
 
 // Update total earnings
-function updateTotalEarnings() {
-    let total = 0;
-    document.querySelectorAll(".portfolio-entry").forEach(entry => {
-        const amount = parseInt(entry.innerHTML.match(/₹(\d+)/)[1]);
-        total += amount;
-    });
-    document.getElementById("total-earnings").textContent = `₹${total}`;
+function updateTotalEarnings(type, amount) {
+    let total = parseFloat(document.getElementById(type === "Earning" ? "total-earnings" : "total-investments").textContent.replace("$", ""));
+    total += parseFloat(amount);
+    document.getElementById(type === "Earning" ? "total-earnings" : "total-investments").textContent = `$${total}`;
 }
 
 // Generate user description
