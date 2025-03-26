@@ -3,45 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto To-Do List</title>
+    <title>Crypto Project Tracker</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+
+    <!-- Header -->
     <header>
-        <h1 id="main-title">Crypto To-Do List</h1>
-        <p><span id="completed">0</span> / <span id="total">0</span> Completed</p>
+        <h1>Crypto Project Tracker</h1>
     </header>
 
+    <!-- Navigation Tabs -->
+    <nav>
+        <button class="tab-btn" onclick="openTab('home')">🏠</button>
+        <button class="tab-btn" onclick="openTab('analytics')">📊</button>
+        <button class="tab-btn" onclick="openTab('earnings')">💰</button>
+    </nav>
+
     <!-- Home Tab -->
-    <div id="home-tab" class="tab-content">
-        <ul id="task-list"></ul>
-    </div>
+    <section id="home" class="tab-content">
+        <h2>Active Projects</h2>
+        <div class="project-list">
+            <!-- Dynamically insert projects -->
+        </div>
+    </section>
 
     <!-- Analytics Tab -->
-    <div id="analytics-tab" class="tab-content hidden">
-        <h2>📊 Analytics</h2>
-        <canvas id="analyticsChart"></canvas>
-        <p id="user-description"></p>
-    </div>
+    <section id="analytics" class="tab-content">
+        <h2>Analytics</h2>
+        <canvas id="earningsChart"></canvas>
+        <p id="userDescription">Analyzing last 3 months...</p>
+    </section>
 
     <!-- Earnings Tab -->
-    <div id="earnings-tab" class="tab-content hidden">
-        <h2>💰 Earnings</h2>
-        <div class="earning-summary">
-            <div class="summary-box">Earnings <br><span id="total-earnings">$0</span></div>
-            <div class="summary-box">Investments <br><span id="total-investments">$0</span></div>
-        </div>
-        <button class="add-btn" onclick="openAddPage()">➕</button>
-        <div id="portfolio-list"></div>
-    </div>
+    <section id="earnings" class="tab-content">
+        <h2>Earnings & Investments</h2>
 
-    <!-- Bottom Navigation -->
-    <nav>
-        <button data-tab="home-tab">🏠</button>
-        <button data-tab="analytics-tab">📊</button>
-        <button data-tab="earnings-tab">💰</button>
-    </nav>
+        <!-- Earnings & Investments Summary -->
+        <div class="summary-container">
+            <div class="summary-box">
+                <p>Investment</p>
+                <h3 id="investmentTotal">$0</h3>
+            </div>
+            <div class="summary-box">
+                <p>Earnings</p>
+                <h3 id="earningsTotal">$0</h3>
+            </div>
+        </div>
+
+        <!-- Add Entry Button -->
+        <button class="add-btn" onclick="openForm()">➕️</button>
+
+        <!-- Logs of Earnings/Investments -->
+        <div id="logs"></div>
+    </section>
+
+    <!-- Pop-up Form -->
+    <div id="popupForm" class="popup">
+        <div class="form-content">
+            <h2>Add Entry</h2>
+            <label>Type:</label>
+            <select id="entryType">
+                <option value="investment">Investment</option>
+                <option value="earning">Earning</option>
+            </select>
+
+            <label>Project:</label>
+            <select id="projectSelect"></select>
+
+            <label>Description:</label>
+            <textarea id="entryDescription" maxlength="300"></textarea>
+
+            <label>Amount:</label>
+            <input type="number" id="entryAmount">
+
+            <button onclick="saveEntry()">Save</button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
