@@ -3,73 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Project Tracker</title>
+    <title>Crypto Testnet Tracker</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
     <!-- Header -->
     <header>
-        <h1>Crypto Project Tracker</h1>
+        <h1>Crypto Testnet Tracker</h1>
     </header>
 
-    <!-- Home Tab -->
-    <section id="home" class="tab-content">
-        <h2>Active Projects</h2>
-        <div class="project-list"></div>
-    </section>
-
-    <!-- Earnings Tab -->
-    <section id="earnings" class="tab-content">
-        <h2>Earnings & Investments</h2>
-
-        <!-- Total Earnings & Investments -->
-        <div class="summary-container">
-            <div class="summary-box">
-                <p>Investment</p>
-                <h3 id="investmentTotal">$0</h3>
-            </div>
-            <div class="summary-box">
-                <p>Earnings</p>
-                <h3 id="earningsTotal">$0</h3>
-            </div>
-        </div>
-
-        <!-- Add Entry Button -->
-        <button class="add-btn" onclick="openForm()">➕️</button>
-
-        <!-- Logs of Earnings/Investments -->
-        <div id="logs"></div>
-    </section>
-
-    <!-- Pop-up Form -->
-    <div id="popupForm" class="popup">
-        <div class="form-content">
-            <h2>Add Entry</h2>
-            
-            <label>Type:</label>
-            <select id="entryType">
-                <option value="investment">Investment</option>
-                <option value="earning">Earning</option>
-            </select>
-
-            <label>Project:</label>
-            <select id="projectSelect"></select>
-
-            <label>Description:</label>
-            <textarea id="entryDescription" maxlength="300"></textarea>
-
-            <label>Amount:</label>
-            <input type="number" id="entryAmount">
-
-            <button onclick="saveEntry()">Save</button>
-        </div>
+    <!-- Main Home Tab -->
+    <div id="home">
+        <h2>📌 Active Projects</h2>
+        <div id="projectList"></div>
     </div>
 
-    <!-- Navigation Bar at Bottom -->
+    <!-- Earnings Section -->
+    <div id="earnings" class="hidden">
+        <h2>💰 Earnings</h2>
+        <div class="summary">
+            <div class="box">Total Overall Earnings <br> <span id="totalEarnings">$0</span></div>
+            <div class="box">Total Overall Investments <br> <span id="totalInvestments">$0</span></div>
+        </div>
+        <button id="addEntry" class="add-button">➕</button>
+        <div id="earningsLog"></div>
+    </div>
+
+    <!-- Add Entry Form (Hidden) -->
+    <div id="entryForm" class="hidden">
+        <button id="closeForm">❎</button>
+        <h2>Add Entry</h2>
+        <label for="entryType">Type:</label>
+        <select id="entryType">
+            <option value="investment">Investment</option>
+            <option value="earning">Earning</option>
+        </select>
+
+        <label for="testnet">Testnet Name:</label>
+        <select id="testnet"></select>
+
+        <label for="description">Description:</label>
+        <textarea id="description" maxlength="300"></textarea>
+
+        <label for="amount">Amount ($):</label>
+        <input type="number" id="amount">
+
+        <button id="saveEntry">Save</button>
+    </div>
+
+    <!-- Navigation Bar -->
     <nav>
-        <button class="tab-btn" onclick="openTab('home')">🏠</button>
-        <button class="tab-btn" onclick="openTab('earnings')">💰</button>
+        <button onclick="switchTab('home')">🏠</button>
+        <button onclick="switchTab('earnings')">💰</button>
     </nav>
 
     <script src="script.js"></script>
