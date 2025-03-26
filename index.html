@@ -3,78 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Testnet Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Crypto Project Tracker</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- Main Container -->
-    <div class="container">
+    <!-- Header -->
+    <header>
+        <h1>Crypto Project Tracker</h1>
+    </header>
 
-        <!-- Home Tab -->
-        <div id="home" class="tab active">
-            <h2>Testnet Projects</h2>
-            <div id="project-list"></div>
+    <!-- Navigation Tabs -->
+    <nav>
+        <button class="tab-btn" onclick="openTab('home')">🏠</button>
+        <button class="tab-btn" onclick="openTab('analytics')">📊</button>
+        <button class="tab-btn" onclick="openTab('earnings')">💰</button>
+    </nav>
+
+    <!-- Home Tab -->
+    <section id="home" class="tab-content">
+        <h2>Active Projects</h2>
+        <div class="project-list">
+            <!-- Dynamically insert projects -->
         </div>
+    </section>
 
-        <!-- Analytics Tab -->
-        <div id="analytics" class="tab">
-            <h2>Analytics</h2>
-            <canvas id="barChart"></canvas>
-        </div>
+    <!-- Analytics Tab -->
+    <section id="analytics" class="tab-content">
+        <h2>Analytics</h2>
+        <canvas id="earningsChart"></canvas>
+        <p id="userDescription">Analyzing last 3 months...</p>
+    </section>
 
-        <!-- Earnings Tab -->
-        <div id="earnings" class="tab">
-            <h2>Earnings & Investments</h2>
-            <div class="earnings-box">
-                <h3>Total Earnings</h3>
-                <p id="total-earnings">$0</p>
+    <!-- Earnings Tab -->
+    <section id="earnings" class="tab-content">
+        <h2>Earnings & Investments</h2>
+
+        <!-- Earnings & Investments Summary -->
+        <div class="summary-container">
+            <div class="summary-box">
+                <p>Investment</p>
+                <h3 id="investmentTotal">$0</h3>
             </div>
-            <div class="earnings-box">
-                <h3>Total Investment</h3>
-                <p id="total-investment">$0</p>
+            <div class="summary-box">
+                <p>Earnings</p>
+                <h3 id="earningsTotal">$0</h3>
             </div>
         </div>
 
-        <!-- Past Projects Tab -->
-        <div id="past-projects" class="tab">
-            <h2>Past Projects</h2>
-            <div id="completed-list"></div>
-        </div>
+        <!-- Add Entry Button -->
+        <button class="add-btn" onclick="openForm()">➕️</button>
 
-    </div>
+        <!-- Logs of Earnings/Investments -->
+        <div id="logs"></div>
+    </section>
 
-    <!-- Floating Add Button -->
-    <button id="addEntryBtn">💲</button>
-
-    <!-- Modal for Adding Entries -->
-    <div id="entryModal" class="modal">
-        <div class="modal-content">
-            <span id="closeModal" class="close">&times;</span>
+    <!-- Pop-up Form -->
+    <div id="popupForm" class="popup">
+        <div class="form-content">
             <h2>Add Entry</h2>
+            <label>Type:</label>
             <select id="entryType">
-                <option value="earning">Earning</option>
                 <option value="investment">Investment</option>
+                <option value="earning">Earning</option>
             </select>
-            <select id="testnetName">
-                <option value="Bless">Bless</option>
-                <option value="Dawn">Dawn</option>
-                <option value="Grass">Grass</option>
-                <!-- Add more projects here -->
-            </select>
-            <textarea id="description" placeholder="Description (Max 300 chars)" maxlength="300"></textarea>
-            <input type="number" id="amount" placeholder="Amount ($)">
-            <button id="saveEntry">Save</button>
-        </div>
-    </div>
 
-    <!-- Bottom Navigation -->
-    <div class="bottom-nav">
-        <button class="nav-btn active" onclick="switchTab('home')">🏠</button>
-        <button class="nav-btn" onclick="switchTab('analytics')">📊</button>
-        <button class="nav-btn" onclick="switchTab('earnings')">💰</button>
-        <button class="nav-btn" onclick="switchTab('past-projects')">⏮️</button>
+            <label>Project:</label>
+            <select id="projectSelect"></select>
+
+            <label>Description:</label>
+            <textarea id="entryDescription" maxlength="300"></textarea>
+
+            <label>Amount:</label>
+            <input type="number" id="entryAmount">
+
+            <button onclick="saveEntry()">Save</button>
+        </div>
     </div>
 
     <script src="script.js"></script>
