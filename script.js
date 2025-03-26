@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", function () {
     totalCount.textContent = tasks.length;
 
     let taskStatus = JSON.parse(localStorage.getItem("taskStatus")) || {};
+    let earningsData = JSON.parse(localStorage.getItem("earningsData")) || [];
+    let pastProjects = JSON.parse(localStorage.getItem("pastProjects")) || [];
 
     tasks.forEach((task, index) => {
         if (!(index in taskStatus)) {
@@ -34,13 +36,11 @@ document.addEventListener("DOMContentLoaded", function () {
             updateProgress();
         });
 
-        // Open project HTML if exists
         button.addEventListener("dblclick", () => {
             const filename = `${task.toLowerCase().replace(/\s+/g, '')}.html`;
-            fetch(filename)
-                .then(response => {
-                    if (response.ok) window.open(filename, "_blank");
-                });
+            fetch(filename).then(response => {
+                if (response.ok) window.open(filename, "_blank");
+            });
         });
 
         const doneBtn = document.createElement("button");
@@ -63,35 +63,15 @@ document.addEventListener("DOMContentLoaded", function () {
     function updateProgress() {
         let completedTasks = Object.values(taskStatus).filter(status => status).length;
         completedCount.textContent = completedTasks;
-        saveDailyStats(completedTasks);
     }
 
-    function saveDailyStats(count) {
-        const today = new Date().toISOString().split("T")[0];
-        let stats = JSON.parse(localStorage.getItem("dailyStats")) || {};
-        stats[today] = count;
-
-        const keys = Object.keys(stats);
-        if (keys.length > 90) delete stats[keys[0]];
-
-        localStorage.setItem("dailyStats", JSON.stringify(stats));
-    }
-
-    // Handle Tabs
     document.getElementById("home-tab").addEventListener("click", () => switchTab("home"));
     document.getElementById("analytics-tab").addEventListener("click", () => switchTab("analytics"));
     document.getElementById("earnings-tab").addEventListener("click", () => switchTab("earnings"));
     document.getElementById("past-projects-tab").addEventListener("click", () => switchTab("past-projects"));
 
     function switchTab(tab) {
-        document.querySelectorAll(".tab").forEach(btn => btn.classList.remove("active"));
-        document.getElementById(tab + "-tab").classList.add("active");
-
-        if (tab === "home") {
-            taskList.style.display = "block";
-        } else {
-            taskList.style.display = "none";
-            alert(`This is a placeholder for the ${tab} section!`);
-        }
+        document.querySelectorAll(".hidden").forEach(section => section.style.display = "none");
+        if (tab !== "home") document.getElementById(tab).style.display = "block";
     }
 });
