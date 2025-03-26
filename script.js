@@ -1,5 +1,10 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const projects = [
+    loadProjects();
+    openTab('home');
+    resetTasksAtMidnight();
+});
+
+const projects = [
         "Bless", "Dawn", "Grass", "Graident", "One Football",
         "Teneo", "Nexus", "Nodepay", "Blockmesh", "Flow3",
         "Mygate", "Treasury", "Layeredge", "Common", "Beamable",
@@ -7,57 +12,77 @@ document.addEventListener("DOMContentLoaded", function() {
         "Wonix", "Arch", "Dvin", "Blockscout", "Malda", "Somnia",
         "Social Incentive", "Billions", "Pod [Dreamers]"
     ];
-    
-    const projectListDiv = document.querySelector('.project-list');
-    projects.forEach(name => {
-        const div = document.createElement('div');
+
+let removedProjects = [];
+
+function loadProjects() {
+    const projectListDiv = document.getElementById('project-list');
+    projectListDiv.innerHTML = "";
+    projects.forEach((name, index) => {
+        let div = document.createElement("div");
         div.className = "project-item";
-        div.innerHTML = `${name} <button onclick="markDone('${name}')">✅</button>`;
+        div.innerHTML = `
+            <span>${name}</span>
+            <button onclick="markDone(this)">✅</button>
+            <button onclick="removeProject(${index})">❌</button>
+            <button onclick="openDetails('${name}')">🔗</button>
+        `;
         projectListDiv.appendChild(div);
     });
-
-    const projectSelect = document.getElementById("projectSelect");
-    projects.forEach(name => {
-        let option = document.createElement("option");
-        option.value = name;
-        option.textContent = name;
-        projectSelect.appendChild(option);
-    });
-
-    openTab('home');
-});
+    updateTaskCount();
+}
 
 function openTab(tabName) {
-    document.querySelectorAll(".tab-content").forEach(tab => {
-        tab.style.display = "none";
-    });
+    document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
     document.getElementById(tabName).style.display = "block";
+}
+
+function markDone(btn) {
+    let parent = btn.parentElement;
+    parent.classList.toggle("done");
+    updateTaskCount();
+}
+
+function removeProject(index) {
+    removedProjects.push(projects[index]);
+    projects.splice(index, 1);
+    loadProjects();
+}
+
+function openDetails(projectName) {
+    const links = {
+        "Bless": "https://example.com/bless",
+        "Dawn": "https://example.com/dawn"
+    };
+    if (links[projectName]) window.open(links[projectName], "_blank");
 }
 
 function openForm() {
     document.getElementById("popupForm").style.display = "block";
 }
 
-function closeForm() {
+function saveEntry() {
+    let type = document.getElementById("entryType").value;
+    let amount = parseFloat(document.getElementById("entryAmount").value);
+    if (!amount) return;
+
+    let totalId = type === "investment" ? "investmentTotal" : "earningsTotal";
+    let total = parseFloat(document.getElementById(totalId).innerText.replace("$", "")) || 0;
+    document.getElementById(totalId).innerText = `$${total + amount}`;
+    
     document.getElementById("popupForm").style.display = "none";
 }
 
-function saveEntry() {
-    const type = document.getElementById("entryType").value;
-    const project = document.getElementById("projectSelect").value;
-    const description = document.getElementById("entryDescription").value;
-    const amount = document.getElementById("entryAmount").value;
-
-    if (!amount) return alert("Enter an amount");
-
-    let logDiv = document.createElement("div");
-    logDiv.className = "summary-box";
-    logDiv.innerHTML = `<p>${type.toUpperCase()}</p><h3>$${amount}</h3><p>${project}</p>`;
-    
-    document.getElementById("logs").appendChild(logDiv);
-    closeForm();
+function updateTaskCount() {
+    let completed = document.querySelectorAll(".project-item.done").length;
+    document.getElementById("taskCount").innerText = `Completed: ${completed} / ${projects.length}`;
 }
 
-function markDone(project) {
-    alert(`${project} marked as done!`);
+function resetTasksAtMidnight() {
+    let now = new Date();
+    let timeUntilMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0) - now;
+    setTimeout(() => {
+        loadProjects();
+        resetTasksAtMidnight();
+    }, timeUntilMidnight);
 }
