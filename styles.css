@@ -1,75 +1,89 @@
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to right, #000, #222);
-    color: white;
+    background: #f9f9f9;
+    color: #333;
     text-align: center;
     margin: 0;
     padding: 0;
 }
 
 header {
-    background: rgba(0, 0, 0, 0.8);
+    background: white;
     padding: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    background: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
 }
 
 nav button {
-    padding: 10px;
+    padding: 12px;
     border: none;
-    background: #444;
-    color: white;
+    background: #eee;
+    color: black;
     cursor: pointer;
-    border-radius: 5px;
     font-size: 16px;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
 }
 
 nav button:hover {
-    background: #666;
+    background: #ddd;
 }
 
 .testnet-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
     margin: 20px auto;
 }
 
 .testnet {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 15px;
-    background: #333;
-    border: 1px solid white;
-    border-radius: 8px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    transition: all 0.3s ease-in-out;
 }
 
 .testnet.done {
-    background: green;
+    background: #c8ffc8;
 }
 
 .earnings-box {
-    background: #333;
+    background: white;
     padding: 20px;
     margin: 10px auto;
     width: 80%;
     border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .amount {
     font-size: 40px;
     font-weight: bold;
-    color: #00ff99;
+    color: #00cc66;
 }
 
 button {
-    background: #555;
-    color: white;
-    padding: 10px;
+    background: #ddd;
+    color: black;
+    padding: 12px;
     border: none;
-    margin: 5px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
 }
 
 button:hover {
-    background: #777;
+    background: #ccc;
 }
