@@ -4,15 +4,17 @@ document.addEventListener("DOMContentLoaded", function () {
     updateAnalytics();
 });
 
+// Tabs Switching
+function showTab(tabName) {
+    document.querySelectorAll(".tab").forEach(tab => tab.style.display = "none");
+    document.getElementById(tabName).style.display = "block";
+}
+
 // Testnets
 const nativeTestnets = [
-        "Bless", "Dawn", "Grass", "Graident", "One Football",
-        "Teneo", "Nexus", "Nodepay", "Blockmesh", "Flow3",
-        "Mygate", "Treasury", "Layeredge", "Common", "Beamable",
-        "Giza", "Exhabits", "Sogni", "Solflare NFT", "Deshare [Cess]",
-        "Wonix", "Arch", "Dvin", "Blockscout", "Malda", "Somnia",
-        "Social Incentive", "Billions", "Pod [Dreamers]"
-    ];
+    "Bless", "Dawn", "Grass", "Graident", "One Football",
+    "Teneo", "Nexus", "Nodepay", "Blockmesh", "Flow3"
+];
 
 function loadNativeTestnets() {
     let container = document.getElementById("nativeTestnets");
@@ -35,38 +37,49 @@ function createTestnetElement(name, date) {
     return `
         <div class="testnet" id="testnet-${name}">
             <span>${name} (${date || 'N/A'})</span>
-            <div>
-                <button onclick="markDone('${name}')">DONE ✅</button>
-                <button onclick="removeTestnet('${name}')">❌</button>
-            </div>
+            <button class="done-btn" onclick="markDone('${name}', this)">DONE ✅</button>
+            <button onclick="removeTestnet('${name}')">❌</button>
         </div>
     `;
 }
 
-function openTestnetForm() {
-    document.getElementById("testnetForm").style.display = "block";
+// Mark as Done (Changes Button & Color)
+function markDone(name, button) {
+    let element = document.getElementById(`testnet-${name}`);
+    element.classList.add("done");
+    button.classList.add("completed");
+    button.innerText = "✔ COMPLETED";
 }
 
-function closeTestnetForm() {
-    document.getElementById("testnetForm").style.display = "none";
+// Remove Testnet (Move to Recovery)
+function removeTestnet(name) {
+    document.getElementById(`testnet-${name}`).remove();
+    let removedTestnets = JSON.parse(localStorage.getItem("removedTestnets")) || [];
+    removedTestnets.push(name);
+    localStorage.setItem("removedTestnets", JSON.stringify(removedTestnets));
+    loadRecoveryTab();
 }
 
-function addCustomTestnet() {
-    let name = document.getElementById("testnetName").value;
-    let date = document.getElementById("testnetDate").value || new Date().toISOString().split('T')[0];
-    
-    if (!name) return alert("Enter a name!");
-
-    let testnets = JSON.parse(localStorage.getItem("customTestnets")) || [];
-    testnets.push({ name, date });
-    localStorage.setItem("customTestnets", JSON.stringify(testnets));
-
-    loadCustomTestnets();
-    closeTestnetForm();
+// Recovery Tab
+function loadRecoveryTab() {
+    let removedTestnets = JSON.parse(localStorage.getItem("removedTestnets")) || [];
+    let container = document.getElementById("recoveryList");
+    container.innerHTML = "";
+    removedTestnets.forEach(name => {
+        container.innerHTML += `<div class="testnet">
+            <span>${name}</span>
+            <button onclick="restoreTestnet('${name}')">🔄 Restore</button>
+        </div>`;
+    });
 }
 
-function updateAnalytics() {
-    let completed = document.querySelectorAll(".done").length;
-    let total = nativeTestnets.length + (JSON.parse(localStorage.getItem("customTestnets")) || []).length;
-    document.getElementById("analyticsData").innerText = `Completed: ${completed} / ${total}`;
+// Restore Testnet
+function restoreTestnet(name) {
+    let removedTestnets = JSON.parse(localStorage.getItem("removedTestnets")) || [];
+    removedTestnets = removedTestnets.filter(item => item !== name);
+    localStorage.setItem("removedTestnets", JSON.stringify(removedTestnets));
+
+    nativeTestnets.push(name);
+    loadNativeTestnets();
+    loadRecoveryTab();
 }
