@@ -56,8 +56,14 @@ function addTask() {
 // Mark Task as Done
 function markDone(button) {
     let item = button.closest(".task-item");
+    let taskName = item.querySelector("span").textContent.trim();
+    let category = item.closest("section").id;
+
+    // Update UI
     item.classList.add("completed");
-    item.innerHTML = `<span>${item.textContent.replace("✅ DONE", "").trim()}</span> <span class="completed">✅🗿 Completed</span>`;
+    item.innerHTML = `<span>${taskName}</span> <span class="completed">✅🗿 Completed</span>`;
+
+    // Save to localStorage
     saveTasks();
 }
 
@@ -134,8 +140,7 @@ function saveTasks() {
 // Load Tasks from Local Storage
 function loadTasks() {
     let savedTasks = localStorage.getItem("savedTasks");
-    
-    // Check if data exists, else use defaultTasks
+
     if (!savedTasks) {
         savedTasks = defaultTasks;
     } else {
@@ -147,6 +152,30 @@ function loadTasks() {
             savedTasks = defaultTasks;
         }
     }
+
+    Object.keys(savedTasks).forEach(category => {
+        let container = document.getElementById(category);
+        if (!container) return;
+
+        savedTasks[category].forEach(task => {
+            let taskElement = document.createElement("div");
+            taskElement.classList.add("task-item");
+
+            // Check if task is completed
+            if (typeof task === "object" && task.completed) {
+                taskElement.classList.add("completed");
+                taskElement.innerHTML = `<span>${task.name}</span> <span class="completed">✅🗿 Completed</span>`;
+            } else {
+                taskElement.innerHTML = `
+                    <span>${task}</span>
+                    <button class="done-btn" onclick="markDone(this)">✅ DONE</button>
+                `;
+            }
+
+            container.appendChild(taskElement);
+        });
+    });
+}
 
     Object.keys(savedTasks).forEach(category => {
         let container = document.getElementById(category);
