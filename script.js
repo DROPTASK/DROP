@@ -1,7 +1,15 @@
+const nativeTestnets = [
+    "Bless", "Dawn", "Grass", "Graident", "One Football",
+    "Teneo", "Nexus", "Nodepay", "Blockmesh", "Flow3",
+    "Mygate", "Treasury", "Layeredge", "Common", "Beamable",
+    "Giza", "Exhabits", "Sogni", "Solflare NFT", "Deshare [Cess]",
+    "Wonix", "Arch", "Dvin", "Blockscout", "Malda", "Somnia",
+    "Social Incentive", "Billions", "Pod [Dreamers]"
+];
+
 document.addEventListener("DOMContentLoaded", function () {
-    loadTestnets();
-    loadEarnings();
-    loadRecovery();
+    loadNativeTestnets();
+    loadCustomTestnets();
 });
 
 function showTab(tabName) {
@@ -9,13 +17,22 @@ function showTab(tabName) {
     document.getElementById(tabName).style.display = "block";
 }
 
-// Load testnets
-function loadTestnets() {
+// Load Native Testnets
+function loadNativeTestnets() {
+    let container = document.getElementById("nativeTestnets");
+    container.innerHTML = "";
+    nativeTestnets.forEach(name => {
+        container.innerHTML += createTestnetElement(name);
+    });
+}
+
+// Load Custom Testnets
+function loadCustomTestnets() {
     let customTestnets = JSON.parse(localStorage.getItem("customTestnets")) || [];
-    let customContainer = document.getElementById("customTestnets");
-    customContainer.innerHTML = "";
-    customTestnets.forEach((testnet) => {
-        customContainer.innerHTML += createTestnetElement(testnet);
+    let container = document.getElementById("customTestnets");
+    container.innerHTML = "";
+    customTestnets.forEach(name => {
+        container.innerHTML += createTestnetElement(name);
     });
 }
 
@@ -23,30 +40,12 @@ function createTestnetElement(name) {
     return `
         <div class="testnet" id="testnet-${name}">
             <span>${name}</span>
-            <button onclick="markDone('${name}')">✅</button>
-            <button onclick="removeTestnet('${name}')">❌</button>
+            <div>
+                <button onclick="markDone('${name}')">✅</button>
+                <button onclick="removeTestnet('${name}')">❌</button>
+            </div>
         </div>
     `;
-}
-
-function openTestnetForm() {
-    document.getElementById("testnetForm").style.display = "block";
-}
-
-function closeTestnetForm() {
-    document.getElementById("testnetForm").style.display = "none";
-}
-
-function addCustomTestnet() {
-    let name = document.getElementById("testnetName").value;
-    if (!name) return;
-    
-    let customTestnets = JSON.parse(localStorage.getItem("customTestnets")) || [];
-    customTestnets.push(name);
-    localStorage.setItem("customTestnets", JSON.stringify(customTestnets));
-    
-    closeTestnetForm();
-    loadTestnets();
 }
 
 function markDone(name) {
@@ -54,16 +53,13 @@ function markDone(name) {
 }
 
 function removeTestnet(name) {
-    let recovery = JSON.parse(localStorage.getItem("recovery")) || [];
-    recovery.push(name);
-    localStorage.setItem("recovery", JSON.stringify(recovery));
-
-    loadRecovery();
-    loadTestnets();
+    document.getElementById(`testnet-${name}`).remove();
 }
 
-// Load Earnings
-function loadEarnings() {
-    document.getElementById("totalInvestment").innerText = "₹" + (localStorage.getItem("investment") || 0);
-    document.getElementById("totalEarnings").innerText = "₹" + (localStorage.getItem("earnings") || 0);
+function openTestnetForm() {
+    document.getElementById("testnetForm").style.display = "block";
+}
+
+function openAddTransaction() {
+    window.location.href = "add.html";
 }
