@@ -1,5 +1,5 @@
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Courier New', monospace;
     background: #f9f9f9;
     color: #333;
     text-align: center;
@@ -10,10 +10,10 @@ body {
 header {
     background: white;
     padding: 15px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 footer {
@@ -21,22 +21,29 @@ footer {
     bottom: 0;
     width: 100%;
     background: white;
-    padding: 10px 0;
+    padding: 10px;
     box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.styled-heading {
-    background: linear-gradient(to right, #ff8c00, #ff2d55);
-    color: white;
-    padding: 8px;
-    border-radius: 5px;
+.box-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
 }
 
 .earnings-box {
     background: white;
     padding: 20px;
-    margin: 10px auto;
-    width: 80%;
+    width: 40%;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.testnet {
+    padding: 15px;
+    margin: 10px auto;
+    width: 80%;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
