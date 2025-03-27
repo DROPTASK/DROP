@@ -1,5 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let projects = [...]; // Add your projects here
+    let projects = [
+        "Bless", "Dawn", "Grass", "Graident", "One Football",
+        "Teneo", "Nexus", "Nodepay", "Blockmesh", "Flow3",
+        "Mygate", "Treasury", "Layeredge", "Common", "Beamable",
+        "Giza", "Exhabits", "Sogni", "Solflare NFT", "Deshare [Cess]",
+        "Wonix", "Arch", "Dvin", "Blockscout", "Malda", "Somnia",
+        "Social Incentive", "Billions", "Pod [Dreamers]"
+    ]; // Add your projects here
     let completedProjects = JSON.parse(localStorage.getItem("removed")) || [];
     let earnings = JSON.parse(localStorage.getItem("earnings")) || [];
 
