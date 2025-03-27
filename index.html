@@ -7,68 +7,56 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
     <header>
         <h1>Crypto Project Tracker</h1>
     </header>
 
+    <button class="add-testnet-btn" onclick="openTestnetForm()">➕ Add Testnet</button>
+
     <main>
-        <!-- Home Tab -->
-        <section id="home" class="tab">
-            <h2>Testnet Projects</h2>
-            <div class="testnet-container">
-                <h3>Native Testnets</h3>
-                <div id="nativeTestnets"></div>
+        <div class="category">
+            <h2>DAILY CHECK-IN</h2>
+            <div id="dailyCheckin" class="testnet-list"></div>
+        </div>
 
-                <h3>Custom Testnets</h3>
-                <div id="customTestnets"></div>
+        <div class="category">
+            <h2>TESTNET</h2>
+            <div id="testnet" class="testnet-list"></div>
+        </div>
 
-                <button onclick="openTestnetForm()">➕ Add Custom Testnet</button>
-            </div>
+        <div class="category">
+            <h2>SIMPLE TASK</h2>
+            <div id="simpleTask" class="testnet-list"></div>
+        </div>
 
-            <!-- Add Custom Testnet Form -->
-            <div id="testnetForm" class="modal">
-                <div class="modal-content">
-                    <h3>Add Custom Testnet</h3>
-                    <input type="text" id="testnetName" placeholder="Enter Testnet Name">
-                    <button onclick="addCustomTestnet()">Add</button>
-                    <button onclick="closeTestnetForm()">Cancel</button>
-                </div>
-            </div>
-        </section>
+        <div class="category">
+            <h2>CHECK CONNECTION</h2>
+            <div id="checkConnection" class="testnet-list"></div>
+        </div>
 
-        <!-- Earnings Tab -->
-        <section id="earnings" class="tab" style="display:none;">
-            <h2>Earnings & Investments</h2>
-            <div class="earnings-box">
-                <h3>Investment</h3>
-                <p class="amount" id="totalInvestment">₹0</p>
-            </div>
-            <div class="earnings-box">
-                <h3>Earnings</h3>
-                <p class="amount" id="totalEarnings">₹0</p>
-            </div>
-            <button onclick="openAddTransaction('earn.html')">➕ Add Earning</button>
-            <button onclick="openAddTransaction('inv.html')">➕ Add Investment</button>
-            <div id="earningsLog"></div>
-        </section>
-
-        <!-- Recovery Tab -->
-        <section id="recovery" class="tab" style="display:none;">
-            <h2>Recovery</h2>
-            <div id="recoveryList"></div>
-        </section>
+        <div class="category">
+            <h2>OTHERS</h2>
+            <div id="others" class="testnet-list"></div>
+        </div>
     </main>
 
-    <!-- Fixed Bottom Navigation -->
-    <footer>
-        <nav>
-            <button onclick="showTab('home')">🏠 Home</button>
-            <button onclick="showTab('analytics')">📊 Analytics</button>
-            <button onclick="showTab('earnings')">💰 Earnings</button>
-            <button onclick="showTab('recovery')">📥 Recovery</button>
-            <button onclick="openAddTransaction('inv.html')">📈 Investment</button>
-        </nav>
-    </footer>
+    <!-- Add Testnet Form -->
+    <div id="testnetForm" class="modal">
+        <div class="modal-content">
+            <h3>Add Testnet</h3>
+            <input type="text" id="testnetName" placeholder="Enter Testnet Name">
+            <select id="testnetCategory">
+                <option value="dailyCheckin">Daily Check-In</option>
+                <option value="testnet">Testnet</option>
+                <option value="simpleTask">Simple Task</option>
+                <option value="checkConnection">Check Connection</option>
+                <option value="others">Others</option>
+            </select>
+            <button onclick="addTestnet()">Add</button>
+            <button onclick="closeTestnetForm()">Close</button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
