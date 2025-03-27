@@ -22,7 +22,7 @@ body {
 /* Section Headers */
 section h2 {
     background: linear-gradient(to right, #ff4e50, #fc913a);
-    color: black;
+    color: red;
     padding: 10px;
     border-radius: 5px;
     text-align: center;
