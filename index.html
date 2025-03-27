@@ -7,71 +7,58 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <!-- Header -->
     <header>
         <h1>Crypto Project Tracker</h1>
-        <p id="taskCounter">0 / 0 Completed</p>
+        <nav>
+            <button onclick="showTab('home')">🏠 Home</button>
+            <button onclick="showTab('analytics')">📊 Analytics</button>
+            <button onclick="showTab('earnings')">💰 Earnings</button>
+            <button onclick="showTab('recovery')">📥 Recovery</button>
+        </nav>
     </header>
 
-    <!-- Navigation Tabs -->
-    <nav>
-        <button class="tab-btn" onclick="openTab('home')">🏠</button>
-        <button class="tab-btn" onclick="openTab('analytics')">📊</button>
-        <button class="tab-btn" onclick="openTab('earnings')">💰</button>
-        <button class="tab-btn" onclick="openTab('removed')">📥</button>
-    </nav>
+    <main>
+        <!-- Home Tab -->
+        <section id="home" class="tab">
+            <h2>Testnet Projects</h2>
+            <div class="testnet-container">
+                <h3>Native Testnets</h3>
+                <div id="nativeTestnets"></div>
 
-    <!-- Home Tab -->
-    <section id="home" class="tab-content">
-        <h2>Active Projects</h2>
-        <button class="add-btn" onclick="openCustomTestnetForm()">➕ Add Custom Testnet</button>
-        <h3>Native Testnets</h3>
-        <div id="projectList"></div>
-        <h3>Custom Testnets</h3>
-        <div id="customTestnetList"></div>
-    </section>
+                <h3>Custom Testnets</h3>
+                <div id="customTestnets"></div>
 
-    <!-- Analytics Tab -->
-    <section id="analytics" class="tab-content">
-        <h2>Analytics</h2>
-        <div id="newsSection"></div>
-    </section>
-
-    <!-- Earnings Tab -->
-    <section id="earnings" class="tab-content">
-        <h2>Earnings & Investments</h2>
-        <div class="summary-container">
-            <div class="summary-box">
-                <p>Investment</p>
-                <h3 id="investmentTotal">$0</h3>
+                <button onclick="addCustomTestnet()">➕ Add Custom Testnet</button>
             </div>
-            <div class="summary-box">
-                <p>Earnings</p>
-                <h3 id="earningsTotal">$0</h3>
+        </section>
+
+        <!-- Analytics Tab -->
+        <section id="analytics" class="tab" style="display:none;">
+            <h2>Analytics</h2>
+            <canvas id="analyticsChart"></canvas>
+        </section>
+
+        <!-- Earnings Tab -->
+        <section id="earnings" class="tab" style="display:none;">
+            <h2>Earnings & Investments</h2>
+            <div class="earnings-box">
+                <h3>Investment</h3>
+                <p class="amount" id="totalInvestment">₹0</p>
             </div>
-        </div>
-        <div id="logs"></div>
-        <button class="add-btn" onclick="openForm()">💲</button>
-    </section>
+            <div class="earnings-box">
+                <h3>Earnings</h3>
+                <p class="amount" id="totalEarnings">₹0</p>
+            </div>
+            <button onclick="addEarning()">➕ Add Transaction</button>
+            <div id="earningsLog"></div>
+        </section>
 
-    <!-- Removed Projects Tab -->
-    <section id="removed" class="tab-content">
-        <h2>Removed Projects</h2>
-        <div id="removedProjects"></div>
-    </section>
-
-    <!-- Forms -->
-    <div id="popupForm" class="popup">
-        <div class="form-content">
-            <h2>Add Entry ❎</h2>
-            <label>Type:</label> <select id="entryType"><option value="investment">Investment</option><option value="earning">Earning</option></select>
-            <label>Project:</label> <select id="projectSelect"></select>
-            <label>Description:</label> <textarea id="entryDescription" maxlength="300"></textarea>
-            <label>Amount:</label> <input type="number" id="entryAmount">
-            <button onclick="saveEntry()">Save</button>
-        </div>
-    </div>
+        <!-- Recovery Tab -->
+        <section id="recovery" class="tab" style="display:none;">
+            <h2>Recovery</h2>
+            <div id="recoveryList"></div>
+        </section>
+    </main>
 
     <script src="script.js"></script>
 </body>
