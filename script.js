@@ -52,3 +52,23 @@ function loadTestnets() {
         container.innerHTML += `<div class="testnet">${name}</div>`;
     });
 }
+
+function showEarningsForm() {
+    document.getElementById("earningsForm").style.display = "block";
+}
+
+function saveTransaction() {
+    let name = document.getElementById("transactionName").value;
+    let amount = document.getElementById("transactionAmount").value;
+    if (!name || !amount) return;
+
+    earningsLog.push({ name, amount });
+    localStorage.setItem("earningsLog", JSON.stringify(earningsLog));
+    loadEarningsLog();
+    closeEarningsForm();
+}
+
+function loadEarningsLog() {
+    let log = document.getElementById("earningsLog");
+    log.innerHTML = earningsLog.map(entry => `<p>${entry.name}: ₹${entry.amount}</p>`).join("");
+}
