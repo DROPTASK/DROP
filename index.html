@@ -25,7 +25,11 @@
     <!-- Home Tab -->
     <section id="home" class="tab-content">
         <h2>Active Projects</h2>
+        <button class="add-btn" onclick="openCustomTestnetForm()">➕ Add Custom Testnet</button>
+        <h3>Native Testnets</h3>
         <div id="projectList"></div>
+        <h3>Custom Testnets</h3>
+        <div id="customTestnetList"></div>
     </section>
 
     <!-- Analytics Tab -->
@@ -38,11 +42,17 @@
     <section id="earnings" class="tab-content">
         <h2>Earnings & Investments</h2>
         <div class="summary-container">
-            <div class="summary-box"><p>Investment</p><h3 id="investmentTotal">$0</h3></div>
-            <div class="summary-box"><p>Earnings</p><h3 id="earningsTotal">$0</h3></div>
+            <div class="summary-box">
+                <p>Investment</p>
+                <h3 id="investmentTotal">$0</h3>
+            </div>
+            <div class="summary-box">
+                <p>Earnings</p>
+                <h3 id="earningsTotal">$0</h3>
+            </div>
         </div>
-        <button class="add-btn" onclick="openForm()">💲</button>
         <div id="logs"></div>
+        <button class="add-btn" onclick="openForm()">💲</button>
     </section>
 
     <!-- Removed Projects Tab -->
@@ -51,7 +61,7 @@
         <div id="removedProjects"></div>
     </section>
 
-    <!-- Form Popup -->
+    <!-- Forms -->
     <div id="popupForm" class="popup">
         <div class="form-content">
             <h2>Add Entry ❎</h2>
