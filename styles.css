@@ -5,8 +5,8 @@ body {
     text-align: center;
 }
 
-/* Testnet Box */
-.testnet {
+/* To-Do List */
+.todo-item {
     background: linear-gradient(45deg, #0099ff, #ffffff);
     padding: 15px;
     margin: 10px auto;
@@ -21,12 +21,12 @@ body {
     width: 80%;
 }
 
-.testnet:hover {
+.todo-item:hover {
     box-shadow: 0px 0px 20px rgba(255, 255, 255, 1);
     transform: scale(1.05);
 }
 
-/* Completed Testnet */
+/* Completed Task */
 .done {
     background: #32cd32 !important;
     box-shadow: 0px 0px 15px rgba(50, 205, 50, 1);
@@ -47,7 +47,7 @@ button:hover {
     opacity: 0.8;
 }
 
-/* "DONE ✅" Button */
+/* DONE Button */
 .done-btn {
     background: #ffcc00;
     color: black;
@@ -57,6 +57,21 @@ button:hover {
 .done-btn.completed {
     background: #32cd32 !important;
     color: white;
+}
+
+/* Form */
+.form-container {
+    background: #333;
+    padding: 20px;
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Bottom Navigation */
