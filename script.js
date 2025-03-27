@@ -1,73 +1,72 @@
-const nativeTestnets = [
-    "Bless", "Dawn", "Grass", "Graident", "One Football",
-    "Teneo", "Nexus", "Nodepay", "Blockmesh", "Flow3",
-    "Mygate", "Treasury", "Layeredge", "Common", "Beamable",
-    "Giza", "Exhabits", "Sogni", "Solflare NFT", "Deshare [Cess]",
-    "Wonix", "Arch", "Dvin", "Blockscout", "Malda", "Somnia",
-    "Social Incentive", "Billions", "Pod [Dreamers]"
-];
-
 document.addEventListener("DOMContentLoaded", function () {
-    loadNativeTestnets();
-    loadCustomTestnets();
+    loadTestnets();
 });
 
-function showTab(tabName) {
-    document.querySelectorAll(".tab").forEach(tab => tab.style.display = "none");
-    document.getElementById(tabName).style.display = "block";
+// Toggle dropdown
+function toggleDropdown(category) {
+    let content = document.getElementById(category);
+    content.style.display = content.style.display === "block" ? "none" : "block";
 }
 
-// Load Native Testnets
-function loadNativeTestnets() {
-    let container = document.getElementById("nativeTestnets");
-    container.innerHTML = "";
-    nativeTestnets.forEach(name => {
-        container.innerHTML += createTestnetElement(name);
-    });
-}
-
-// Load Custom Testnets
-function loadCustomTestnets() {
-    let customTestnets = JSON.parse(localStorage.getItem("customTestnets")) || [];
-    let container = document.getElementById("customTestnets");
-    container.innerHTML = "";
-    customTestnets.forEach(name => {
-        container.innerHTML += createTestnetElement(name);
-    });
-}
-
-function createTestnetElement(name) {
-    return `
-        <div class="testnet-item" id="testnet-${name}">
-            <span>${name}</span>
-            <div class="testnet-buttons">
-                <button class="done-btn" onclick="markDone('${name}')">✅ DONE</button>
-                <button onclick="removeTestnet('${name}')">❌</button>
-            </div>
-        </div>
-    `;
-}
-
-function markDone(name) {
-    document.getElementById(`testnet-${name}`).classList.add("done");
-}
-
-function removeTestnet(name) {
-    let element = document.getElementById(`testnet-${name}`);
-    element.remove();
-    saveToRecovery(name);
-}
-
-function saveToRecovery(name) {
-    let recoveryList = JSON.parse(localStorage.getItem("recoveryList")) || [];
-    recoveryList.push(name);
-    localStorage.setItem("recoveryList", JSON.stringify(recoveryList));
-}
-
-function openTestnetForm() {
+// Open testnet form
+function openTestnetForm(category) {
+    document.getElementById("testnetCategory").value = category;
     document.getElementById("testnetForm").style.display = "block";
 }
 
-function openAddTransaction(page) {
-    window.location.href = page;
+// Close testnet form
+function closeTestnetForm() {
+    document.getElementById("testnetForm").style.display = "none";
+}
+
+// Add testnet
+function addTestnet() {
+    let name = document.getElementById("testnetName").value;
+    let category = document.getElementById("testnetCategory").value;
+    if (name.trim() === "") return alert("Enter a valid name");
+
+    let testnets = JSON.parse(localStorage.getItem("testnets")) || {};
+    if (!testnets[category]) testnets[category] = [];
+    testnets[category].push({ name, done: false });
+
+    localStorage.setItem("testnets", JSON.stringify(testnets));
+    loadTestnets();
+    closeTestnetForm();
+}
+
+// Load testnets
+function loadTestnets() {
+    let testnets = JSON.parse(localStorage.getItem("testnets")) || {};
+    ["dailyCheckin", "testnet", "simpleTask", "checkConnection", "others"].forEach(category => {
+        let container = document.getElementById(category);
+        container.innerHTML = "";
+        if (testnets[category]) {
+            testnets[category].forEach((testnet, index) => {
+                let div = document.createElement("div");
+                div.className = "testnet-item" + (testnet.done ? " done" : "");
+                div.innerHTML = `
+                    <span>${testnet.name}</span>
+                    <button onclick="markDone('${category}', ${index})">✅ DONE</button>
+                    <button onclick="deleteTestnet('${category}', ${index})">❌ DELETE</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+    });
+}
+
+// Mark testnet as done
+function markDone(category, index) {
+    let testnets = JSON.parse(localStorage.getItem("testnets"));
+    testnets[category][index].done = true;
+    localStorage.setItem("testnets", JSON.stringify(testnets));
+    loadTestnets();
+}
+
+// Delete testnet
+function deleteTestnet(category, index) {
+    let testnets = JSON.parse(localStorage.getItem("testnets"));
+    testnets[category].splice(index, 1);
+    localStorage.setItem("testnets", JSON.stringify(testnets));
+    loadTestnets();
 }
