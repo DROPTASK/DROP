@@ -1,5 +1,5 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const projects = [
+document.addEventListener("DOMContentLoaded", function () {
+    let projects = [
         "Bless", "Dawn", "Grass", "Graident", "One Football",
         "Teneo", "Nexus", "Nodepay", "Blockmesh", "Flow3",
         "Mygate", "Treasury", "Layeredge", "Common", "Beamable",
@@ -8,62 +8,82 @@ document.addEventListener("DOMContentLoaded", function() {
         "Social Incentive", "Billions", "Pod [Dreamers]"
     ];
 
-    const projectListDiv = document.querySelector('.project-list');
-    const removedListDiv = document.querySelector('.removed-list');
-    let removedProjects = JSON.parse(localStorage.getItem('removedProjects')) || [];
+    let completedProjects = JSON.parse(localStorage.getItem("removed")) || [];
+    let earnings = JSON.parse(localStorage.getItem("earnings")) || [];
 
-    function updateProgress() {
-        let completed = document.querySelectorAll(".project-item.done").length;
-        document.getElementById("progress").innerText = `${completed} / ${projects.length} Completed`;
+    function renderProjects() {
+        const projectGrid = document.getElementById("projectGrid");
+        projectGrid.innerHTML = "";
+        projects.forEach(name => {
+            if (!completedProjects.includes(name)) {
+                const div = document.createElement("div");
+                div.className = "project-box";
+                div.innerHTML = `
+                    <span>${name}</span>
+                    <button onclick="markDone(this)">✅</button>
+                    <button onclick="openLink('${name}')">🔗</button>
+                    <button onclick="removeProject('${name}')">❌</button>
+                `;
+                projectGrid.appendChild(div);
+            }
+        });
+        document.getElementById("taskCounter").textContent = `${document.querySelectorAll('.project-box.done').length} / ${projects.length} Completed`;
     }
 
-    projects.forEach(name => {
-        const div = document.createElement('div');
-        div.className = "project-item";
-        div.innerHTML = `<span>${name}</span>
-            <button class="details-btn">Details</button>
-            <button class="done-btn">✅</button>
-            <button class="remove-btn">❌</button>`;
+    function markDone(btn) {
+        btn.parentElement.classList.add("done");
+        renderProjects();
+    }
 
-        div.querySelector(".done-btn").onclick = function() {
-            div.classList.toggle("done");
-            div.style.background = div.classList.contains("done") ? "lightgreen" : "white";
-            updateProgress();
-        };
+    function openLink(name) {
+        let link = localStorage.getItem(name + "_link");
+        if (link) window.open(link, "_blank");
+    }
 
-        div.querySelector(".remove-btn").onclick = function() {
-            removedProjects.push(name);
-            localStorage.setItem("removedProjects", JSON.stringify(removedProjects));
-            div.remove();
-            updateProgress();
-        };
+    function removeProject(name) {
+        completedProjects.push(name);
+        localStorage.setItem("removed", JSON.stringify(completedProjects));
+        renderProjects();
+        renderRemoved();
+    }
 
-        projectListDiv.appendChild(div);
-    });
+    function renderRemoved() {
+        const removedList = document.getElementById("removedProjects");
+        removedList.innerHTML = "";
+        completedProjects.forEach(name => {
+            const div = document.createElement("div");
+            div.innerHTML = `${name} <button onclick="restoreProject('${name}')">↩</button>`;
+            removedList.appendChild(div);
+        });
+    }
 
-    removedProjects.forEach(name => {
-        const div = document.createElement('div');
-        div.className = "project-item";
-        div.innerHTML = `<span>${name}</span>
-            <button class="restore-btn">📥 Restore</button>`;
+    function restoreProject(name) {
+        completedProjects = completedProjects.filter(p => p !== name);
+        localStorage.setItem("removed", JSON.stringify(completedProjects));
+        renderProjects();
+        renderRemoved();
+    }
 
-        div.querySelector(".restore-btn").onclick = function() {
-            removedProjects = removedProjects.filter(p => p !== name);
-            localStorage.setItem("removedProjects", JSON.stringify(removedProjects));
-            div.remove();
-        };
+    function openForm() {
+        document.getElementById("popupForm").style.display = "block";
+        const select = document.getElementById("projectSelect");
+        select.innerHTML = projects.map(p => `<option>${p}</option>`).join("");
+    }
 
-        removedListDiv.appendChild(div);
-    });
+    function saveEntry() {
+        const type = document.getElementById("entryType").value;
+        const project = document.getElementById("projectSelect").value;
+        const amount = document.getElementById("entryAmount").value;
+        
+        earnings.push({ type, project, amount });
+        localStorage.setItem("earnings", JSON.stringify(earnings));
+        
+        document.getElementById("popupForm").style.display = "none";
+        renderEarnings();
+    }
 
-    updateProgress();
+    setInterval(() => { localStorage.removeItem("removed"); renderProjects(); }, 86400000);
+
+    renderProjects();
+    renderRemoved();
 });
-
-function openTab(tab) {
-    document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
-    document.getElementById(tab).style.display = "block";
-}
-
-function openForm() {
-    document.getElementById("popupForm").style.display = "block";
-}
