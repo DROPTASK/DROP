@@ -1,93 +1,73 @@
+const nativeTestnets = [
+    "Bless", "Dawn", "Grass", "Graident", "One Football",
+    "Teneo", "Nexus", "Nodepay", "Blockmesh", "Flow3",
+    "Mygate", "Treasury", "Layeredge", "Common", "Beamable",
+    "Giza", "Exhabits", "Sogni", "Solflare NFT", "Deshare [Cess]",
+    "Wonix", "Arch", "Dvin", "Blockscout", "Malda", "Somnia",
+    "Social Incentive", "Billions", "Pod [Dreamers]"
+];
+
 document.addEventListener("DOMContentLoaded", function () {
-    loadTasks();
+    loadNativeTestnets();
+    loadCustomTestnets();
 });
 
-// Tabs Switching
 function showTab(tabName) {
     document.querySelectorAll(".tab").forEach(tab => tab.style.display = "none");
     document.getElementById(tabName).style.display = "block";
 }
 
-// Load Tasks
-function loadTasks() {
-    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    let container = document.getElementById("todoList");
+// Load Native Testnets
+function loadNativeTestnets() {
+    let container = document.getElementById("nativeTestnets");
     container.innerHTML = "";
-    tasks.forEach(task => {
-        container.innerHTML += createTaskElement(task.name, task.date);
+    nativeTestnets.forEach(name => {
+        container.innerHTML += createTestnetElement(name);
     });
 }
 
-// Create Task Element
-function createTaskElement(name, date) {
+// Load Custom Testnets
+function loadCustomTestnets() {
+    let customTestnets = JSON.parse(localStorage.getItem("customTestnets")) || [];
+    let container = document.getElementById("customTestnets");
+    container.innerHTML = "";
+    customTestnets.forEach(name => {
+        container.innerHTML += createTestnetElement(name);
+    });
+}
+
+function createTestnetElement(name) {
     return `
-        <div class="todo-item" id="task-${name}">
-            <span>${name} (${date || 'N/A'})</span>
-            <button class="done-btn" onclick="markDone('${name}', this)">DONE ✅</button>
-            <button onclick="removeTask('${name}')">❌</button>
+        <div class="testnet-item" id="testnet-${name}">
+            <span>${name}</span>
+            <div class="testnet-buttons">
+                <button class="done-btn" onclick="markDone('${name}')">✅ DONE</button>
+                <button onclick="removeTestnet('${name}')">❌</button>
+            </div>
         </div>
     `;
 }
 
-// Mark as Done
-function markDone(name, button) {
-    let element = document.getElementById(`task-${name}`);
-    element.classList.add("done");
-    button.classList.add("completed");
-    button.innerText = "✔ COMPLETED";
+function markDone(name) {
+    document.getElementById(`testnet-${name}`).classList.add("done");
 }
 
-// Remove Task (Move to Recovery)
-function removeTask(name) {
-    document.getElementById(`task-${name}`).remove();
-    let removedTasks = JSON.parse(localStorage.getItem("removedTasks")) || [];
-    removedTasks.push(name);
-    localStorage.setItem("removedTasks", JSON.stringify(removedTasks));
-    loadRecoveryTab();
+function removeTestnet(name) {
+    let element = document.getElementById(`testnet-${name}`);
+    element.remove();
+    saveToRecovery(name);
 }
 
-// Open Task Form
-function openTaskForm() {
-    document.getElementById("taskForm").style.display = "block";
+function saveToRecovery(name) {
+    let recoveryList = JSON.parse(localStorage.getItem("recoveryList")) || [];
+    recoveryList.push(name);
+    localStorage.setItem("recoveryList", JSON.stringify(recoveryList));
 }
 
-// Close Task Form
-function closeTaskForm() {
-    document.getElementById("taskForm").style.display = "none";
+function openTestnetForm() {
+    document.getElementById("testnetForm").style.display = "block";
 }
 
-// Add New Task
-function addTask() {
-    let taskName = document.getElementById("taskName").value.trim();
-    if (taskName === "") return alert("Please enter a task name.");
-
-    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    tasks.push({ name: taskName, date: new Date().toLocaleDateString() });
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-
-    loadTasks();
-    closeTaskForm();
-}
-
-// Load Recovery Tab
-function loadRecoveryTab() {
-    let removedTasks = JSON.parse(localStorage.getItem("removedTasks")) || [];
-    let container = document.getElementById("recoveryList");
-    container.innerHTML = "";
-    removedTasks.forEach(name => {
-        container.innerHTML += `<div class="todo-item">
-            <span>${name}</span>
-            <button onclick="restoreTask('${name}')">🔄 Restore</button>
-        </div>`;
-    });
-}
-
-// Restore Task
-function restoreTask(name) {
-    let removedTasks = JSON.parse(localStorage.getItem("removedTasks")) || [];
-    removedTasks = removedTasks.filter(item => item !== name);
-    localStorage.setItem("removedTasks", JSON.stringify(removedTasks));
-
-    loadTasks();
-    loadRecoveryTab();
+function openAddTransaction(page) {
+    window.location.href = page;
 }
