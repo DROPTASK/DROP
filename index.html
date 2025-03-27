@@ -3,27 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Project Tracker</title>
+    <title>To-Do List | Testnet Tracker</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Crypto Project Tracker</h1>
+        <h1>🚀 Testnet To-Do List</h1>
     </header>
 
     <main>
-        <!-- Home Tab -->
+        <!-- To-Do List (Home) -->
         <section id="home" class="tab">
-            <h2>Testnet Projects</h2>
-            <div class="testnet-container">
-                <h3>Native Testnets</h3>
-                <div id="nativeTestnets"></div>
-
-                <h3>Custom Testnets</h3>
-                <div id="customTestnets"></div>
-
-                <button onclick="openTestnetForm()">➕ Add Custom Testnet</button>
-            </div>
+            <h2>Your Tasks</h2>
+            <div id="todoList"></div>
+            <button onclick="openTaskForm()">➕ Add Task</button>
         </section>
 
         <!-- Earnings Tab -->
@@ -41,12 +34,6 @@
             <div id="earningsLog"></div>
         </section>
 
-        <!-- Analytics Tab -->
-        <section id="analytics" class="tab" style="display:none;">
-            <h2>Analytics</h2>
-            <p id="analyticsData"></p>
-        </section>
-
         <!-- Recovery Tab -->
         <section id="recovery" class="tab" style="display:none;">
             <h2>Recovery</h2>
@@ -54,11 +41,18 @@
         </section>
     </main>
 
+    <!-- Form to Add Task -->
+    <div id="taskForm" class="form-container" style="display:none;">
+        <h3>Add New Task</h3>
+        <input type="text" id="taskName" placeholder="Task Name">
+        <button onclick="addTask()">Save</button>
+        <button onclick="closeTaskForm()">Cancel</button>
+    </div>
+
     <!-- Bottom Navigation -->
     <footer>
         <nav>
             <button onclick="showTab('home')">🏠 Home</button>
-            <button onclick="showTab('analytics')">📊 Analytics</button>
             <button onclick="showTab('earnings')">💰 Earnings</button>
             <button onclick="showTab('recovery')">📥 Recovery</button>
         </nav>
