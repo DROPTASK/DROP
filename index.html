@@ -28,14 +28,18 @@
                 <h3>Custom Testnets</h3>
                 <div id="customTestnets"></div>
 
-                <button onclick="addCustomTestnet()">➕ Add Custom Testnet</button>
+                <button onclick="openTestnetForm()">➕ Add Custom Testnet</button>
             </div>
-        </section>
 
-        <!-- Analytics Tab -->
-        <section id="analytics" class="tab" style="display:none;">
-            <h2>Analytics</h2>
-            <canvas id="analyticsChart"></canvas>
+            <!-- Add Testnet Form -->
+            <div id="testnetForm" class="modal">
+                <div class="modal-content">
+                    <h3>Add Custom Testnet</h3>
+                    <input type="text" id="testnetName" placeholder="Enter Testnet Name">
+                    <button onclick="addCustomTestnet()">Add</button>
+                    <button onclick="closeTestnetForm()">Cancel</button>
+                </div>
+            </div>
         </section>
 
         <!-- Earnings Tab -->
@@ -49,7 +53,7 @@
                 <h3>Earnings</h3>
                 <p class="amount" id="totalEarnings">₹0</p>
             </div>
-            <button onclick="addEarning()">➕ Add Transaction</button>
+            <button onclick="openTransactionForm()">➕ Add Transaction</button>
             <div id="earningsLog"></div>
         </section>
 
