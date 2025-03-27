@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fantasy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fantasy&family=Comic+Sans+MS&family=Copperplate&display=swap');
 
 body {
     font-family: 'Fantasy', sans-serif;
@@ -90,4 +90,8 @@ nav {
     background: white;
     padding: 20px;
     border-radius: 10px;
+}
+
+button {
+    margin-left: 5px;
 }
