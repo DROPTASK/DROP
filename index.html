@@ -49,10 +49,17 @@
     <div id="popupForm" class="popup">
         <div class="form-content">
             <h2>Add Entry</h2>
-            <label>Type:</label> <select id="entryType"><option value="investment">Investment</option><option value="earning">Earning</option></select>
-            <label>Project:</label> <select id="projectSelect"></select>
-            <label>Description:</label> <textarea id="entryDescription"></textarea>
-            <label>Amount:</label> <input type="number" id="entryAmount">
+            <label>Type:</label> 
+            <select id="entryType">
+                <option value="investment">Investment</option>
+                <option value="earning">Earning</option>
+            </select>
+            <label>Project:</label> 
+            <select id="projectSelect"></select>
+            <label>Description:</label> 
+            <textarea id="entryDescription"></textarea>
+            <label>Amount:</label> 
+            <input type="number" id="entryAmount">
             <button onclick="saveEntry()">Save</button>
             <button onclick="closeForm()">Cancel</button>
         </div>
