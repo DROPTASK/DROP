@@ -8,13 +8,15 @@
 </head>
 <body>
     <header>
-        <h1>Crypto Project Tracker</h1>
+        <img src="logo.png" alt="Logo" class="logo">
+        <h1 class="styled-heading">🚀 Crypto Project Tracker</h1>
+        <button class="profile-btn">👤 Profile</button>
     </header>
 
     <main>
         <!-- Home Tab -->
         <section id="home" class="tab">
-            <h2>Testnet Projects</h2>
+            <h2 class="styled-heading">📜 Testnet Projects</h2>
             <div class="testnet-container">
                 <h3>Native Testnets</h3>
                 <div id="nativeTestnets"></div>
@@ -28,7 +30,7 @@
             <!-- Add Testnet Form -->
             <div id="testnetForm" class="modal">
                 <div class="modal-content">
-                    <h3>Add Custom Testnet</h3>
+                    <h3>🛠 Add Custom Testnet</h3>
                     <input type="text" id="testnetName" placeholder="Enter Testnet Name">
                     <button onclick="addCustomTestnet()">Add</button>
                     <button onclick="closeTestnetForm()">Cancel</button>
@@ -38,14 +40,14 @@
 
         <!-- Earnings Tab -->
         <section id="earnings" class="tab" style="display:none;">
-            <h2>Earnings & Investments</h2>
+            <h2 class="styled-heading">💰 Earnings & Investments</h2>
             <div class="earnings-box">
                 <h3>Investment</h3>
-                <p class="amount" id="totalInvestment">$0</p>
+                <p class="amount" id="totalInvestment">₹0</p>
             </div>
             <div class="earnings-box">
                 <h3>Earnings</h3>
-                <p class="amount" id="totalEarnings">$0</p>
+                <p class="amount" id="totalEarnings">₹0</p>
             </div>
             <button onclick="openAddTransaction()">➕ Add Transaction</button>
             <div id="earningsLog"></div>
@@ -53,7 +55,7 @@
 
         <!-- Recovery Tab -->
         <section id="recovery" class="tab" style="display:none;">
-            <h2>Recovery</h2>
+            <h2 class="styled-heading">🛠 Recovery</h2>
             <div id="recoveryList"></div>
         </section>
     </main>
@@ -62,9 +64,8 @@
     <footer>
         <nav>
             <button onclick="showTab('home')">🏠</button>
-            <button onclick="showTab('analytics')">📊</button>
             <button onclick="showTab('earnings')">💰</button>
-            <button onclick="showTab('recovery')">📥</button>
+            <button onclick="showTab('recovery')">♻</button>
         </nav>
     </footer>
 
