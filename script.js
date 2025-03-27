@@ -7,14 +7,9 @@ const nativeTestnets = [
     "Social Incentive", "Billions", "Pod [Dreamers]"
 ];
 
-let removedTestnets = JSON.parse(localStorage.getItem("removedTestnets")) || [];
-let customTestnets = JSON.parse(localStorage.getItem("customTestnets")) || [];
-let earningsLog = JSON.parse(localStorage.getItem("earningsLog")) || [];
-
 document.addEventListener("DOMContentLoaded", function () {
-    loadTestnets();
-    loadRecoveryList();
-    loadEarningsLog();
+    loadNativeTestnets();
+    loadCustomTestnets();
 });
 
 function showTab(tabName) {
@@ -22,53 +17,49 @@ function showTab(tabName) {
     document.getElementById(tabName).style.display = "block";
 }
 
-function openProfile() {
-    window.open("https://t.me/milkyway_king", "_blank");
-}
-
-// Custom Testnet Functions
-function showTestnetForm() {
-    document.getElementById("testnetForm").style.display = "block";
-}
-
-function closeTestnetForm() {
-    document.getElementById("testnetForm").style.display = "none";
-}
-
-function addCustomTestnet() {
-    let name = document.getElementById("testnetName").value;
-    if (!name) return;
-    customTestnets.push(name);
-    localStorage.setItem("customTestnets", JSON.stringify(customTestnets));
-    loadTestnets();
-    closeTestnetForm();
-}
-
-function loadTestnets() {
-    let container = document.getElementById("testnetContainer");
+// Load Native Testnets
+function loadNativeTestnets() {
+    let container = document.getElementById("nativeTestnets");
     container.innerHTML = "";
-
-    [...nativeTestnets, ...customTestnets].forEach(name => {
-        container.innerHTML += `<div class="testnet">${name}</div>`;
+    nativeTestnets.forEach(name => {
+        container.innerHTML += createTestnetElement(name);
     });
 }
 
-function showEarningsForm() {
-    document.getElementById("earningsForm").style.display = "block";
+// Load Custom Testnets
+function loadCustomTestnets() {
+    let customTestnets = JSON.parse(localStorage.getItem("customTestnets")) || [];
+    let container = document.getElementById("customTestnets");
+    container.innerHTML = "";
+    customTestnets.forEach(name => {
+        container.innerHTML += createTestnetElement(name);
+    });
 }
 
-function saveTransaction() {
-    let name = document.getElementById("transactionName").value;
-    let amount = document.getElementById("transactionAmount").value;
-    if (!name || !amount) return;
-
-    earningsLog.push({ name, amount });
-    localStorage.setItem("earningsLog", JSON.stringify(earningsLog));
-    loadEarningsLog();
-    closeEarningsForm();
+function createTestnetElement(name) {
+    return `
+        <div class="testnet" id="testnet-${name}">
+            <span>${name}</span>
+            <div>
+                <button onclick="markDone('${name}')">✅</button>
+                <button onclick="removeTestnet('${name}')">❌</button>
+            </div>
+        </div>
+    `;
 }
 
-function loadEarningsLog() {
-    let log = document.getElementById("earningsLog");
-    log.innerHTML = earningsLog.map(entry => `<p>${entry.name}: ₹${entry.amount}</p>`).join("");
+function markDone(name) {
+    document.getElementById(`testnet-${name}`).classList.add("done");
+}
+
+function removeTestnet(name) {
+    document.getElementById(`testnet-${name}`).remove();
+}
+
+function openTestnetForm() {
+    document.getElementById("testnetForm").style.display = "block";
+}
+
+function openAddTransaction() {
+    window.location.href = "add.html";
 }
