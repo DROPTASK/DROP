@@ -16,16 +16,13 @@ header {
     align-items: center;
 }
 
-.logo {
-    height: 40px;
-    margin-left: 10px;
-}
-
-.profile-btn {
-    border: none;
-    background: none;
-    font-size: 20px;
-    cursor: pointer;
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    padding: 10px 0;
+    box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .styled-heading {
@@ -35,21 +32,6 @@ header {
     border-radius: 5px;
 }
 
-.testnet {
-    font-family: 'Courier New', monospace;
-    margin: 10px auto;
-    padding: 15px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
-    max-width: 300px;
-}
-
-.testnet.done {
-    background: #c8ffc8;
-}
-
 .earnings-box {
     background: white;
     padding: 20px;
@@ -57,10 +39,4 @@ header {
     width: 80%;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.amount {
-    font-size: 40px;
-    font-weight: bold;
-    color: #00cc66;
 }
