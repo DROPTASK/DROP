@@ -1,38 +1,63 @@
 @import url('https://fonts.googleapis.com/css2?family=Fantasy&family=Comic+Sans+MS&family=Copperplate&display=swap');
 
 body {
-    font-family: 'Fantasy', 'Comic Sans MS', 'Copperplate', sans-serif;
-    background: linear-gradient(180deg, #6a11cb, #2575fc);
-    color: white;
+    font-family: 'Fantasy', sans-serif;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: #fff;
     text-align: center;
     margin: 0;
     padding: 0;
 }
 
 header {
-    background: #333;
+    background: #000;
+    color: #fff;
     padding: 15px;
+    font-size: 20px;
+    font-weight: bold;
 }
 
-.project-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 10px;
-    padding: 10px;
-}
-
-.project-item {
-    background: white;
-    padding: 10px;
-    border-radius: 10px;
-    color: black;
+nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    padding: 10px;
+    background: #111;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.tab-btn {
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.tab-content {
+    display: none;
+    padding: 20px;
+}
+
+#projectGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.project-box {
+    background: #222;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }
 
-.project-item button {
-    margin-left: 10px;
+.project-box.done {
+    background: lightgreen;
 }
 
 .summary-container {
@@ -42,20 +67,20 @@ header {
 }
 
 .summary-box {
-    background: white;
+    background: #333;
     padding: 20px;
     border-radius: 10px;
-    color: black;
+    width: 40%;
+    text-align: center;
 }
 
 .add-btn {
     background: purple;
     color: white;
-    border: none;
     padding: 15px;
     border-radius: 50%;
     position: fixed;
-    bottom: 80px;
+    bottom: 70px;
     right: 20px;
     font-size: 24px;
     cursor: pointer;
@@ -70,23 +95,4 @@ header {
     background: white;
     padding: 20px;
     border-radius: 10px;
-    color: black;
-}
-
-nav {
-    display: flex;
-    justify-content: space-around;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: #333;
-    padding: 10px;
-}
-
-.tab-btn {
-    font-size: 24px;
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
 }
