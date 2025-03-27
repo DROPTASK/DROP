@@ -9,7 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
     ];
 
     let completedProjects = JSON.parse(localStorage.getItem("removed")) || [];
-    
+    let earnings = JSON.parse(localStorage.getItem("earnings")) || [];
+
     function renderProjects() {
         const projectList = document.getElementById("projectList");
         projectList.innerHTML = "";
@@ -43,13 +44,31 @@ document.addEventListener("DOMContentLoaded", function () {
         completedProjects.push(name);
         localStorage.setItem("removed", JSON.stringify(completedProjects));
         renderProjects();
+        renderRemoved();
+    }
+
+    function renderRemoved() {
+        const removedList = document.getElementById("removedProjects");
+        removedList.innerHTML = completedProjects.map(name => `<div>${name} <button onclick="restoreProject('${name}')">↩</button></div>`).join("");
+    }
+
+    function restoreProject(name) {
+        completedProjects = completedProjects.filter(p => p !== name);
+        localStorage.setItem("removed", JSON.stringify(completedProjects));
+        renderProjects();
+        renderRemoved();
     }
 
     function openForm() {
         document.getElementById("popupForm").style.display = "block";
     }
 
+    function saveEntry() {
+        // Handle saving earnings
+    }
+
     setInterval(() => { localStorage.removeItem("removed"); renderProjects(); }, 86400000);
 
     renderProjects();
+    renderRemoved();
 });
