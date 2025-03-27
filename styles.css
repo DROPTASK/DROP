@@ -41,12 +41,6 @@ nav {
     padding: 20px;
 }
 
-#nativeGrid, #customGrid, #removedProjects {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .project-box {
     background: #222;
     padding: 15px;
