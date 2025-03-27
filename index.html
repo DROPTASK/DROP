@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Project Tracker</title>
+    <title>Crypto Portfolio Manager</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <img src="logo.png" alt="Logo" class="logo">
-        <h1 class="styled-heading">🚀 Crypto Project Tracker</h1>
+        <h1 class="styled-heading">🚀 Testnet Tracker</h1>
         <button class="profile-btn" onclick="openProfile()">👤 Profile</button>
     </header>
 
@@ -18,19 +18,21 @@
         <section id="home" class="tab">
             <h2 class="styled-heading">📜 Testnet Projects</h2>
             <div id="testnetContainer"></div>
-            <button onclick="showTestnetForm()">➕ Add Custom Testnet</button>
+            <button onclick="showTestnetForm()">➕ Add Testnet</button>
         </section>
 
         <!-- Earnings Tab -->
         <section id="earnings" class="tab" style="display:none;">
             <h2 class="styled-heading">💰 Earnings & Investments</h2>
-            <div class="earnings-box">
-                <h3>Investment</h3>
-                <p class="amount" id="totalInvestment">₹0</p>
-            </div>
-            <div class="earnings-box">
-                <h3>Earnings</h3>
-                <p class="amount" id="totalEarnings">₹0</p>
+            <div class="box-container">
+                <div class="earnings-box">
+                    <h3>Investment</h3>
+                    <p class="amount" id="totalInvestment">₹0</p>
+                </div>
+                <div class="earnings-box">
+                    <h3>Earnings</h3>
+                    <p class="amount" id="totalEarnings">₹0</p>
+                </div>
             </div>
             <button onclick="showEarningsForm()">➕ Add Transaction</button>
             <div id="earningsLog"></div>
