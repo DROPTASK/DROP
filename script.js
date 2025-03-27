@@ -7,9 +7,12 @@ const nativeTestnets = [
     "Social Incentive", "Billions", "Pod [Dreamers]"
 ];
 
+let removedTestnets = [];
+
 document.addEventListener("DOMContentLoaded", function () {
     loadNativeTestnets();
     loadCustomTestnets();
+    loadRecoveryList();
 });
 
 function showTab(tabName) {
@@ -17,49 +20,45 @@ function showTab(tabName) {
     document.getElementById(tabName).style.display = "block";
 }
 
-// Load Native Testnets
-function loadNativeTestnets() {
-    let container = document.getElementById("nativeTestnets");
-    container.innerHTML = "";
-    nativeTestnets.forEach(name => {
-        container.innerHTML += createTestnetElement(name);
-    });
-}
-
-// Load Custom Testnets
-function loadCustomTestnets() {
-    let customTestnets = JSON.parse(localStorage.getItem("customTestnets")) || [];
-    let container = document.getElementById("customTestnets");
-    container.innerHTML = "";
-    customTestnets.forEach(name => {
-        container.innerHTML += createTestnetElement(name);
-    });
-}
-
-function createTestnetElement(name) {
-    return `
-        <div class="testnet" id="testnet-${name}">
-            <span>${name}</span>
-            <div>
-                <button onclick="markDone('${name}')">✅</button>
-                <button onclick="removeTestnet('${name}')">❌</button>
-            </div>
-        </div>
-    `;
-}
-
-function markDone(name) {
-    document.getElementById(`testnet-${name}`).classList.add("done");
-}
-
-function removeTestnet(name) {
-    document.getElementById(`testnet-${name}`).remove();
-}
-
+// Custom Testnet Functions
 function openTestnetForm() {
     document.getElementById("testnetForm").style.display = "block";
 }
 
-function openAddTransaction() {
-    window.location.href = "add.html";
+function closeTestnetForm() {
+    document.getElementById("testnetForm").style.display = "none";
+}
+
+function addCustomTestnet() {
+    let name = document.getElementById("testnetName").value;
+    if (!name) return;
+    let customTestnets = JSON.parse(localStorage.getItem("customTestnets")) || [];
+    customTestnets.push(name);
+    localStorage.setItem("customTestnets", JSON.stringify(customTestnets));
+    loadCustomTestnets();
+    closeTestnetForm();
+}
+
+// Recovery Tab
+function removeTestnet(name) {
+    removedTestnets.push(name);
+    loadRecoveryList();
+}
+
+function loadRecoveryList() {
+    let container = document.getElementById("recoveryList");
+    container.innerHTML = "";
+    removedTestnets.forEach(name => {
+        container.innerHTML += `
+            <div class="testnet">
+                <span>${name}</span>
+                <button onclick="recoverTestnet('${name}')">🔄 Recover</button>
+            </div>
+        `;
+    });
+}
+
+function recoverTestnet(name) {
+    removedTestnets = removedTestnets.filter(t => t !== name);
+    loadRecoveryList();
 }
