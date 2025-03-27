@@ -1,6 +1,6 @@
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(120deg, #222, #444);
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #000, #222);
     color: white;
     text-align: center;
     margin: 0;
@@ -8,34 +8,56 @@ body {
 }
 
 header {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.8);
     padding: 15px;
 }
 
 nav button {
-    margin: 5px;
     padding: 10px;
     border: none;
-    background: #666;
+    background: #444;
     color: white;
     cursor: pointer;
     border-radius: 5px;
+    font-size: 16px;
 }
 
 nav button:hover {
-    background: #888;
-}
-
-main {
-    padding: 20px;
-}
-
-.tab {
-    display: none;
+    background: #666;
 }
 
 .testnet-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     margin: 20px auto;
+}
+
+.testnet {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background: #333;
+    border: 1px solid white;
+    border-radius: 8px;
+}
+
+.testnet.done {
+    background: green;
+}
+
+.earnings-box {
+    background: #333;
+    padding: 20px;
+    margin: 10px auto;
+    width: 80%;
+    border-radius: 10px;
+}
+
+.amount {
+    font-size: 40px;
+    font-weight: bold;
+    color: #00ff99;
 }
 
 button {
@@ -50,18 +72,4 @@ button {
 
 button:hover {
     background: #777;
-}
-
-.earnings-box {
-    background: #333;
-    padding: 20px;
-    margin: 10px auto;
-    width: 80%;
-    border-radius: 10px;
-}
-
-.amount {
-    font-size: 32px;
-    font-weight: bold;
-    color: #00ff99;
 }
