@@ -3,77 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Portfolio Manager</title>
+    <title>Crypto Project Tracker</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <img src="logo.png" alt="Logo" class="logo">
-        <h1 class="styled-heading">🚀 Testnet Tracker</h1>
-        <button class="profile-btn" onclick="openProfile()">👤 Profile</button>
+        <h1>Crypto Project Tracker</h1>
     </header>
 
     <main>
         <!-- Home Tab -->
         <section id="home" class="tab">
-            <h2 class="styled-heading">📜 Testnet Projects</h2>
-            <div id="testnetContainer"></div>
-            <button onclick="showTestnetForm()">➕ Add Testnet</button>
+            <h2>Testnet Projects</h2>
+            <div class="testnet-container">
+                <h3>Native Testnets</h3>
+                <div id="nativeTestnets"></div>
+
+                <h3>Custom Testnets</h3>
+                <div id="customTestnets"></div>
+
+                <button onclick="openTestnetForm()">➕ Add Custom Testnet</button>
+            </div>
+
+            <!-- Add Testnet Form -->
+            <div id="testnetForm" class="modal">
+                <div class="modal-content">
+                    <h3>Add Custom Testnet</h3>
+                    <input type="text" id="testnetName" placeholder="Enter Testnet Name">
+                    <button onclick="addCustomTestnet()">Add</button>
+                    <button onclick="closeTestnetForm()">Cancel</button>
+                </div>
+            </div>
         </section>
 
         <!-- Earnings Tab -->
         <section id="earnings" class="tab" style="display:none;">
-            <h2 class="styled-heading">💰 Earnings & Investments</h2>
-            <div class="box-container">
-                <div class="earnings-box">
-                    <h3>Investment</h3>
-                    <p class="amount" id="totalInvestment">₹0</p>
-                </div>
-                <div class="earnings-box">
-                    <h3>Earnings</h3>
-                    <p class="amount" id="totalEarnings">₹0</p>
-                </div>
+            <h2>Earnings & Investments</h2>
+            <div class="earnings-box">
+                <h3>Investment</h3>
+                <p class="amount" id="totalInvestment">₹0</p>
             </div>
-            <button onclick="showEarningsForm()">➕ Add Transaction</button>
+            <div class="earnings-box">
+                <h3>Earnings</h3>
+                <p class="amount" id="totalEarnings">₹0</p>
+            </div>
+            <button onclick="openAddTransaction()">➕ Add Transaction</button>
             <div id="earningsLog"></div>
         </section>
 
         <!-- Recovery Tab -->
         <section id="recovery" class="tab" style="display:none;">
-            <h2 class="styled-heading">♻ Recovery</h2>
+            <h2>Recovery</h2>
             <div id="recoveryList"></div>
         </section>
     </main>
 
-    <!-- Bottom Navigation -->
+    <!-- Bottom Navigation Bar -->
     <footer>
         <nav>
             <button onclick="showTab('home')">🏠 Home</button>
+            <button onclick="showTab('analytics')">📊 Analytics</button>
             <button onclick="showTab('earnings')">💰 Earnings</button>
-            <button onclick="showTab('recovery')">♻ Recovery</button>
+            <button onclick="showTab('recovery')">📥 Recovery</button>
         </nav>
     </footer>
-
-    <!-- Add Testnet Form -->
-    <div id="testnetForm" class="modal">
-        <div class="modal-content">
-            <h3>🛠 Add Custom Testnet</h3>
-            <input type="text" id="testnetName" placeholder="Enter Testnet Name">
-            <button onclick="addCustomTestnet()">Save</button>
-            <button onclick="closeTestnetForm()">Cancel</button>
-        </div>
-    </div>
-
-    <!-- Add Earnings Form -->
-    <div id="earningsForm" class="modal">
-        <div class="modal-content">
-            <h3>📜 Add Transaction</h3>
-            <input type="text" id="transactionName" placeholder="Project Name">
-            <input type="number" id="transactionAmount" placeholder="Amount (₹)">
-            <button onclick="saveTransaction()">Save</button>
-            <button onclick="closeEarningsForm()">Cancel</button>
-        </div>
-    </div>
 
     <script src="script.js"></script>
 </body>
