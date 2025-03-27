@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let nativeProjects = [
+    const projects = [
         "Bless", "Dawn", "Grass", "Graident", "One Football",
         "Teneo", "Nexus", "Nodepay", "Blockmesh", "Flow3",
         "Mygate", "Treasury", "Layeredge", "Common", "Beamable",
@@ -7,29 +7,26 @@ document.addEventListener("DOMContentLoaded", function () {
         "Wonix", "Arch", "Dvin", "Blockscout", "Malda", "Somnia",
         "Social Incentive", "Billions", "Pod [Dreamers]"
     ];
-    let customProjects = JSON.parse(localStorage.getItem("customProjects")) || [];
-    let removedProjects = JSON.parse(localStorage.getItem("removed")) || [];
 
+    let completedProjects = JSON.parse(localStorage.getItem("removed")) || [];
+    
     function renderProjects() {
-        let renderList = (projects, containerId) => {
-            let container = document.getElementById(containerId);
-            container.innerHTML = "";
-            projects.forEach(name => {
-                if (!removedProjects.includes(name)) {
-                    let div = document.createElement("div");
-                    div.className = "project-box";
-                    div.innerHTML = `
-                        <span>${name}</span>
-                        <button onclick="markDone(this)">✅</button>
-                        <button onclick="removeProject('${name}')">❌</button>
-                    `;
-                    container.appendChild(div);
-                }
-            });
-        };
-
-        renderList(nativeProjects, "nativeGrid");
-        renderList(customProjects, "customGrid");
+        const projectList = document.getElementById("projectList");
+        projectList.innerHTML = "";
+        projects.forEach(name => {
+            if (!completedProjects.includes(name)) {
+                const div = document.createElement("div");
+                div.className = "project-box";
+                div.innerHTML = `
+                    <span>${name}</span>
+                    <button onclick="markDone(this)">✅</button>
+                    <button onclick="openLink('${name}')">🔗</button>
+                    <button onclick="removeProject('${name}')">❌</button>
+                `;
+                projectList.appendChild(div);
+            }
+        });
+        document.getElementById("taskCounter").textContent = `${document.querySelectorAll('.project-box.done').length} / ${projects.length} Completed`;
     }
 
     function markDone(btn) {
@@ -37,34 +34,22 @@ document.addEventListener("DOMContentLoaded", function () {
         renderProjects();
     }
 
+    function openLink(name) {
+        let link = localStorage.getItem(name + "_link");
+        if (link) window.open(link, "_blank");
+    }
+
     function removeProject(name) {
-        removedProjects.push(name);
-        localStorage.setItem("removed", JSON.stringify(removedProjects));
+        completedProjects.push(name);
+        localStorage.setItem("removed", JSON.stringify(completedProjects));
         renderProjects();
-        renderRemoved();
     }
 
-    function renderRemoved() {
-        const removedList = document.getElementById("removedProjects");
-        removedList.innerHTML = "";
-        removedProjects.forEach(name => {
-            const div = document.createElement("div");
-            div.innerHTML = `${name} <button onclick="restoreProject('${name}')">↩</button>`;
-            removedList.appendChild(div);
-        });
+    function openForm() {
+        document.getElementById("popupForm").style.display = "block";
     }
-
-    function restoreProject(name) {
-        removedProjects = removedProjects.filter(p => p !== name);
-        localStorage.setItem("removed", JSON.stringify(removedProjects));
-        renderProjects();
-        renderRemoved();
-    }
-
-    document.getElementById("logs").innerHTML = "<p>No logs yet</p>";
 
     setInterval(() => { localStorage.removeItem("removed"); renderProjects(); }, 86400000);
 
     renderProjects();
-    renderRemoved();
 });
