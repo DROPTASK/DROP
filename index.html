@@ -9,12 +9,6 @@
 <body>
     <header>
         <h1>Crypto Project Tracker</h1>
-        <nav>
-            <button onclick="showTab('home')">🏠 Home</button>
-            <button onclick="showTab('analytics')">📊 Analytics</button>
-            <button onclick="showTab('earnings')">💰 Earnings</button>
-            <button onclick="showTab('recovery')">📥 Recovery</button>
-        </nav>
     </header>
 
     <main>
@@ -47,13 +41,13 @@
             <h2>Earnings & Investments</h2>
             <div class="earnings-box">
                 <h3>Investment</h3>
-                <p class="amount" id="totalInvestment">₹0</p>
+                <p class="amount" id="totalInvestment">$0</p>
             </div>
             <div class="earnings-box">
                 <h3>Earnings</h3>
-                <p class="amount" id="totalEarnings">₹0</p>
+                <p class="amount" id="totalEarnings">$0</p>
             </div>
-            <button onclick="openTransactionForm()">➕ Add Transaction</button>
+            <button onclick="openAddTransaction()">➕ Add Transaction</button>
             <div id="earningsLog"></div>
         </section>
 
@@ -63,6 +57,16 @@
             <div id="recoveryList"></div>
         </section>
     </main>
+
+    <!-- Bottom Navigation Bar -->
+    <footer>
+        <nav>
+            <button onclick="showTab('home')">🏠</button>
+            <button onclick="showTab('analytics')">📊</button>
+            <button onclick="showTab('earnings')">💰</button>
+            <button onclick="showTab('recovery')">📥</button>
+        </nav>
+    </footer>
 
     <script src="script.js"></script>
 </body>
