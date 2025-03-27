@@ -8,13 +8,11 @@
 </head>
 <body>
 
-    <!-- Header -->
     <header>
         <h1>Crypto Project Tracker</h1>
         <p id="taskCounter">0 / 0 Completed</p>
     </header>
 
-    <!-- Navigation Tabs -->
     <nav>
         <button class="tab-btn" onclick="openTab('home')">🏠 Home</button>
         <button class="tab-btn" onclick="openTab('analytics')">📊 Analytics</button>
@@ -22,19 +20,16 @@
         <button class="tab-btn" onclick="openTab('removed')">📥 Removed</button>
     </nav>
 
-    <!-- Home Tab -->
     <section id="home" class="tab-content">
         <h2>Active Projects</h2>
         <div id="projectGrid"></div>
     </section>
 
-    <!-- Removed Projects Tab -->
     <section id="removed" class="tab-content">
         <h2>Removed Projects</h2>
         <div id="removedProjects"></div>
     </section>
 
-    <!-- Earnings Tab -->
     <section id="earnings" class="tab-content">
         <h2>Earnings & Investments</h2>
         <div class="summary-container">
@@ -45,7 +40,12 @@
         <div id="logs"></div>
     </section>
 
-    <!-- Form Popup -->
+    <section id="analytics" class="tab-content">
+        <h2>Latest Updates</h2>
+        <div id="newsContainer"></div>
+        <button class="add-btn" onclick="addNews()">➕ Add News</button>
+    </section>
+
     <div id="popupForm" class="popup">
         <div class="form-content">
             <h2>Add Entry</h2>
