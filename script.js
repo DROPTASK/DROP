@@ -1,74 +1,102 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const projects = [
-        "Bless", "Dawn", "Grass", "Graident", "One Football",
-        "Teneo", "Nexus", "Nodepay", "Blockmesh", "Flow3",
-        "Mygate", "Treasury", "Layeredge", "Common", "Beamable",
-        "Giza", "Exhabits", "Sogni", "Solflare NFT", "Deshare [Cess]",
-        "Wonix", "Arch", "Dvin", "Blockscout", "Malda", "Somnia",
-        "Social Incentive", "Billions", "Pod [Dreamers]"
-    ];
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Lobster&family=Orbitron:wght@600&display=swap');
 
-    let completedProjects = JSON.parse(localStorage.getItem("removed")) || [];
-    let earnings = JSON.parse(localStorage.getItem("earnings")) || [];
+body {
+    font-family: 'Playfair Display', serif;
+    background: linear-gradient(to right, #3A1C71, #D76D77, #FFAF7B);
+    color: #fff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
 
-    function renderProjects() {
-        const projectList = document.getElementById("projectList");
-        projectList.innerHTML = "";
-        projects.forEach(name => {
-            if (!completedProjects.includes(name)) {
-                const div = document.createElement("div");
-                div.className = "project-box";
-                div.innerHTML = `
-                    <span>${name}</span>
-                    <button onclick="markDone(this)">✅</button>
-                    <button onclick="openLink('${name}')">🔗</button>
-                    <button onclick="removeProject('${name}')">❌</button>
-                `;
-                projectList.appendChild(div);
-            }
-        });
-        document.getElementById("taskCounter").textContent = `${document.querySelectorAll('.project-box.done').length} / ${projects.length} Completed`;
-    }
+header {
+    background: #000;
+    color: #fff;
+    padding: 15px;
+    font-size: 20px;
+    font-weight: bold;
+}
 
-    function markDone(btn) {
-        btn.parentElement.classList.add("done");
-        renderProjects();
-    }
+nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    background: #111;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
 
-    function openLink(name) {
-        let link = localStorage.getItem(name + "_link");
-        if (link) window.open(link, "_blank");
-    }
+.tab-btn {
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+}
 
-    function removeProject(name) {
-        completedProjects.push(name);
-        localStorage.setItem("removed", JSON.stringify(completedProjects));
-        renderProjects();
-        renderRemoved();
-    }
+.tab-content {
+    display: none;
+    padding: 20px;
+}
 
-    function renderRemoved() {
-        const removedList = document.getElementById("removedProjects");
-        removedList.innerHTML = completedProjects.map(name => `<div>${name} <button onclick="restoreProject('${name}')">↩</button></div>`).join("");
-    }
+.project-box {
+    background: #222;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-    function restoreProject(name) {
-        completedProjects = completedProjects.filter(p => p !== name);
-        localStorage.setItem("removed", JSON.stringify(completedProjects));
-        renderProjects();
-        renderRemoved();
-    }
+.project-box.done {
+    background: lightgreen;
+}
 
-    function openForm() {
-        document.getElementById("popupForm").style.display = "block";
-    }
+.summary-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
 
-    function saveEntry() {
-        // Handle saving earnings
-    }
+.summary-box {
+    background: #333;
+    padding: 20px;
+    border-radius: 10px;
+    width: 45%;
+    text-align: center;
+    font-size: 20px;
+}
 
-    setInterval(() => { localStorage.removeItem("removed"); renderProjects(); }, 86400000);
+.summary-box h3 {
+    font-size: 80px;
+}
 
-    renderProjects();
-    renderRemoved();
-});
+.add-btn {
+    background: purple;
+    color: white;
+    padding: 15px;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+button {
+    margin-left: 5px;
+}
