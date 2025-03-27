@@ -21,11 +21,11 @@ body {
 
 /* Section Headers */
 section h2 {
-h2 {
-    background: linear-gradient(to right, #ff6666, #ff99aa);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: bold;
+    background: linear-gradient(to right, #000000, #ffffff);
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
 }
 
 /* Task Items */
