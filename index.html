@@ -7,68 +7,53 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
     <header>
         <h1>Crypto Project Tracker</h1>
     </header>
 
     <main>
-        <!-- Home Tab -->
-        <section id="home" class="tab">
-            <h2>Testnet Projects</h2>
-            <div class="testnet-container">
-                <h3>Native Testnets</h3>
-                <div id="nativeTestnets"></div>
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggleDropdown('dailyCheckin')">DAILY CHECK-IN ⬇</button>
+            <div id="dailyCheckin" class="dropdown-content"></div>
+            <button class="add-btn" onclick="openTestnetForm('dailyCheckin')">➕</button>
+        </div>
 
-                <h3>Custom Testnets</h3>
-                <div id="customTestnets"></div>
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggleDropdown('testnet')">TESTNET ⬇</button>
+            <div id="testnet" class="dropdown-content"></div>
+            <button class="add-btn" onclick="openTestnetForm('testnet')">➕</button>
+        </div>
 
-                <button onclick="openTestnetForm()">➕ Add Custom Testnet</button>
-            </div>
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggleDropdown('simpleTask')">SIMPLE TASK ⬇</button>
+            <div id="simpleTask" class="dropdown-content"></div>
+            <button class="add-btn" onclick="openTestnetForm('simpleTask')">➕</button>
+        </div>
 
-            <!-- Add Custom Testnet Form -->
-            <div id="testnetForm" class="modal">
-                <div class="modal-content">
-                    <h3>Add Custom Testnet</h3>
-                    <input type="text" id="testnetName" placeholder="Enter Testnet Name">
-                    <button onclick="addCustomTestnet()">Add</button>
-                    <button onclick="closeTestnetForm()">Cancel</button>
-                </div>
-            </div>
-        </section>
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggleDropdown('checkConnection')">CHECK CONNECTION ⬇</button>
+            <div id="checkConnection" class="dropdown-content"></div>
+            <button class="add-btn" onclick="openTestnetForm('checkConnection')">➕</button>
+        </div>
 
-        <!-- Earnings Tab -->
-        <section id="earnings" class="tab" style="display:none;">
-            <h2>Earnings & Investments</h2>
-            <div class="earnings-box">
-                <h3>Investment</h3>
-                <p class="amount" id="totalInvestment">₹0</p>
-            </div>
-            <div class="earnings-box">
-                <h3>Earnings</h3>
-                <p class="amount" id="totalEarnings">₹0</p>
-            </div>
-            <button onclick="openAddTransaction('earn.html')">➕ Add Earning</button>
-            <button onclick="openAddTransaction('inv.html')">➕ Add Investment</button>
-            <div id="earningsLog"></div>
-        </section>
-
-        <!-- Recovery Tab -->
-        <section id="recovery" class="tab" style="display:none;">
-            <h2>Recovery</h2>
-            <div id="recoveryList"></div>
-        </section>
+        <div class="dropdown">
+            <button class="dropbtn" onclick="toggleDropdown('others')">OTHERS ⬇</button>
+            <div id="others" class="dropdown-content"></div>
+            <button class="add-btn" onclick="openTestnetForm('others')">➕</button>
+        </div>
     </main>
 
-    <!-- Fixed Bottom Navigation -->
-    <footer>
-        <nav>
-            <button onclick="showTab('home')">🏠 Home</button>
-            <button onclick="showTab('analytics')">📊 Analytics</button>
-            <button onclick="showTab('earnings')">💰 Earnings</button>
-            <button onclick="showTab('recovery')">📥 Recovery</button>
-            <button onclick="openAddTransaction('inv.html')">📈 Investment</button>
-        </nav>
-    </footer>
+    <!-- Add Testnet Form (Modal) -->
+    <div id="testnetForm" class="modal">
+        <div class="modal-content">
+            <h3>Add Testnet</h3>
+            <input type="text" id="testnetName" placeholder="Enter Testnet Name">
+            <input type="hidden" id="testnetCategory">
+            <button onclick="addTestnet()">Add</button>
+            <button onclick="closeTestnetForm()">Close</button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
