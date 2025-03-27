@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Exo:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fantasy&display=swap');
 
 body {
-    font-family: 'Exo', sans-serif;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    font-family: 'Fantasy', sans-serif;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
     color: #fff;
     text-align: center;
     margin: 0;
@@ -28,7 +28,7 @@ nav {
 }
 
 .tab-btn {
-    font-size: 18px;
+    font-size: 24px;
     background: none;
     border: none;
     color: white;
@@ -45,8 +45,7 @@ nav {
     background: #222;
     padding: 15px;
     border-radius: 10px;
-    width: 90%;
-    margin: 10px 0;
+    margin: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -56,22 +55,18 @@ nav {
     background: lightgreen;
 }
 
-.earnings-container {
+.summary-container {
     display: flex;
     justify-content: space-around;
     padding: 20px;
 }
 
-.earnings-box {
+.summary-box {
     background: #333;
     padding: 20px;
     border-radius: 10px;
     width: 40%;
     text-align: center;
-}
-
-.earnings-box h3 {
-    font-size: 48px;
 }
 
 .add-btn {
@@ -84,4 +79,15 @@ nav {
     right: 20px;
     font-size: 24px;
     cursor: pointer;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
 }
