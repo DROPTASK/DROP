@@ -9,102 +9,61 @@ function showTab(tabName) {
     document.getElementById(tabName).style.display = "block";
 }
 
-// Load testnets from LocalStorage
+// Load testnets
 function loadTestnets() {
-    let nativeTestnets = ["Bless", "Dawn", "Grass"];
     let customTestnets = JSON.parse(localStorage.getItem("customTestnets")) || [];
-
-    let nativeContainer = document.getElementById("nativeTestnets");
-    nativeContainer.innerHTML = "";
-    nativeTestnets.forEach((testnet) => nativeContainer.innerHTML += createTestnetElement(testnet));
-
     let customContainer = document.getElementById("customTestnets");
     customContainer.innerHTML = "";
-    customTestnets.forEach((testnet) => customContainer.innerHTML += createTestnetElement(testnet, true));
+    customTestnets.forEach((testnet) => {
+        customContainer.innerHTML += createTestnetElement(testnet);
+    });
 }
 
-function createTestnetElement(name, isCustom = false) {
+function createTestnetElement(name) {
     return `
-        <div class="testnet">
+        <div class="testnet" id="testnet-${name}">
             <span>${name}</span>
             <button onclick="markDone('${name}')">✅</button>
-            <button onclick="openTestnet('${name}')">🔗</button>
-            <button onclick="removeTestnet('${name}', ${isCustom})">❌</button>
+            <button onclick="removeTestnet('${name}')">❌</button>
         </div>
     `;
 }
 
+function openTestnetForm() {
+    document.getElementById("testnetForm").style.display = "block";
+}
+
+function closeTestnetForm() {
+    document.getElementById("testnetForm").style.display = "none";
+}
+
 function addCustomTestnet() {
-    let name = prompt("Enter Custom Testnet Name:");
-    if (name) {
-        let customTestnets = JSON.parse(localStorage.getItem("customTestnets")) || [];
-        customTestnets.push(name);
-        localStorage.setItem("customTestnets", JSON.stringify(customTestnets));
-        loadTestnets();
-    }
-}
-
-function markDone(name) {
-    alert(name + " marked as done!");
-}
-
-function openTestnet(name) {
-    window.open("https://testnet.example.com/" + name, "_blank");
-}
-
-function removeTestnet(name, isCustom) {
-    let customTestnets = JSON.parse(localStorage.getItem("customTestnets")) || [];
-    if (isCustom) {
-        customTestnets = customTestnets.filter(testnet => testnet !== name);
-        localStorage.setItem("customTestnets", JSON.stringify(customTestnets));
-    }
-    let recovery = JSON.parse(localStorage.getItem("recovery")) || [];
-    recovery.push(name);
-    localStorage.setItem("recovery", JSON.stringify(recovery));
-    loadTestnets();
-    loadRecovery();
-}
-
-// Load earnings
-function loadEarnings() {
-    document.getElementById("totalInvestment").innerText = "₹" + (localStorage.getItem("investment") || 0);
-    document.getElementById("totalEarnings").innerText = "₹" + (localStorage.getItem("earnings") || 0);
-}
-
-// Add earnings
-function addEarning() {
-    let amount = prompt("Enter amount:");
-    if (amount) {
-        let earnings = parseInt(localStorage.getItem("earnings") || 0) + parseInt(amount);
-        localStorage.setItem("earnings", earnings);
-        loadEarnings();
-    }
-}
-
-// Load recovery list
-function loadRecovery() {
-    let recovery = JSON.parse(localStorage.getItem("recovery")) || [];
-    let recoveryContainer = document.getElementById("recoveryList");
-    recoveryContainer.innerHTML = "";
-    recovery.forEach(testnet => {
-        recoveryContainer.innerHTML += `
-            <div>
-                <span>${testnet}</span>
-                <button onclick="restoreTestnet('${testnet}')">♻️ Restore</button>
-            </div>
-        `;
-    });
-}
-
-function restoreTestnet(name) {
-    let recovery = JSON.parse(localStorage.getItem("recovery")) || [];
-    recovery = recovery.filter(testnet => testnet !== name);
-    localStorage.setItem("recovery", JSON.stringify(recovery));
-
+    let name = document.getElementById("testnetName").value;
+    if (!name) return;
+    
     let customTestnets = JSON.parse(localStorage.getItem("customTestnets")) || [];
     customTestnets.push(name);
     localStorage.setItem("customTestnets", JSON.stringify(customTestnets));
-
+    
+    closeTestnetForm();
     loadTestnets();
+}
+
+function markDone(name) {
+    document.getElementById(`testnet-${name}`).classList.add("done");
+}
+
+function removeTestnet(name) {
+    let recovery = JSON.parse(localStorage.getItem("recovery")) || [];
+    recovery.push(name);
+    localStorage.setItem("recovery", JSON.stringify(recovery));
+
     loadRecovery();
+    loadTestnets();
+}
+
+// Load Earnings
+function loadEarnings() {
+    document.getElementById("totalInvestment").innerText = "₹" + (localStorage.getItem("investment") || 0);
+    document.getElementById("totalEarnings").innerText = "₹" + (localStorage.getItem("earnings") || 0);
 }
