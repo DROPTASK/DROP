@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Earnings</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <h1 class="title">💰 Manage Earnings</h1>
+
+    <div class="summary">
+        <h2>Total Earnings: ₹<span id="totalEarnings">0</span></h2>
+        <h2>Total Investments: ₹<span id="totalInvestments">0</span></h2>
+    <div class="form-container">
+        <h2>Add Earnings</h2>
+        <input type="text" id="earningProject" placeholder="Project Name">
+        <input type="number" id="earningAmount" placeholder="Amount (₹)">
+        <input type="date" id="earningDate">
+        <button onclick="addEarning()">Add</button>
+    </div>
+
+    <!-- Add Investment -->
+    <div class="form-container">
+        <h2>Add Investment</h2>
+        <input type="text" id="investmentProject" placeholder="Project Name">
+        <input type="number" id="investmentAmount" placeholder="Amount (₹)">
+        <input type="date" id="investmentDate">
+        <button onclick="addInvestment()">Add</button>
+    </div>
+
+    <!-- Earnings & Investment History -->
+    <div class="history">
+        <h2>Earnings History</h2>
+        <ul id="earningsList"></ul>
+        
+        <h2>Investment History</h2>
+        <ul id="investmentList"></ul>
+    </div>
+
+    <!-- Remove Entry -->
+    <div class="form-container">
+        <h2>Remove Entry</h2>
+        <select id="removeEntrySelect"></select>
+        <button onclick="removeEntry()">Remove</button>
+    </div>
+
+    <p class="credit">Made by @milkyway_king</p>
+
+    <script src="manage.js"></script>
+</body>
+</html>
