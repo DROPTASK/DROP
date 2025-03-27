@@ -33,17 +33,6 @@ function closeTaskForm() {
     document.getElementById("taskForm").style.display = "none";
 }
 
-// Open Remove Task Form
-function openRemoveTaskForm() {
-    document.getElementById("removeTaskForm").style.display = "block";
-    populateRemoveDropdown();
-}
-
-// Close Remove Task Form
-function closeRemoveTaskForm() {
-    document.getElementById("removeTaskForm").style.display = "none";
-}
-
 // Add Task to List
 function addTask() {
     let name = document.getElementById("taskName").value.trim();
@@ -72,33 +61,41 @@ function markDone(button) {
     saveTasks();
 }
 
-// Remove Task from Dropdown Selection
-function removeTask() {
-    let taskToRemove = document.getElementById("taskToRemove").value;
-    let taskItems = document.querySelectorAll(".task-item");
+// Remove Task (Dropdown Method)
+function openRemoveForm() {
+    document.getElementById("removeTaskForm").style.display = "block";
+    populateRemoveDropdown();
+}
 
-    taskItems.forEach(task => {
-        if (task.textContent.includes(taskToRemove)) {
+function closeRemoveTaskForm() {
+    document.getElementById("removeTaskForm").style.display = "none";
+}
+
+// Populate Remove Dropdown
+function populateRemoveDropdown() {
+    let dropdown = document.getElementById("taskToRemove");
+    dropdown.innerHTML = ""; // Clear previous options
+
+    document.querySelectorAll(".task-item").forEach(task => {
+        let option = document.createElement("option");
+        option.textContent = task.textContent.replace("✅🗿 Completed", "").trim();
+        dropdown.appendChild(option);
+    });
+}
+
+// Remove Selected Task
+function removeTask() {
+    let selectedTask = document.getElementById("taskToRemove").value;
+    if (!selectedTask) return;
+
+    document.querySelectorAll(".task-item").forEach(task => {
+        if (task.textContent.includes(selectedTask)) {
             task.remove();
         }
     });
 
     saveTasks();
     closeRemoveTaskForm();
-}
-
-// Populate Remove Task Dropdown
-function populateRemoveDropdown() {
-    let dropdown = document.getElementById("taskToRemove");
-    dropdown.innerHTML = "";
-
-    let taskItems = document.querySelectorAll(".task-item");
-    taskItems.forEach(task => {
-        let option = document.createElement("option");
-        option.value = task.textContent.replace("✅ DONE", "").trim();
-        option.textContent = task.textContent.replace("✅ DONE", "").trim();
-        dropdown.appendChild(option);
-    });
 }
 
 // Remove All Tasks
@@ -110,7 +107,7 @@ function removeAllTasks() {
 // Reset Tasks at Midnight (Loads Default Tasks)
 function resetTasks() {
     document.querySelectorAll(".task-item").forEach(task => task.remove());
-    saveTasks();
+    localStorage.removeItem("savedTasks");
 
     // Load default tasks again
     loadTasks();
@@ -136,7 +133,20 @@ function saveTasks() {
 
 // Load Tasks from Local Storage
 function loadTasks() {
-    let savedTasks = JSON.parse(localStorage.getItem("savedTasks")) || defaultTasks;
+    let savedTasks = localStorage.getItem("savedTasks");
+    
+    // Check if data exists, else use defaultTasks
+    if (!savedTasks) {
+        savedTasks = defaultTasks;
+    } else {
+        try {
+            savedTasks = JSON.parse(savedTasks);
+        } catch (e) {
+            console.error("Error reading localStorage. Resetting...", e);
+            localStorage.removeItem("savedTasks");
+            savedTasks = defaultTasks;
+        }
+    }
 
     Object.keys(savedTasks).forEach(category => {
         let container = document.getElementById(category);
@@ -152,4 +162,5 @@ function loadTasks() {
             container.appendChild(taskElement);
         });
     });
+
 }
