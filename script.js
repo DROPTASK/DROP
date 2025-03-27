@@ -1,7 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
     let projects = [
-        "Bless", "Dawn", "Grass", "Gradient", "One Football",
-        "Teneo", "Nexus", "Nodepay", "Blockmesh", "Flow3"
+        "Bless", "Dawn", "Grass", "Graident", "One Football",
+        "Teneo", "Nexus", "Nodepay", "Blockmesh", "Flow3",
+        "Mygate", "Treasury", "Layeredge", "Common", "Beamable",
+        "Giza", "Exhabits", "Sogni", "Solflare NFT", "Deshare [Cess]",
+        "Wonix", "Arch", "Dvin", "Blockscout", "Malda", "Somnia",
+        "Social Incentive", "Billions", "Pod [Dreamers]"
     ];
 
     let completedProjects = JSON.parse(localStorage.getItem("removed")) || [];
@@ -58,24 +62,6 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("removed", JSON.stringify(completedProjects));
         renderProjects();
         renderRemoved();
-    }
-
-    function openForm() {
-        document.getElementById("popupForm").style.display = "block";
-        const select = document.getElementById("projectSelect");
-        select.innerHTML = projects.map(p => `<option>${p}</option>`).join("");
-    }
-
-    function saveEntry() {
-        const type = document.getElementById("entryType").value;
-        const project = document.getElementById("projectSelect").value;
-        const amount = document.getElementById("entryAmount").value;
-        
-        earnings.push({ type, project, amount });
-        localStorage.setItem("earnings", JSON.stringify(earnings));
-        
-        document.getElementById("popupForm").style.display = "none";
-        renderEarnings();
     }
 
     setInterval(() => { localStorage.removeItem("removed"); renderProjects(); }, 86400000);
