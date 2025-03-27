@@ -10,32 +10,15 @@
     <header>
         <img src="logo.png" alt="Logo" class="logo">
         <h1 class="styled-heading">🚀 Crypto Project Tracker</h1>
-        <button class="profile-btn">👤 Profile</button>
+        <button class="profile-btn" onclick="openProfile()">👤 Profile</button>
     </header>
 
     <main>
         <!-- Home Tab -->
         <section id="home" class="tab">
             <h2 class="styled-heading">📜 Testnet Projects</h2>
-            <div class="testnet-container">
-                <h3>Native Testnets</h3>
-                <div id="nativeTestnets"></div>
-
-                <h3>Custom Testnets</h3>
-                <div id="customTestnets"></div>
-
-                <button onclick="openTestnetForm()">➕ Add Custom Testnet</button>
-            </div>
-
-            <!-- Add Testnet Form -->
-            <div id="testnetForm" class="modal">
-                <div class="modal-content">
-                    <h3>🛠 Add Custom Testnet</h3>
-                    <input type="text" id="testnetName" placeholder="Enter Testnet Name">
-                    <button onclick="addCustomTestnet()">Add</button>
-                    <button onclick="closeTestnetForm()">Cancel</button>
-                </div>
-            </div>
+            <div id="testnetContainer"></div>
+            <button onclick="showTestnetForm()">➕ Add Custom Testnet</button>
         </section>
 
         <!-- Earnings Tab -->
@@ -49,25 +32,46 @@
                 <h3>Earnings</h3>
                 <p class="amount" id="totalEarnings">₹0</p>
             </div>
-            <button onclick="openAddTransaction()">➕ Add Transaction</button>
+            <button onclick="showEarningsForm()">➕ Add Transaction</button>
             <div id="earningsLog"></div>
         </section>
 
         <!-- Recovery Tab -->
         <section id="recovery" class="tab" style="display:none;">
-            <h2 class="styled-heading">🛠 Recovery</h2>
+            <h2 class="styled-heading">♻ Recovery</h2>
             <div id="recoveryList"></div>
         </section>
     </main>
 
-    <!-- Bottom Navigation Bar -->
+    <!-- Bottom Navigation -->
     <footer>
         <nav>
-            <button onclick="showTab('home')">🏠</button>
-            <button onclick="showTab('earnings')">💰</button>
-            <button onclick="showTab('recovery')">♻</button>
+            <button onclick="showTab('home')">🏠 Home</button>
+            <button onclick="showTab('earnings')">💰 Earnings</button>
+            <button onclick="showTab('recovery')">♻ Recovery</button>
         </nav>
     </footer>
+
+    <!-- Add Testnet Form -->
+    <div id="testnetForm" class="modal">
+        <div class="modal-content">
+            <h3>🛠 Add Custom Testnet</h3>
+            <input type="text" id="testnetName" placeholder="Enter Testnet Name">
+            <button onclick="addCustomTestnet()">Save</button>
+            <button onclick="closeTestnetForm()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Add Earnings Form -->
+    <div id="earningsForm" class="modal">
+        <div class="modal-content">
+            <h3>📜 Add Transaction</h3>
+            <input type="text" id="transactionName" placeholder="Project Name">
+            <input type="number" id="transactionAmount" placeholder="Amount (₹)">
+            <button onclick="saveTransaction()">Save</button>
+            <button onclick="closeEarningsForm()">Cancel</button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
