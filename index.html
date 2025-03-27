@@ -16,10 +16,10 @@
 
     <!-- Navigation Tabs -->
     <nav>
-        <button class="tab-btn" onclick="openTab('home')">🏠</button>
-        <button class="tab-btn" onclick="openTab('analytics')">📊</button>
-        <button class="tab-btn" onclick="openTab('earnings')">💰</button>
-        <button class="tab-btn" onclick="openTab('removed')">📥</button>
+        <button class="tab-btn" onclick="openTab('home')">🏠 Home</button>
+        <button class="tab-btn" onclick="openTab('analytics')">📊 Analytics</button>
+        <button class="tab-btn" onclick="openTab('earnings')">💰 Earnings</button>
+        <button class="tab-btn" onclick="openTab('removed')">📥 Removed</button>
     </nav>
 
     <!-- Home Tab -->
@@ -38,10 +38,10 @@
     <section id="earnings" class="tab-content">
         <h2>Earnings & Investments</h2>
         <div class="summary-container">
-            <div class="summary-box"><p>Total Invested</p><h3 id="investmentTotal">$0</h3></div>
-            <div class="summary-box"><p>Total Earned</p><h3 id="earningsTotal">$0</h3></div>
+            <div class="summary-box"><p>Total Invested</p><h3 id="investmentTotal">₹0</h3></div>
+            <div class="summary-box"><p>Total Earned</p><h3 id="earningsTotal">₹0</h3></div>
         </div>
-        <button class="add-btn" onclick="openForm()">💲</button>
+        <button class="add-btn" onclick="openForm()">➕ Add</button>
         <div id="logs"></div>
     </section>
 
@@ -54,6 +54,7 @@
             <label>Description:</label> <textarea id="entryDescription"></textarea>
             <label>Amount:</label> <input type="number" id="entryAmount">
             <button onclick="saveEntry()">Save</button>
+            <button onclick="closeForm()">Cancel</button>
         </div>
     </div>
 
