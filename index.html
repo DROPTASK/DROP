@@ -3,60 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Project Tracker</title>
+    <title>To-Do Daily</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <header>
-        <h1>Crypto Project Tracker</h1>
-    </header>
+    <h1 class="title">TO DO DAILY</h1>
 
-    <button class="add-testnet-btn" onclick="openTestnetForm()">➕ Add Testnet</button>
+    <!-- Sections for each category -->
+    <section id="Check-in">
+        <h2>📆 CHECK-IN</h2>
+    </section>
 
-    <main>
-        <div class="category">
-            <h2>DAILY CHECK-IN</h2>
-            <div id="dailyCheckin" class="testnet-list"></div>
-        </div>
+    <section id="Check Connection">
+        <h2>📶 CHECK CONNECTION</h2>
+    </section>
 
-        <div class="category">
-            <h2>TESTNET</h2>
-            <div id="testnet" class="testnet-list"></div>
-        </div>
+    <section id="Testnet">
+        <h2>📈 TESTNET</h2>
+    </section>
 
-        <div class="category">
-            <h2>SIMPLE TASK</h2>
-            <div id="simpleTask" class="testnet-list"></div>
-        </div>
+    <section id="Simple Task">
+        <h2>🍦 SIMPLE TASK</h2>
+    </section>
 
-        <div class="category">
-            <h2>CHECK CONNECTION</h2>
-            <div id="checkConnection" class="testnet-list"></div>
-        </div>
+    <section id="Others">
+        <h2>🗃 OTHERS</h2>
+    </section>
 
-        <div class="category">
-            <h2>OTHERS</h2>
-            <div id="others" class="testnet-list"></div>
-        </div>
-    </main>
+    <!-- Buttons -->
+    <div class="button-container">
+        <button class="add-btn" onclick="openTaskForm()">➕</button>
+        <button class="money-btn" onclick="window.location.href='manage.html'">💰</button>
+        <button class="remove-task-btn" onclick="openRemoveTaskForm()">🗑 Remove Task</button>
+        <button class="remove-all-btn" onclick="removeAllTasks()">🗑 Remove All</button>
+    </div>
 
-    <!-- Add Testnet Form -->
-    <div id="testnetForm" class="modal">
-        <div class="modal-content">
-            <h3>Add Testnet</h3>
-            <input type="text" id="testnetName" placeholder="Enter Testnet Name">
-            <select id="testnetCategory">
-                <option value="dailyCheckin">Daily Check-In</option>
-                <option value="testnet">Testnet</option>
-                <option value="simpleTask">Simple Task</option>
-                <option value="checkConnection">Check Connection</option>
-                <option value="others">Others</option>
-            </select>
-            <button onclick="addTestnet()">Add</button>
-            <button onclick="closeTestnetForm()">Close</button>
+    <!-- Task Form -->
+    <div id="taskForm" class="form-container">
+        <h2>Add New Task</h2>
+        <input type="text" id="taskName" placeholder="Enter Task Name">
+        <select id="taskCategory">
+            <option value="Check-in">📆 Check-in</option>
+            <option value="Check Connection">📶 Check Connection</option>
+            <option value="Testnet">📈 Testnet</option>
+            <option value="Simple Task">🍦 Simple Task</option>
+            <option value="Others">🗃 Others</option>
+        </select>
+        <div class="form-buttons">
+            <button onclick="addTask()">Add</button>
+            <button onclick="closeTaskForm()">Cancel</button>
         </div>
     </div>
+
+    <!-- Remove Task Form -->
+    <div id="removeTaskForm" class="form-container">
+        <h2>Remove Task</h2>
+        <select id="taskToRemove"></select>
+        <div class="form-buttons">
+            <button onclick="removeTask()">Remove</button>
+            <button onclick="closeRemoveTaskForm()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Credit -->
+    <p class="credit">Made by @milkyway_king</p>
 
     <script src="script.js"></script>
 </body>
