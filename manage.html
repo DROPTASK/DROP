@@ -183,7 +183,8 @@
             loadData();
             closePopup();
         }
-
+<button onclick="window.location.href='manage.html'" style="position: fixed; top: 10px; left: 10px; padding: 10px 15px; font-size: 16px; border: none; background: #333; color: white; border-radius: 5px; cursor: pointer;">⬅ Back</button>
+      
         function updateTotal() {
             let logs = JSON.parse(localStorage.getItem("logs")) || [];
             let totalInvestment = 0, totalEarning = 0;
@@ -232,6 +233,5 @@
             updateTotal();
         }
     </script>
-
 </body>
 </html>
