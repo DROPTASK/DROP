@@ -55,7 +55,7 @@ function loadLogs() {
         let logItem = document.createElement("div");
         logItem.classList.add("log-item");
         logItem.innerHTML = `<div class="log-header">
-            <span class="log-type">${log.type === "investment" ? "[Invest..]" : "[Earn..]"}</span>
+            <span class="log-type">${log.type === "investment" ? "[Investstment]" : "[Earning]"}</span>
             <span class="log-name">${log.name}</span>
             <span class="log-date">${log.date}</span>
             <span class="log-amount ${log.type === "investment" ? "red" : "green"}">$${log.amount}</span>
