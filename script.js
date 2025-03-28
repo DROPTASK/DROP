@@ -131,5 +131,5 @@ function scheduleMidnightReset() {
 
 
 function openmanage() {
-    window.open("manage.html", "_blank");
+    window.location.href = "manage.html";
 }
