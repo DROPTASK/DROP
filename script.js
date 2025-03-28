@@ -1,68 +1,130 @@
-document.addEventListener("DOMContentLoaded", loadTasks);
-
-document.getElementById("menu-btn").addEventListener("click", () => {
-    document.getElementById("popup-menu").style.display = "block";
+document.addEventListener("DOMContentLoaded", () => {
+    loadTasks();
+    scheduleMidnightReset();
 });
 
-document.getElementById("close-popup").addEventListener("click", () => {
-    document.getElementById("popup-menu").style.display = "none";
-});
+// Toggle popup menu
+function togglePopup() {
+    let popup = document.getElementById("popupMenu");
+    popup.style.display = popup.style.display === "flex" ? "none" : "flex";
+}
 
-document.getElementById("add-task-btn").addEventListener("click", () => {
-    document.getElementById("add-task-form").style.display = "block";
-});
+// Close popup menu
+function closePopup() {
+    document.getElementById("popupMenu").style.display = "none";
+}
 
-document.getElementById("save-task").addEventListener("click", () => {
-    let taskName = document.getElementById("task-name").value;
-    let taskCategory = document.getElementById("task-category").value;
-
-    if (taskName) {
-        let taskObj = { name: taskName, category: taskCategory, completed: false };
-        let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-        tasks.push(taskObj);
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-
-        addTaskToDOM(taskObj);
-        document.getElementById("add-task-form").style.display = "none";
+// Open and close forms
+function openForm(type) {
+    closeForm(); // Close any open form first
+    let form = document.getElementById(`${type}TaskForm`);
+    if (form) {
+        form.style.display = "block";
+    } else {
+        console.error(`Form with ID '${type}TaskForm' not found.`);
     }
-});
+}
+function closeForm() {
+    document.querySelectorAll(".popup-form").forEach(form => form.style.display = "none");
+}
 
-function addTaskToDOM(taskObj) {
-    let taskBox = document.createElement("div");
-    taskBox.classList.add("task");
-    if (taskObj.completed) {
-        taskBox.classList.add("completed");
+// Add task
+function addTask() {
+    let taskName = document.getElementById("taskName").value.trim();
+    let taskList = document.getElementById("taskList").value;
+    if (!taskName) return;
+
+    let list = document.getElementById(taskList);
+    let taskDiv = document.createElement("div");
+    taskDiv.classList.add("task");
+    taskDiv.innerHTML = `${taskName} <button onclick="markDone(this)">✔</button>`;
+    list.appendChild(taskDiv);
+
+    saveTasks();
+    closeForm();
+}
+
+// Mark task as done/undone
+function markDone(button) {
+    button.parentElement.classList.toggle("completed");
+    saveTasks();
+}
+
+// Remove task (fixed)
+function removeTask() {
+    let listName = document.getElementById("removeTaskList").value;
+    let taskName = document.getElementById("removeTaskName").value.trim();
+    let list = document.getElementById(listName);
+    let tasks = list.getElementsByClassName("task");
+
+    if (!taskName) return; // Prevent empty input
+
+    let taskRemoved = false;
+    for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].textContent.includes(taskName)) {
+            tasks[i].remove();
+            taskRemoved = true;
+            break;
+        }
     }
-    taskBox.innerHTML = `${taskObj.name} <button class="done-btn">${taskObj.completed ? "✅ Completed" : "✔️ Done"}</button>`;
 
-    document.getElementById(taskObj.category).appendChild(taskBox);
+    if (!taskRemoved) {
+        alert("Task not found in the selected list.");
+    } else {
+        saveTasks();
+        closeForm();
+    }
+}
 
-    taskBox.querySelector(".done-btn").addEventListener("click", function () {
-        taskBox.classList.toggle("completed");
-        let tasks = JSON.parse(localStorage.getItem("tasks"));
-        let task = tasks.find(t => t.name === taskObj.name && t.category === taskObj.category);
-        task.completed = taskBox.classList.contains("completed");
-        localStorage.setItem("tasks", JSON.stringify(tasks));
+// Save tasks to local storage
+function saveTasks() {
+    let allTasks = {};
+    document.querySelectorAll(".task-list").forEach(list => {
+        let listId = list.id;
+        allTasks[listId] = [];
 
-        this.textContent = task.completed ? "✅ Completed" : "✔️ Done";
+        list.querySelectorAll(".task").forEach(task => {
+            allTasks[listId].push({
+                name: task.textContent.replace("✔", "").trim(),
+                completed: task.classList.contains("completed")
+            });
+        });
+    });
+
+    localStorage.setItem("tasks", JSON.stringify(allTasks));
+}
+
+// Load tasks from local storage
+function loadTasks() {
+    let storedTasks = JSON.parse(localStorage.getItem("tasks")) || {};
+    
+    Object.keys(storedTasks).forEach(listId => {
+        let list = document.getElementById(listId);
+        storedTasks[listId].forEach(task => {
+            let taskDiv = document.createElement("div");
+            taskDiv.classList.add("task");
+            taskDiv.innerHTML = `${task.name} <button onclick="markDone(this)">✔</button>`;
+            if (task.completed) taskDiv.classList.add("completed");
+            list.appendChild(taskDiv);
+        });
     });
 }
 
-function loadTasks() {
-    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    tasks.forEach(task => addTaskToDOM(task));
+// Reset all tasks to undone
+function resetTasks() {
+    document.querySelectorAll(".task").forEach(task => task.classList.remove("completed"));
+    saveTasks();
 }
 
-// Auto-reset completed tasks at midnight
-setInterval(() => {
+// Schedule reset at midnight
+function scheduleMidnightReset() {
     let now = new Date();
-    if (now.getHours() === 0 && now.getMinutes() === 0) {
-        let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-        tasks.forEach(task => task.completed = false);
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-        document.querySelectorAll(".task.completed").forEach(task => {
-            task.classList.remove("completed");
-            task.querySelector(".done-btn").textContent = "✔️ Done";
-        });
-    }
-}, 60000);
+    let midnight = new Date();
+    midnight.setHours(24, 0, 0, 0); // Set to next midnight
+
+    let timeUntilMidnight = midnight - now;
+    setTimeout(() => {
+        resetTasks();
+        scheduleMidnightReset(); // Schedule for the next day
+    }, timeUntilMidnight);
+}
