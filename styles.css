@@ -1,353 +1,135 @@
 /* General Styles */
 body {
-    font-family: 'Arial', sans-serif;
-    background: #f4f4f9;
+    font-family: 'Poppins', sans-serif;
+    background: #f3f6f9;
     color: #333;
     text-align: center;
     margin: 0;
-    padding: 20px;
+    padding: 0;
 }
 
 /* Header */
-.title {
-    font-size: 32px;
-    font-weight: bold;
-    color: #007bff;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 5px rgba(0, 123, 255, 0.3);
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 15px 15px;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/* Task Container */
+.task-container {
+    max-width: 400px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 /* Task Sections */
-section {
+.task-section {
     background: white;
-    border-radius: 12px;
     padding: 15px;
-    margin: 15px auto;
-    width: 90%;
-    max-width: 500px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: left;
+    border-radius: 15px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
-section h2 {
-    font-size: 20px;
-    color: #333;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 5px;
+.task-section:hover {
+    transform: scale(1.02);
 }
 
-/* Task Box */
+/* Task Items */
 .task {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #f8f9fa;
-    padding: 1px 50px;
-    margin: 10px 0;
-    border-radius: 20px;
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-    transition: background 0.3s ease-in-out;
-    position: relative; /* Allows absolute positioning */
+    padding: 10px;
+    margin-top: 5px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Task Name */
-.task span {
-    flex-grow: 2; /* Makes name take full space */
-    text-align: left;
-}
-
-/* Done Button - Fully Right Aligned */
-.task button {
-    background: #28a745; /* Green */
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-    position: absolute;
-    right: 12px; /* Pushes to the right */
-}
-
-.task button:hover {
-    background: #218838;
-}
-
-/* Green Background for Completed Tasks */
 .task.completed {
-    background-color: #c3e6cb !important;
+    background: linear-gradient(to right, #a8ff78, #78ffd6);
+    text-decoration: line-through;
 }
 
-/* Button Container */
-.button-container {
-    margin-top: 20px;
-}
-
-
-/* 📜 Floating Button (Bottom-Left) */
-.menu-btn {
+/* Floating Menu Button */
+#menu-btn {
     position: fixed;
     bottom: 20px;
-    left: 20px;
-    background: #007bff;
+    right: 20px;
+    background: #007BFF;
     color: white;
     border: none;
-    padding: 14px;
     border-radius: 50%;
-    font-size: 22px;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     cursor: pointer;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s;
 }
 
-.menu-btn:hover {
+#menu-btn:hover {
     background: #0056b3;
 }
 
-/* 📜 Popup Menu */
-.menu-popup {
+/* Popup Menu */
+.popup {
     display: none;
     position: fixed;
-    bottom: 20px;
-    left: 80px;
+    bottom: 80px;
+    right: 20px;
     background: white;
-    padding: 90px;
-    border-radius: 50px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-/* Task Removal Buttons */
-.menu-popup button {
-    display: block;
-    width: 100%;
-    margin: 5px 0;
     padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 8px;
-}
-
-.remove-task-btn {
-    background: red;
-    color: white;
-}
-
-
-
-/* Menu Popup */
-.menu-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border-radius: 900px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    display: none;
-    width: 50px;
-    text-align: center;
+    border-radius: 15px;
 }
 
-.menu-popup button {
+.popup button {
     display: block;
-    width: 100%;
-    margin: 10px 0;
+    margin: 5px;
     padding: 10px;
-    font-size: 1000px;
     border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-/* Button Colors */
-.add-btn { background: #28a745; color: white; }
-.money-btn { background: #ffc107; color: blacl; }
-.remove-task-btn { background: #dc3545; color: white; }
-
-
-.add-btn:hover { background: #218838; }
-.money-btn:hover { background: #e0a800; }
-.remove-task-btn:hover { background: #c82333; }
-
-
-/* Close Menu Button */
-.close-menu {
-    background: #dc3545;
+    border-radius: 10px;
+    background: #007BFF;
     color: white;
-    margin-top: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
 }
 
-.close-menu:hover {
-    background: #c82333;
+.popup button:hover {
+    background: #0056b3;
 }
 
 /* Forms */
-.form-container {
-    width: 350px;
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+.popup-form {
+    display: none;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 100;
-    display: none;
-    transition: all 0.3s ease-in-out;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Form Header */
-.form-container h2 {
-    text-align: center;
-    font-size: 22px;
-    color: #333;
-    margin-bottom: 15px;
-}
-
-/* Form Input Fields */
-.form-container input,
-.form-container select {
+.popup-form input, .popup-form select {
     width: 100%;
     padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
-    transition: all 0.2s ease-in-out;
-}
-
-/* Form Buttons */
-.form-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-}
-
-.form-buttons button {
-    width: 48%;
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-/* Add Button */
-.form-buttons button:first-child {
-    background: #007bff;
-    color: white;
-}
-
-.form-buttons button:first-child:hover {
-    background: #0056b3;
-}
-
-/* Cancel Button */
-.form-buttons button:last-child {
-    background: #dc3545;
-    color: white;
-}
-
-.form-buttons button:last-child:hover {
-    background: #c82333;
-}
-
-/* Credit */
-.credit {
-    margin-top: 30px;
-    font-size: 14px;
-    color: #777;
-}
-/* 📜 Options Button - Fixed to Bottom Left */
-.options-btn {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background: #6c5ce7;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-.options-btn:hover {
-    background: #a29bfe;
-}
-
-/* 🏠 Options Popup - Initially Hidden */
-.options-window {
-    position: fixed;
-    bottom: 70px; /* Above the button */
-    left: 20px;
-    background: #222;
-    padding: px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
-    display: none;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* Show Popup when Active */
-.options-window.show {
-    display: flex;
-}
-
-/* Buttons inside Popup */
-.options-window button {
-    background: #444;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.options-window button:hover {
-    background: #666;
-}
-
-/* ❌ Close Button */
-.close-menu-btn {
-    background: #e74c3c;
-}
-
-.close-menu-btn:hover {
-    background: #c0392b;
-}
-
-
-.options-window {
-    position: fixed;
-    bottom: 80px;
-    left: 20px;
-    background: white;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    width: 200px;
-    
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-/* Show class ensures visibility */
-.options-window.show {
-    visibility: visible;
-    opacity: 1;
+    margin-bottom: 10px;
+    border-radius: 10px;
 }
