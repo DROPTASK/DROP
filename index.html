@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DAILY TO DO AIRDROP</title>
+    <title>Daily Airdrop Tasks 🚀</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,43 +11,66 @@
     <!-- Header -->
     <header>
         <img src="logo.png" alt="Logo" class="logo">
-        <h1>🚀 DAILY TO DO AIRDROP</h1>
+        <h1>🚀 Daily Airdrop Tasks</h1>
     </header>
 
     <!-- Task Sections -->
     <div class="task-container">
-        <div class="task-section" id="checkins"><h2>📍 Check-ins</h2></div>
-        <div class="task-section" id="check-connection"><h2>🔗 Check Connection</h2></div>
-        <div class="task-section" id="testnet"><h2>🛠️ Testnet</h2></div>
-        <div class="task-section" id="simple-task"><h2>✅ Simple Task</h2></div>
-        <div class="task-section" id="others"><h2>📂 Others</h2></div>
+        <div class="task-list" id="checkins"><h2>✅ Check-ins</h2></div>
+        <div class="task-list" id="connection"><h2>🔗 Connection Check</h2></div>
+        <div class="task-list" id="testnet"><h2>🛠 Testnet Tasks</h2></div>
+        <div class="task-list" id="simpletask"><h2>📌 Simple Tasks</h2></div>
+        <div class="task-list" id="others"><h2>📜 Other Tasks</h2></div>
     </div>
 
     <!-- Floating Menu Button -->
-    <button id="menu-btn">➕</button>
+    <div class="floating-btn" onclick="togglePopup()">⚡</div>
 
-    <!-- Popup Menu -->
-    <div id="popup-menu" class="popup">
-        <button id="add-task-btn">📝 Add Task</button>
-        <button id="remove-task-btn">❌ Remove Task</button>
-        <button onclick="window.location.href='manage.html'">⚙️ Open Manage</button>
-        <button id="close-popup">❎ Close</button>
+    <!-- Horizontal Popup Menu -->
+    <div class="popup-menu" id="popupMenu">
+        <button onclick="openForm('add')">➕ Add Task</button>
+<button onclick="openForm('remove')">Remove Task</button>
+        <button onclick="resetTasks()">🔄 Reset All</button>
+        <button onclick="closePopup()">❌ Close</button>
     </div>
 
     <!-- Add Task Form -->
-    <div id="add-task-form" class="popup-form">
-        <h3>🆕 Add Task</h3>
-        <input type="text" id="task-name" placeholder="Task Name">
-        <select id="task-category">
-            <option value="checkins">📍 Check-ins</option>
-            <option value="check-connection">🔗 Check Connection</option>
-            <option value="testnet">🛠️ Testnet</option>
-            <option value="simple-task">✅ Simple Task</option>
-            <option value="others">📂 Others</option>
+    <div class="popup-form" id="addTaskForm">
+        <h3>📝 Add New Task</h3>
+        <input type="text" id="taskName" placeholder="Enter task name">
+        <select id="taskList">
+            <option value="checkins">✅ Check-ins</option>
+            <option value="connection">🔗 Connection Check</option>
+            <option value="testnet">🛠 Testnet Tasks</option>
+            <option value="simpletask">📌 Simple Tasks</option>
+            <option value="others">📜 Other Tasks</option>
         </select>
-        <button id="save-task">✔️ Save</button>
+        <button onclick="addTask()">✅ Add</button>
+        <button onclick="closeForm()">❌ Close</button>
     </div>
+<!-- Remove Task Form (Popup) -->
+<div id="removeTaskForm" class="popup-form">
+    <h3>Remove Task</h3>
+    
+    <label for="removeTaskList">Select List:</label>
+    <select id="removeTaskList">
+        <option value="checkins">Check-ins</option>
+        <option value="connection">Check Connection</option>
+        <option value="testnet">Testnet</option>
+        <option value="simpletask">Simple Task</option>
+        <option value="others">Others</option>
+    </select>
 
+    <label for="removeTaskName">Enter Task Name:</label>
+    <input type="text" id="removeTaskName" placeholder="Task Name">
+
+    <div class="form-buttons">
+        <button onclick="removeTask()">Remove</button>
+        <button onclick="closeForm()">Close</button>
+    </div>
+</div>
+    <!-- JavaScript -->
     <script src="script.js"></script>
+
 </body>
 </html>
