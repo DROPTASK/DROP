@@ -21,6 +21,7 @@ function closeDeleteForm() {
     document.getElementById("deleteForm").style.display = "none";
 }
 
+// Save Log
 function saveLog() {
     let type = document.getElementById("logType").value;
     let name = document.getElementById("logName").value;
@@ -41,6 +42,7 @@ function saveLog() {
     loadLogs();
 }
 
+// Load Logs
 function loadLogs() {
     let logs = JSON.parse(localStorage.getItem("logs")) || [];
     let logList = document.getElementById("logList");
@@ -59,8 +61,12 @@ function loadLogs() {
             <span class="log-amount ${log.type === "investment" ? "red" : "green"}">$${log.amount}</span>
         </div>
         <div class="log-desc">${log.desc}</div>`;
-        
-        logItem.onclick = () => logItem.querySelector(".log-desc").style.display = "block";
+
+        logItem.onclick = () => {
+            let desc = logItem.querySelector(".log-desc");
+            desc.style.display = desc.style.display === "block" ? "none" : "block";
+        };
+
         logList.appendChild(logItem);
 
         if (log.type === "investment") totalInvestment += log.amount;
@@ -69,4 +75,41 @@ function loadLogs() {
 
     document.getElementById("totalInvestment").textContent = totalInvestment;
     document.getElementById("totalEarnings").textContent = totalEarnings;
+}
+
+// Load Delete Options
+function loadDeleteOptions() {
+    let logs = JSON.parse(localStorage.getItem("logs")) || [];
+    let deleteSelect = document.getElementById("deleteSelect");
+    
+    deleteSelect.innerHTML = ""; // Clear previous options
+
+    logs.forEach((log, index) => {
+        let option = document.createElement("option");
+        option.value = index;
+        option.textContent = `${log.name} - $${log.amount}`;
+        deleteSelect.appendChild(option);
+    });
+}
+
+// Delete Log
+function deleteLog() {
+    let logs = JSON.parse(localStorage.getItem("logs")) || [];
+    let deleteSelect = document.getElementById("deleteSelect");
+
+    if (logs.length === 0) {
+        alert("No logs to delete!");
+        return;
+    }
+
+    let selectedIndex = deleteSelect.value;
+
+    if (selectedIndex !== "") {
+        logs.splice(selectedIndex, 1); // Remove selected log
+        localStorage.setItem("logs", JSON.stringify(logs)); // Save updated list
+        closeDeleteForm();
+        loadLogs(); // Refresh UI
+    } else {
+        alert("Select an item to delete.");
+    }
 }
