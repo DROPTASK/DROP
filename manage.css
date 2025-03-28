@@ -1,0 +1,210 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f5f7fa;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Back Button */
+.back-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.1);
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.back-btn:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* Top Section */
+.top-section {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0;
+}
+
+.box {
+    width: 40%;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    background: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+.box:hover {
+    transform: scale(1.05);
+}
+
+.total-amount {
+    display: block;
+    font-size: 45px;
+    font-weight: bold;
+}
+
+.red {
+    color: #e63946;
+}
+
+.green {
+    color: #2a9d8f;
+}
+
+/* Log Section */
+.log-container {
+    margin-top: 20px;
+}
+
+.log-item {
+    background: white;
+    padding: 15px;
+    margin: 10px auto;
+    width: 80%;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+.log-item:hover {
+    transform: scale(1.02);
+}
+
+.log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.log-type {
+    font-size: 12px;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.log-name {
+    font-size: 22px;
+}
+
+.log-date {
+    font-size: 14px;
+}
+
+.log-amount {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.log-desc {
+    display: none;
+    margin-top: 10px;
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+/* Floating Buttons */
+.floating-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 28px;
+    padding: 15px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.floating-btn:hover {
+    transform: scale(1.1);
+}
+
+.add-btn {
+    background: #008cff;
+    color: white;
+}
+
+.delete-btn {
+    background: #ff4d4d;
+    color: white;
+    right: 80px;
+}
+
+/* Modern Popup Forms */
+.popup-form {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    text-align: left;
+    width: 320px;
+    transition: 0.3s;
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.popup-form input,
+.popup-form select,
+.popup-form textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+}
+
+.popup-form button {
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.popup-form button:hover {
+    opacity: 0.8;
+}
+
+.popup-form button:nth-child(4) {
+    background: #008cff;
+    color: white;
+    border-radius: 8px;
+}
+
+.popup-form button:nth-child(3) {
+    background: #ff4d4d;
+    color: white;
+    border-radius: 8px;
+}
