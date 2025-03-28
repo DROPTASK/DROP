@@ -1,135 +1,72 @@
-document.addEventListener("DOMContentLoaded", function () {
-    loadData();
-    updateChart();
-});
+document.addEventListener("DOMContentLoaded", loadLogs);
 
-// **Local Storage Keys**
-const EARNINGS_KEY = "earningsData";
-const INVESTMENTS_KEY = "investmentsData";
-
-// **Add Earnings**
-function addEarning() {
-    let project = document.getElementById("earningProject").value.trim();
-    let amount = parseFloat(document.getElementById("earningAmount").value);
-    let date = document.getElementById("earningDate").value;
-
-    if (project === "" || isNaN(amount) || date === "") return;
-
-    let earnings = JSON.parse(localStorage.getItem(EARNINGS_KEY)) || [];
-    earnings.push({ project, amount, date });
-
-    localStorage.setItem(EARNINGS_KEY, JSON.stringify(earnings));
-    loadData();
-    updateChart();
+function goBack() {
+    window.location.href = "index.html";
 }
 
-// **Add Investment**
-function addInvestment() {
-    let project = document.getElementById("investmentProject").value.trim();
-    let amount = parseFloat(document.getElementById("investmentAmount").value);
-    let date = document.getElementById("investmentDate").value;
-
-    if (project === "" || isNaN(amount) || date === "") return;
-
-    let investments = JSON.parse(localStorage.getItem(INVESTMENTS_KEY)) || [];
-    investments.push({ project, amount, date });
-
-    localStorage.setItem(INVESTMENTS_KEY, JSON.stringify(investments));
-    loadData();
-    updateChart();
+function openForm() {
+    document.getElementById("logForm").style.display = "block";
 }
 
-// **Load Data & Update UI**
-function loadData() {
-    let earnings = JSON.parse(localStorage.getItem(EARNINGS_KEY)) || [];
-    let investments = JSON.parse(localStorage.getItem(INVESTMENTS_KEY)) || [];
-
-    let totalEarnings = earnings.reduce((sum, e) => sum + e.amount, 0);
-    let totalInvestments = investments.reduce((sum, i) => sum + i.amount, 0);
-
-    document.getElementById("totalEarnings").innerText = totalEarnings;
-    document.getElementById("totalInvestments").innerText = totalInvestments;
-
-    updateList("earningsList", earnings);
-    updateList("investmentList", investments);
-    updateRemoveOptions(earnings, investments);
+function closeForm() {
+    document.getElementById("logForm").style.display = "none";
 }
 
-// **Update Earnings/Investment List**
-function updateList(elementId, data) {
-    let list = document.getElementById(elementId);
-    list.innerHTML = "";
-    data.forEach(item => {
-        let li = document.createElement("li");
-        li.textContent = `${item.project}: ₹${item.amount} (${item.date})`;
-        list.appendChild(li);
-    });
+function openDeleteForm() {
+    document.getElementById("deleteForm").style.display = "block";
+    loadDeleteOptions();
 }
 
-// **Update Remove Dropdown**
-function updateRemoveOptions(earnings, investments) {
-    let removeSelect = document.getElementById("removeEntrySelect");
-    removeSelect.innerHTML = "";
-
-    [...earnings, ...investments].forEach((entry, index) => {
-        let option = document.createElement("option");
-        option.value = index;
-        option.textContent = `${entry.project} - ₹${entry.amount}`;
-        removeSelect.appendChild(option);
-    });
+function closeDeleteForm() {
+    document.getElementById("deleteForm").style.display = "none";
 }
 
-// **Remove Entry**
-function removeEntry() {
-    let index = document.getElementById("removeEntrySelect").value;
-    if (index === "") return;
+function saveLog() {
+    let type = document.getElementById("logType").value;
+    let name = document.getElementById("logName").value;
+    let date = document.getElementById("logDate").value.split("-").slice(1).join("/");
+    let amount = parseFloat(document.getElementById("logAmount").value);
+    let desc = document.getElementById("logDesc").value;
 
-    let earnings = JSON.parse(localStorage.getItem(EARNINGS_KEY)) || [];
-    let investments = JSON.parse(localStorage.getItem(INVESTMENTS_KEY)) || [];
-
-    if (index < earnings.length) {
-        earnings.splice(index, 1);
-        localStorage.setItem(EARNINGS_KEY, JSON.stringify(earnings));
-    } else {
-        investments.splice(index - earnings.length, 1);
-        localStorage.setItem(INVESTMENTS_KEY, JSON.stringify(investments));
+    if (!name || !date || isNaN(amount)) {
+        alert("Fill all fields correctly.");
+        return;
     }
 
-    loadData();
-    updateChart();
+    let logs = JSON.parse(localStorage.getItem("logs")) || [];
+    logs.push({ type, name, date, amount, desc });
+    localStorage.setItem("logs", JSON.stringify(logs));
+
+    closeForm();
+    loadLogs();
 }
 
-// **Chart.js for Graph**
-function updateChart() {
-    let earnings = JSON.parse(localStorage.getItem(EARNINGS_KEY)) || [];
-    let investments = JSON.parse(localStorage.getItem(INVESTMENTS_KEY)) || [];
+function loadLogs() {
+    let logs = JSON.parse(localStorage.getItem("logs")) || [];
+    let logList = document.getElementById("logList");
+    let totalInvestment = 0;
+    let totalEarnings = 0;
 
-    let labels = [...earnings.map(e => e.project), ...investments.map(i => i.project)];
-    let earningsData = earnings.map(e => e.amount);
-    let investmentsData = investments.map(i => i.amount);
+    logList.innerHTML = "";
 
-    let ctx = document.getElementById("earningsChart").getContext("2d");
-    if (window.myChart) window.myChart.destroy(); // Prevent multiple charts
+    logs.forEach((log, index) => {
+        let logItem = document.createElement("div");
+        logItem.classList.add("log-item");
+        logItem.innerHTML = `<div class="log-header">
+            <span class="log-type">${log.type === "investment" ? "[Invest..]" : "[Earn..]"}</span>
+            <span class="log-name">${log.name}</span>
+            <span class="log-date">${log.date}</span>
+            <span class="log-amount ${log.type === "investment" ? "red" : "green"}">$${log.amount}</span>
+        </div>
+        <div class="log-desc">${log.desc}</div>`;
+        
+        logItem.onclick = () => logItem.querySelector(".log-desc").style.display = "block";
+        logList.appendChild(logItem);
 
-    window.myChart = new Chart(ctx, {
-        type: "bar",
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: "Earnings",
-                    data: earningsData,
-                    backgroundColor: "green",
-                },
-                {
-                    label: "Investments",
-                    data: investmentsData,
-                    backgroundColor: "red",
-                }
-            ]
-        },
-        options: {
-            responsive: true
-        }
+        if (log.type === "investment") totalInvestment += log.amount;
+        else totalEarnings += log.amount;
     });
+
+    document.getElementById("totalInvestment").textContent = totalInvestment;
+    document.getElementById("totalEarnings").textContent = totalEarnings;
 }
