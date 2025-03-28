@@ -10,10 +10,16 @@ function toggleOptions() {
     }
 }
 
+// Close the Options Window Automatically
+function closeOptions() {
+    document.getElementById("optionsWindow").style.display = "none";
+}
+
 // Open Task Form & Auto-Close Options Menu
 function openTaskForm() {
     closeAllPopups();
     document.getElementById("taskForm").style.display = "block";
+    closeOptions();
 }
 
 // Close Task Form
@@ -21,9 +27,10 @@ function closeTaskForm() {
     document.getElementById("taskForm").style.display = "none";
 }
 
-// Open Manage Money (Redirect)
+// Open Manage Money (Redirect & Auto-Close Options Menu)
 function openManageMoney() {
     closeAllPopups();
+    closeOptions();
     window.location.href = 'manage.html';
 }
 
@@ -31,6 +38,7 @@ function openManageMoney() {
 function openRemoveTaskForm() {
     closeAllPopups();
     document.getElementById("removeTaskForm").style.display = "block";
+    closeOptions();
 }
 
 // Close Remove Task Form
@@ -45,50 +53,44 @@ function closeAllPopups() {
     document.getElementById("optionsWindow").style.display = "none";
 }
 
-// Add Task Function (Now Saves to LocalStorage)
+// Add Task Function (Auto-Closes Form)
 function addTask() {
     let taskName = document.getElementById("taskName").value;
     let category = document.getElementById("taskCategory").value;
 
     if (taskName.trim() === "") return alert("Please enter a task name!");
 
-    // Generate a unique ID
     let taskId = "task-" + Date.now();
 
-    // Create task in UI
     let section = document.getElementById(category);
     let task = document.createElement("div");
     task.classList.add("task");
     task.id = taskId;
-
     task.innerHTML = `<p>${taskName} <button onclick="completeTask('${taskId}')">✔ Done</button></p>`;
     section.appendChild(task);
 
-    // Add task to remove dropdown
     let select = document.getElementById("taskToRemove");
     let option = document.createElement("option");
     option.value = taskId;
     option.textContent = taskName;
     select.appendChild(option);
 
-    // Save task to localStorage
     let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     tasks.push({ id: taskId, name: taskName, category, completed: false });
     localStorage.setItem("tasks", JSON.stringify(tasks));
 
-    closeTaskForm(); // Close popup
+    closeTaskForm(); // Auto-close form
 }
 
-// Complete Task (Now Saves Completion Status to LocalStorage)
+// Complete Task (Auto-Saves to LocalStorage)
 function completeTask(taskId) {
     let task = document.getElementById(taskId);
     if (!task) return;
 
     task.classList.add("completed");
     let button = task.querySelector("button");
-    if (button) button.remove(); // Remove "✔ Done" button
+    if (button) button.remove();
 
-    // Update localStorage
     let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     tasks = tasks.map(task => {
         if (task.id === taskId) task.completed = true;
@@ -97,32 +99,23 @@ function completeTask(taskId) {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-// Remove Selected Task (Now Updates LocalStorage)
+// Remove Selected Task (Auto-Closes Form)
 function removeTask() {
     let select = document.getElementById("taskToRemove");
     let selectedTaskId = select.value;
 
     if (!selectedTaskId) return alert("No task selected!");
 
-    // Remove from UI
     let task = document.getElementById(selectedTaskId);
     if (task) task.remove();
 
-    // Remove from dropdown
     select.options[select.selectedIndex].remove();
 
-    // Update localStorage
     let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     tasks = tasks.filter(task => task.id !== selectedTaskId);
     localStorage.setItem("tasks", JSON.stringify(tasks));
-}
 
-// Remove All Tasks (Now Clears LocalStorage)
-function removeAllTasks() {
-    document.querySelectorAll(".task").forEach(task => task.remove());
-    localStorage.removeItem("tasks"); // Clear storage
-    document.getElementById("taskToRemove").innerHTML = ""; // Clear dropdown
-    closeAllPopups();
+    closeRemoveTaskForm(); // Auto-close form
 }
 
 // Load tasks from localStorage on page load
@@ -144,7 +137,6 @@ function loadTasks() {
         taskDiv.innerHTML = `<p>${task.name} ${task.completed ? "" : `<button onclick="completeTask('${task.id}')">✔ Done</button>`}</p>`;
         section.appendChild(taskDiv);
 
-        // Add to remove dropdown
         let option = document.createElement("option");
         option.value = task.id;
         option.textContent = task.name;
@@ -152,50 +144,32 @@ function loadTasks() {
     });
 }
 
-// Reset Completed Tasks (Now Updates LocalStorage)
+// Reset Completed Tasks (Auto-Saves to LocalStorage)
 function resetCompletedTasks() {
     let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-    // Reset only completed tasks
     tasks = tasks.map(task => {
         task.completed = false;
         return task;
     });
 
     localStorage.setItem("tasks", JSON.stringify(tasks));
-    loadTasks(); // Refresh UI
+    loadTasks();
 }
-
-// Load tasks on page load
-window.onload = loadTasks;
 
 // Function to reset completed tasks at 00:00
 function resetTasksAtMidnight() {
     let lastResetDate = localStorage.getItem("lastResetDate");
-    let todayDate = new Date().toISOString().split("T")[0]; // Get YYYY-MM-DD format
+    let todayDate = new Date().toISOString().split("T")[0];
 
     if (lastResetDate !== todayDate) {
         resetCompletedTasks();
-        localStorage.setItem("lastResetDate", todayDate); // Update reset date
+        localStorage.setItem("lastResetDate", todayDate);
     }
 }
 
-// Reset Completed Tasks (Now Updates LocalStorage)
-function resetCompletedTasks() {
-    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
-    // Reset only completed tasks
-    tasks = tasks.map(task => {
-        task.completed = false;
-        return task;
-    });
-
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-    loadTasks(); // Refresh UI
-}
-
-// Load tasks from localStorage on page load
+// Load tasks on page load
 window.onload = function () {
-    resetTasksAtMidnight(); // Check if reset is needed
-    loadTasks(); // Load tasks
+    resetTasksAtMidnight();
+    loadTasks();
 };
