@@ -11,35 +11,25 @@
     <h1 class="title">TO DO DAILY</h1>
 
     <!-- Sections for each category -->
-    <section id="Check-in">
-        <h2>📆 CHECK-IN</h2>
-    </section>
+    <section id="Check-in"><h2>📆 CHECK-IN</h2></section>
+    <section id="Check Connection"><h2>📶 CHECK CONNECTION</h2></section>
+    <section id="Testnet"><h2>📈 TESTNET</h2></section>
+    <section id="Simple Task"><h2>🍦 SIMPLE TASK</h2></section>
+    <section id="Others"><h2>🗃 OTHERS</h2></section>
 
-    <section id="Check Connection">
-        <h2>📶 CHECK CONNECTION</h2>
-    </section>
+<!-- 📜 Options Button (Now Positioned at Bottom Left) -->
+<button class="options-btn" onclick="toggleOptions()">📜 Options</button>
 
-    <section id="Testnet">
-        <h2>📈 TESTNET</h2>
-    </section>
+<!-- Options Popup Menu -->
+<div class="options-window hidden" id="optionsWindow">
+    <button onclick="openTaskForm()">➕ Add Task</button>
+    <button onclick="openManageMoney()">💰 Manage Money</button>
+    <button onclick="openRemoveTaskForm()">➖ Remove Task</button>
+    <button class="close-menu-btn" onclick="toggleOptions()">❌ Close</button>
+</div></button>
+     
 
-    <section id="Simple Task">
-        <h2>🍦 SIMPLE TASK</h2>
-    </section>
-
-    <section id="Others">
-        <h2>🗃 OTHERS</h2>
-    </section>
-
-    <!-- Buttons -->
-    <div class="button-container">
-        <button class="add-btn" onclick="openTaskForm()">➕</button>
-        <button class="money-btn" onclick="window.location.href='manage.html'">💰</button>
-        <button class="remove-all-btn" onclick="removeAllTasks()">🗑 Remove All</button>
-        <button class="remove-task-btn" onclick="openRemoveTaskForm()">➖ Remove Task</button>
-    </div>
-
-    <!-- Task Form -->
+    <!-- Task Form (Hidden by Default) -->
     <div id="taskForm" class="form-container">
         <h2>Add New Task</h2>
         <input type="text" id="taskName" placeholder="Enter Task Name">
@@ -56,7 +46,7 @@
         </div>
     </div>
 
-    <!-- Remove Task Form -->
+    <!-- Remove Task Form (Hidden by Default) -->
     <div id="removeTaskForm" class="form-container">
         <h2>Remove Task</h2>
         <select id="taskToRemove"></select>
@@ -66,7 +56,6 @@
         </div>
     </div>
 
-    <!-- Credit -->
     <p class="credit">Made by @milkyway_king</p>
 
     <script src="script.js"></script>
