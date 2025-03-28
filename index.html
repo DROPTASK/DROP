@@ -3,60 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do Daily</title>
+    <title>DAILY TO DO AIRDROP</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <h1 class="title">TO DO DAILY</h1>
+    <!-- Header -->
+    <header>
+        <img src="logo.png" alt="Logo" class="logo">
+        <h1>🚀 DAILY TO DO AIRDROP</h1>
+    </header>
 
-    <!-- Sections for each category -->
-    <section id="Check-in"><h2>📆 CHECK-IN</h2></section>
-    <section id="Check Connection"><h2>📶 CHECK CONNECTION</h2></section>
-    <section id="Testnet"><h2>📈 TESTNET</h2></section>
-    <section id="Simple Task"><h2>🍦 SIMPLE TASK</h2></section>
-    <section id="Others"><h2>🗃 OTHERS</h2></section>
+    <!-- Task Sections -->
+    <div class="task-container">
+        <div class="task-section" id="checkins"><h2>📍 Check-ins</h2></div>
+        <div class="task-section" id="check-connection"><h2>🔗 Check Connection</h2></div>
+        <div class="task-section" id="testnet"><h2>🛠️ Testnet</h2></div>
+        <div class="task-section" id="simple-task"><h2>✅ Simple Task</h2></div>
+        <div class="task-section" id="others"><h2>📂 Others</h2></div>
+    </div>
 
-<!-- 📜 Options Button (Now Positioned at Bottom Left) -->
-<button class="options-btn" onclick="toggleOptions()">📜 Options</button>
+    <!-- Floating Menu Button -->
+    <button id="menu-btn">➕</button>
 
-<!-- Options Popup Menu -->
-<div class="options-window hidden" id="optionsWindow">
-    <button onclick="openTaskForm()">➕ Add Task</button>
-    <button onclick="openManageMoney()">💰 Manage Money</button>
-    <button onclick="openRemoveTaskForm()">➖ Remove Task</button>
-    <button class="close-menu-btn" onclick="toggleOptions()">❌ Close</button>
-</div></button>
-     
+    <!-- Popup Menu -->
+    <div id="popup-menu" class="popup">
+        <button id="add-task-btn">📝 Add Task</button>
+        <button id="remove-task-btn">❌ Remove Task</button>
+        <button onclick="window.location.href='manage.html'">⚙️ Open Manage</button>
+        <button id="close-popup">❎ Close</button>
+    </div>
 
-    <!-- Task Form (Hidden by Default) -->
-    <div id="taskForm" class="form-container">
-        <h2>Add New Task</h2>
-        <input type="text" id="taskName" placeholder="Enter Task Name">
-        <select id="taskCategory">
-            <option value="Check-in">📆 Check-in</option>
-            <option value="Check Connection">📶 Check Connection</option>
-            <option value="Testnet">📈 Testnet</option>
-            <option value="Simple Task">🍦 Simple Task</option>
-            <option value="Others">🗃 Others</option>
+    <!-- Add Task Form -->
+    <div id="add-task-form" class="popup-form">
+        <h3>🆕 Add Task</h3>
+        <input type="text" id="task-name" placeholder="Task Name">
+        <select id="task-category">
+            <option value="checkins">📍 Check-ins</option>
+            <option value="check-connection">🔗 Check Connection</option>
+            <option value="testnet">🛠️ Testnet</option>
+            <option value="simple-task">✅ Simple Task</option>
+            <option value="others">📂 Others</option>
         </select>
-        <div class="form-buttons">
-            <button onclick="addTask()">Add</button>
-            <button onclick="closeTaskForm()">Cancel</button>
-        </div>
+        <button id="save-task">✔️ Save</button>
     </div>
-
-    <!-- Remove Task Form (Hidden by Default) -->
-    <div id="removeTaskForm" class="form-container">
-        <h2>Remove Task</h2>
-        <select id="taskToRemove"></select>
-        <div class="form-buttons">
-            <button onclick="removeTask()">Remove</button>
-            <button onclick="closeRemoveTaskForm()">Cancel</button>
-        </div>
-    </div>
-
-    <p class="credit">Made by @milkyway_king</p>
 
     <script src="script.js"></script>
 </body>
