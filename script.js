@@ -128,3 +128,8 @@ function scheduleMidnightReset() {
         scheduleMidnightReset(); // Schedule for the next day
     }, timeUntilMidnight);
 }
+
+
+function openmanage() {
+    window.open("manage.html", "_blank");
+}
