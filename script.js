@@ -1,150 +1,166 @@
-document.addEventListener("DOMContentLoaded", function () {
-    checkForDailyReset();
-    loadTasks();
-});
+/// Toggle the Options Window
 
-// Default tasks
-const defaultTasks = {
-    "Check-in": ["One football", "Shaga", "Somnia", "Dvin", "Cess", "Arch", "Part of Dream", "Sogni AI", "Billion"],
-    "Check Connection": ["Dawn", "Blockmesh", "Grass", "Gradient", "Teneo", "Nexus", "Bless", "Openloop", "Distribute"],
-    "Testnet": ["Taker", "Chaos", "Stork", "Parasil", "Initia", "Blackscout", "Coresky", "Linera"],
-    "Simple Task": ["Malda [soon testnet]", "Exabits", "Arch", "Plasma", "Abstract", "World3"],
-    "Others": ["Node Shift", "Giza", "Dango [early adopter]", "Sophon", "Solflare NFT"]
-};
+function toggleOptions() {
+    let menu = document.getElementById("optionsWindow");
 
-// Check and reset daily
-function checkForDailyReset() {
-    let lastDate = localStorage.getItem("lastResetDate");
-    let today = new Date().toISOString().split("T")[0];
-
-    if (lastDate !== today) {
-        localStorage.setItem("lastResetDate", today);
-        resetTasks();
+    if (menu.classList.contains("show")) {
+        menu.classList.remove("show");
+        menu.style.display = "none";
+    } else {
+        menu.classList.add("show");
+        menu.style.display = "flex";
     }
 }
 
-// Open and close forms
-function openTaskForm() { document.getElementById("taskForm").style.display = "block"; }
-function closeTaskForm() { document.getElementById("taskForm").style.display = "none"; }
-function openRemoveTaskForm() { document.getElementById("removeTaskForm").style.display = "block"; loadRemoveOptions(); }
-function closeRemoveTaskForm() { document.getElementById("removeTaskForm").style.display = "none"; }
+// Open Task Form & Auto-Close Options Menu
+function openTaskForm() {
+closeAllPopups();
+document.getElementById("taskForm").style.display = "block";
+}
 
-// Add Task
+// Close Task Form
+function closeTaskForm() {
+document.getElementById("taskForm").style.display = "none";
+}
+
+// Open Manage Money (Redirect)
+function openManageMoney() {
+closeAllPopups();
+window.location.href = 'manage.html';
+}
+
+// Open Remove Task Form & Auto-Close Options Menu
+function openRemoveTaskForm() {
+closeAllPopups();
+document.getElementById("removeTaskForm").style.display = "block";
+}
+
+// Close Remove Task Form
+function closeRemoveTaskForm() {
+document.getElementById("removeTaskForm").style.display = "none";
+}
+
+// Close All Popups
+function closeAllPopups() {
+document.getElementById("taskForm").style.display = "none";
+document.getElementById("removeTaskForm").style.display = "none";
+document.getElementById("optionsWindow").style.display = "none";
+}
+
+// Add Task Function
 function addTask() {
-    let name = document.getElementById("taskName").value.trim();
-    let category = document.getElementById("taskCategory").value;
-    if (!name) return;
+let taskName = document.getElementById("taskName").value;
+let category = document.getElementById("taskCategory").value;
 
-    let taskElement = document.createElement("div");
-    taskElement.classList.add("task-item");
-    taskElement.innerHTML = `
-        <span>${name}</span>
-        <button class="done-btn" onclick="markDone(this)">✅ DONE</button>
-    `;
+if (taskName.trim() === "") return alert("Please enter a task name!");  
 
-    document.getElementById(category).appendChild(taskElement);
-    saveTasks();
-    closeTaskForm();
+// Create task in the main section  
+let section = document.getElementById(category);  
+let task = document.createElement("div");  
+task.classList.add("task");  
+  
+// Generate a unique ID for the task  
+let taskId = "task-" + Date.now();   
+task.id = taskId;  
+
+task.innerHTML = `<p>${taskName} <button onclick="completeTask(this)">✔ Done</button></p>`;  
+section.appendChild(task);  
+
+// Add the task to the remove dropdown  
+let select = document.getElementById("taskToRemove");  
+let option = document.createElement("option");  
+option.value = taskId;  
+option.textContent = taskName;  
+select.appendChild(option);  
+document.getElementById("optionsWindow").style.display = "none";
+closeTaskForm(); // Close popup
+
 }
 
-// Mark Task as Done
-function markDone(button) {
-    let item = button.closest(".task-item");
-    let taskName = item.querySelector("span").textContent.trim();
-    let category = item.closest("section").id;
-
-    item.classList.add("completed");
-    item.innerHTML = `<span>${taskName}</span> <span class="completed">✅🗿 Completed</span>`;
-
-    saveTasks();
-}
-
-// Remove Task via Dropdown
-function removeTask() {
-    let selectedTask = document.getElementById("taskToRemove").value;
-    if (!selectedTask) return;
-
-    document.querySelectorAll(".task-item").forEach(task => {
-        if (task.querySelector("span").textContent.trim() === selectedTask) {
-            task.remove();
-        }
-    });
-
-    saveTasks();
-    closeRemoveTaskForm();
-}
-
-// Load Remove Dropdown
-function loadRemoveOptions() {
-    let select = document.getElementById("taskToRemove");
-    select.innerHTML = "";
-
-    document.querySelectorAll(".task-item").forEach(task => {
-        let taskName = task.querySelector("span").textContent.trim();
-        let option = document.createElement("option");
-        option.value = taskName;
-        option.textContent = taskName;
-        select.appendChild(option);
-    });
+// Complete Task (Change Background to Green)
+function completeTask(button) {
+let task = button.parentElement.parentElement;
+task.classList.add("completed");
+button.remove(); // Remove "✔ Done" button
 }
 
 // Remove All Tasks
 function removeAllTasks() {
-    document.querySelectorAll(".task-item").forEach(task => task.remove());
-    saveTasks();
+document.querySelectorAll(".task").forEach(task => task.remove());
+closeAllPopups();
 }
 
-// Save Tasks
-function saveTasks() {
-    let taskData = {};
+// Remove Selected Task
+function removeTask() {
+let select = document.getElementById("taskToRemove");
+let taskName = select.value;
 
-    document.querySelectorAll("section").forEach(section => {
-        let category = section.id;
-        let tasks = [];
+document.querySelectorAll(".task").forEach(task => {  
+    if (task.innerText.includes(taskName)) {  
+        task.remove();  
+    }  
+});  
 
-        section.querySelectorAll(".task-item").forEach(task => {
-            let name = task.querySelector("span").textContent.trim();
-            let isCompleted = task.classList.contains("completed");
-            tasks.push({ name, completed: isCompleted });
-        });
+closeRemoveTaskForm(); // Close popup
 
-        taskData[category] = tasks;
-    });
+}function removeTask() {
+let select = document.getElementById("taskToRemove");
+let selectedTaskId = select.value;
 
-    localStorage.setItem("savedTasks", JSON.stringify(taskData));
+if (!selectedTaskId) return alert("No task selected!");  
+
+// Remove task from the main section  
+let task = document.getElementById(selectedTaskId);  
+if (task) task.remove();  
+
+// Remove task from the dropdown  
+select.options[select.selectedIndex].remove();
+
 }
 
-// Load Tasks
+// Load tasks from localStorage on page load
 function loadTasks() {
-    let savedTasks = JSON.parse(localStorage.getItem("savedTasks")) || defaultTasks;
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-    Object.keys(savedTasks).forEach(category => {
-        let container = document.getElementById(category);
-        if (!container) return;
+document.getElementById("work").innerHTML = "";  
+document.getElementById("personal").innerHTML = "";  
+document.getElementById("taskToRemove").innerHTML = "";  
 
-        savedTasks[category].forEach(task => {
-            let taskElement = document.createElement("div");
-            taskElement.classList.add("task-item");
+tasks.forEach(task => {  
+    let section = document.getElementById(task.category);  
+    let taskDiv = document.createElement("div");  
+    taskDiv.classList.add("task");  
+    taskDiv.id = task.id;  
 
-            if (task.completed) {
-                taskElement.classList.add("completed");
-                taskElement.innerHTML = `<span>${task.name}</span> <span class="completed">✅🗿 Completed</span>`;
-            } else {
-                taskElement.innerHTML = `
-                    <span>${task.name}</span>
-                    <button class="done-btn" onclick="markDone(this)">✅ DONE</button>
-                `;
-            }
+    if (task.completed) taskDiv.classList.add("completed");  
 
-            container.appendChild(taskElement);
-        });
-    });
+    taskDiv.innerHTML = `  
+        <p>${task.name}   
+            ${task.completed ? "" : `<button onclick="completeTask('${task.id}')">✔ Done</button>`}  
+        </p>`;  
+    section.appendChild(taskDiv);  
+
+    // Add to remove dropdown  
+    let option = document.createElement("option");  
+    option.value = task.id;  
+    option.textContent = task.name;  
+    document.getElementById("taskToRemove").appendChild(option);  
+});
+
 }
 
-// Reset Tasks (Load Default)
-function resetTasks() {
-    document.querySelectorAll(".task-item").forEach(task => task.remove());
-    localStorage.removeItem("savedTasks");
-    saveTasks();
-    loadTasks();
+window.onload = loadTasks; // Load tasks on page load
+
+function resetCompletedTasks() {
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+// Reset only completed tasks  
+tasks = tasks.map(task => {  
+    if (task.completed) task.completed = false;  
+    return task;  
+});  
+
+localStorage.setItem("tasks", JSON.stringify(tasks));  
+loadTasks(); // Refresh UI
+
 }
