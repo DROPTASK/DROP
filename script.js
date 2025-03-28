@@ -149,7 +149,7 @@ function resetCompletedTasks() {
     let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
     tasks = tasks.map(task => {
-        task.completed = false;
+        task.completed = false; // Mark task as undone
         return task;
     });
 
@@ -164,12 +164,12 @@ function resetTasksAtMidnight() {
 
     if (lastResetDate !== todayDate) {
         resetCompletedTasks();
-        localStorage.setItem("lastResetDate", todayDate);
+        localStorage.setItem("lastResetDate", todayDate); // Store today's date
     }
 }
 
 // Load tasks on page load
 window.onload = function () {
-    resetTasksAtMidnight();
+    resetTasksAtMidnight(); // Reset tasks if it's a new day
     loadTasks();
 };
