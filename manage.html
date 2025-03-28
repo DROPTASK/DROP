@@ -1,236 +1,63 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Testnet</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            color: black;
-            text-align: center;
-        }
-        h1 {
-            font-size: 2em;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .big-text {
-            font-size: 2.5em;
-            font-weight: bold;
-        }
-        .logs {
-            margin-top: 20px;
-            text-align: left;
-        }
-        .log-entry {
-            padding: 8px;
-            border-bottom: 1px solid #ddd;
-        }
-        .investment {
-            color: red;
-        }
-        .earning {
-            color: green;
-        }
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            z-index: 1000;
-            width: 80%;
-            max-width: 400px;
-        }
-        .popup .form-group {
-            margin-bottom: 10px;
-            text-align: left;
-        }
-        .popup .form-group label {
-            display: block;
-            font-weight: bold;
-        }
-        .popup .form-group input, .popup .form-group select {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        .popup button {
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-        .add-btn {
-            background: green;
-            color: white;
-        }
-        .delete-btn {
-            background: red;
-            color: white;
-        }
-        .close-btn {
-            background: grey;
-            color: white;
-        }
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-    </style>
+    <title>Investment & Earning Tracker</title>
+    <link rel="stylesheet" href="manage.css">
 </head>
 <body>
+    <!-- Back Button -->
+    <button class="back-btn" onclick="goBack()">⬅ Back</button>
 
-    <div class="container">
-        <h1>Testnet Manager</h1>
-
-        <p>Total Investment: <span class="big-text" id="total-investment">💲0</span></p>
-        <p>Total Earning: <span class="big-text" id="total-earning">💲0</span></p>
-
-        <button class="add-btn" onclick="openPopup()">➕ Add Entry</button>
-
-        <h2>Entry Logs</h2>
-        <div class="logs" id="logs"></div>
+    <!-- Top Section (25%) -->
+    <div class="top-section">
+        <div class="box investment-box">
+            <p>TOTAL INVESTMENT</p>
+            <span class="total-amount red">💲<span id="totalInvestment">0</span></span>
+        </div>
+        <div class="box earning-box">
+            <p>TOTAL EARNING</p>
+            <span class="total-amount green">💲<span id="totalEarnings">0</span></span>
+        </div>
     </div>
 
-    <!-- Popup Form -->
-    <div class="overlay" id="overlay" onclick="closePopup()"></div>
-    <div class="popup" id="popup">
-        <h2>Add New Entry</h2>
-        <div class="form-group">
-            <label>Project Name:</label>
-            <input type="text" id="project-name">
-        </div>
-        <div class="form-group">
-            <label>Date:</label>
-            <input type="date" id="date">
-        </div>
-        <div class="form-group">
-            <label>Type:</label>
-            <select id="type">
+    <!-- Bottom Section (75%) -->
+    <div class="log-container" id="logList"></div>
+
+    <!-- Floating Add Button -->
+    <button class="floating-btn add-btn" onclick="openForm()">➕</button>
+
+    <!-- Floating Delete Button -->
+    <button class="floating-btn delete-btn" onclick="openDeleteForm()">🗑</button>
+
+    <!-- Add Log Form (Popup) -->
+    <div id="logForm" class="popup-form">
+        <div class="form-content">
+            <h2>Add Log</h2>
+            <select id="logType">
                 <option value="investment">Investment</option>
                 <option value="earning">Earning</option>
             </select>
+            <input type="text" id="logName" placeholder="Enter Name">
+            <input type="date" id="logDate">
+            <input type="number" id="logAmount" placeholder="Enter Amount">
+            <textarea id="logDesc" placeholder="Enter Description"></textarea>
+            <button onclick="closeForm()">Close</button>
+            <button onclick="saveLog()">Save</button>
         </div>
-        <div class="form-group">
-            <label>Amount (💲):</label>
-            <input type="number" id="amount">
-        </div>
-        <div class="form-group">
-            <label>Description:</label>
-            <input type="text" id="description">
-        </div>
-
-        <button class="add-btn" onclick="addEntry()">Add</button>
-        <button class="close-btn" onclick="closePopup()">Close</button>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            loadData();
-        });
+    <!-- Delete Log Form (Popup) -->
+    <div id="deleteForm" class="popup-form">
+        <div class="form-content">
+            <h2>Delete Log</h2>
+            <select id="deleteSelect"></select>
+            <button onclick="closeDeleteForm()">Close</button>
+            <button onclick="deleteLog()">Delete</button>
+        </div>
+    </div>
 
-        function openPopup() {
-            document.getElementById("popup").style.display = "block";
-            document.getElementById("overlay").style.display = "block";
-        }
-
-        function closePopup() {
-            document.getElementById("popup").style.display = "none";
-            document.getElementById("overlay").style.display = "none";
-        }
-
-        function addEntry() {
-            let projectName = document.getElementById("project-name").value.trim();
-            let date = document.getElementById("date").value;
-            let type = document.getElementById("type").value;
-            let amount = parseFloat(document.getElementById("amount").value);
-            let description = document.getElementById("description").value.trim();
-
-            if (!projectName || !date || isNaN(amount) || !description) {
-                alert("Please fill all fields correctly.");
-                return;
-            }
-
-            let logs = JSON.parse(localStorage.getItem("logs")) || [];
-            let entry = { projectName, date, type, amount, description };
-            logs.push(entry);
-            localStorage.setItem("logs", JSON.stringify(logs));
-
-            updateTotal();
-            loadData();
-            closePopup();
-        }
- 
-        function updateTotal() {
-            let logs = JSON.parse(localStorage.getItem("logs")) || [];
-            let totalInvestment = 0, totalEarning = 0;
-
-            logs.forEach(entry => {
-                if (entry.type === "investment") {
-                    totalInvestment += entry.amount;
-                } else {
-                    totalEarning += entry.amount;
-                }
-            });
-
-            document.getElementById("total-investment").innerHTML = `💲${totalInvestment}`;
-            document.getElementById("total-earning").innerHTML = `💲${totalEarning}`;
-        }
-
-        function deleteEntry(index) {
-            let logs = JSON.parse(localStorage.getItem("logs")) || [];
-            logs.splice(index, 1);
-            localStorage.setItem("logs", JSON.stringify(logs));
-            updateTotal();
-            loadData();
-        }
-
-        function loadData() {
-            let logs = JSON.parse(localStorage.getItem("logs")) || [];
-            let logsContainer = document.getElementById("logs");
-            logsContainer.innerHTML = "";
-
-            logs.forEach((entry, index) => {
-                let logDiv = document.createElement("div");
-                logDiv.className = "log-entry";
-
-                logDiv.innerHTML = `
-                    ${entry.type === "investment" ? "🔴" : "🟢"}
-                    <strong>${entry.projectName}</strong> - ${entry.date} - ${entry.description} 
-                    <span class="${entry.type === "investment" ? "investment" : "earning"}">
-                        💲${entry.amount}
-                    </span>
-                    <button class="delete-btn" onclick="deleteEntry(${index})">🗑</button>
-                `;
-
-                logsContainer.appendChild(logDiv);
-            });
-
-            updateTotal();
-        }
-    </script>
+    <script src="manage.js"></script>
 </body>
 </html>
