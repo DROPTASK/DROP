@@ -1,11 +1,11 @@
 /* General Styles */
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to bottom, #f8f9fa, #e3f2fd); /* Light theme */
+    background: linear-gradient(to bottom, #ffffff, #d0e8ff); /* White to light blue gradient */
+    color: #333;
     text-align: center;
     margin: 0;
     padding: 0;
-    color: #333;
 }
 
 /* Header */
@@ -14,16 +14,16 @@ header {
     align-items: center;
     justify-content: center;
     padding: 15px;
-    background: linear-gradient(to right, #ffffff, #e0e0e0);
+    background: linear-gradient(to right, #ffffff, #cce0ff);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 0 0 20px 20px;
-    font-size: 22px;
+    font-size: 20px; /* Adjusted for smaller screens */
     font-weight: bold;
 }
 
 .logo {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     margin-right: 10px;
 }
@@ -33,14 +33,15 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
+/* List Boxes */
 .task-list {
-    width: 90%;
-    max-width: 450px;
-    background: linear-gradient(to right, #ffffff, #f0f0f0);
-    padding: 15px;
+    width: 95%;
+    max-width: 420px;
+    background: #d0e8ff; /* Light blue */
+    padding: 12px;
     border-radius: 15px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
@@ -55,30 +56,31 @@ header {
     align-items: center;
     padding: 12px;
     border-radius: 12px;
-    background: linear-gradient(to right, #ffffff, #f5f8fb);
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
+    background: #ffffff; /* Lighter task box */
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
     transition: 0.3s;
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 16px; /* Optimized for mobile */
+    font-weight: bold;
+    margin-bottom: 10px; /* Better spacing */
+    flex-wrap: wrap; /* Prevent overflow */
 }
 
+/* Completed Task */
 .task.completed {
-    background: linear-gradient(to right, #a2f5b5, #5fd482);
+    background: #4caf50; /* Darker green for completed tasks */
     color: white;
-    text-decoration: line-through;
-    font-weight: bold;
 }
 
 /* Floating Button */
 .floating-btn {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 15px;
+    right: 15px;
     background: linear-gradient(to right, #007bff, #00c6ff);
     color: white;
-    padding: 18px;
+    padding: 16px;
     border-radius: 50%;
-    font-size: 24px;
+    font-size: 22px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
     transition: 0.3s;
     cursor: pointer;
@@ -88,10 +90,10 @@ header {
 .popup-menu {
     display: none;
     position: fixed;
-    bottom: 80px;
-    right: 20px;
+    bottom: 75px;
+    right: 15px;
     background: linear-gradient(to bottom, #ffffff, #f1f1f1);
-    padding: 12px;
+    padding: 10px;
     border-radius: 12px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -99,11 +101,12 @@ header {
     gap: 8px;
 }
 
+/* Popup Menu Buttons */
 .popup-menu button {
     background: #007bff;
     border: none;
     color: white;
-    padding: 12px;
+    padding: 10px;
     border-radius: 10px;
     cursor: pointer;
     transition: 0.3s;
@@ -118,26 +121,30 @@ header {
 .popup-form {
     display: none;
     position: fixed;
-    background: linear-gradient(to bottom, #ffffff, #e3f2fd);
-    padding: 20px;
-    border-radius: 15px;
+    background: linear-gradient(to bottom, #ffffff, #c0ddff); /* Gradient effect */
+    padding: 15px;
+    border-radius: 12px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    width: 280px;
+    width: 90%;
+    max-width: 300px;
 }
 
+/* Form Inputs */
 .popup-form input,
 .popup-form select {
-    width: 90%;
-    padding: 12px;
+    width: 100%;
+    padding: 10px;
     border-radius: 10px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
-    outline: none;
+    background: #ffffff;
+    color: #333;
 }
 
+/* Form Buttons */
 .popup-form button {
     width: 48%;
     padding: 10px;
@@ -150,4 +157,43 @@ header {
 
 .popup-form button:hover {
     background: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    header {
+        font-size: 18px;
+        padding: 10px;
+    }
+    
+    .logo {
+        width: 40px;
+        height: 40px;
+    }
+
+    .task-list {
+        width: 100%;
+        max-width: 380px;
+        padding: 10px;
+    }
+
+    .task {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .floating-btn {
+        font-size: 20px;
+        padding: 14px;
+    }
+
+    .popup-form {
+        width: 95%;
+        padding: 12px;
+    }
+
+    .popup-menu {
+        bottom: 70px;
+        right: 10px;
+    }
 }
