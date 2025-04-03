@@ -25,25 +25,34 @@
         const url = urlInput.value.trim();
         if (!name || !url) return;
         
+        createSiteElement(name, url);
+        saveSite({ name, url });
+        nameInput.value = '';
+        urlInput.value = '';
+    }
+
+    function createSiteElement(name, url) {
         const siteGrid = document.getElementById('siteGrid');
         const siteBox = document.createElement('div');
         siteBox.classList.add('site-box');
+        
+        const link = document.createElement('a');
+        link.href = url;
+        link.target = '_blank';
         
         const img = document.createElement('img');
         img.src = `https://www.google.com/s2/favicons?domain=${url}&sz=64`;
         img.alt = 'Site Logo';
         img.classList.add('site-logo');
         
+        link.appendChild(img);
+        
         const siteName = document.createElement('p');
         siteName.textContent = name;
         
-        siteBox.appendChild(img);
+        siteBox.appendChild(link);
         siteBox.appendChild(siteName);
         siteGrid.appendChild(siteBox);
-        
-        saveSite({ name, url });
-        nameInput.value = '';
-        urlInput.value = '';
     }
 
     function saveSite(site) {
@@ -54,23 +63,7 @@
 
     function loadSites() {
         let sites = JSON.parse(localStorage.getItem('sites')) || [];
-        sites.forEach(site => {
-            const siteGrid = document.getElementById('siteGrid');
-            const siteBox = document.createElement('div');
-            siteBox.classList.add('site-box');
-            
-            const img = document.createElement('img');
-            img.src = `https://www.google.com/s2/favicons?domain=${site.url}&sz=64`;
-            img.alt = 'Site Logo';
-            img.classList.add('site-logo');
-            
-            const siteName = document.createElement('p');
-            siteName.textContent = site.name;
-            
-            siteBox.appendChild(img);
-            siteBox.appendChild(siteName);
-            siteGrid.appendChild(siteBox);
-        });
+        sites.forEach(site => createSiteElement(site.name, site.url));
     }
 </script>
 
