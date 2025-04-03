@@ -15,57 +15,64 @@
             <input type="text" id="siteUrl" placeholder="Enter site URL">
             <button onclick="addSite()">Add</button>
         </div>
-    </div><script>
-    document.addEventListener("DOMContentLoaded", loadSites);
-
-    function addSite() {
-        const nameInput = document.getElementById('siteName');
-        const urlInput = document.getElementById('siteUrl');
-        const name = nameInput.value.trim();
-        const url = urlInput.value.trim();
-        if (!name || !url) return;
-        
-        createSiteElement(name, url);
-        saveSite({ name, url });
-        nameInput.value = '';
-        urlInput.value = '';
-    }
-
-    function createSiteElement(name, url) {
-        const siteGrid = document.getElementById('siteGrid');
-        const siteBox = document.createElement('div');
-        siteBox.classList.add('site-box');
-        
-        const link = document.createElement('a');
-        link.href = url;
-        link.target = '_blank';
-        
-        const img = document.createElement('img');
-        img.src = `https://www.google.com/s2/favicons?domain=${url}&sz=64`;
-        img.alt = 'Site Logo';
-        img.classList.add('site-logo');
-        
-        link.appendChild(img);
-        
-        const siteName = document.createElement('p');
-        siteName.textContent = name;
-        
-        siteBox.appendChild(link);
-        siteBox.appendChild(siteName);
-        siteGrid.appendChild(siteBox);
-    }
-
-    function saveSite(site) {
-        let sites = JSON.parse(localStorage.getItem('sites')) || [];
-        sites.push(site);
-        localStorage.setItem('sites', JSON.stringify(sites));
-    }
-
-    function loadSites() {
-        let sites = JSON.parse(localStorage.getItem('sites')) || [];
-        sites.forEach(site => createSiteElement(site.name, site.url));
-    }
-</script>
-
+    </div>
 </body>
-</html>
+</html><style>
+    body {
+        background-color: #0a0a0a;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    .container {
+        padding: 20px;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+    .site-box {
+        background: #111;
+        padding: 15px;
+        border-radius: 15px;
+        box-shadow: 0 0 15px #0ff;
+        text-align: center;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+    .site-box:hover {
+        box-shadow: 0 0 25px #0ff;
+    }
+    .site-logo {
+        width: 64px;
+        height: 64px;
+        border-radius: 12px;
+        margin-bottom: 10px;
+    }
+    .add-site {
+        margin-top: 20px;
+    }
+    input {
+        padding: 10px;
+        width: 200px;
+        border-radius: 10px;
+        border: none;
+        background: #222;
+        color: #fff;
+    }
+    button {
+        padding: 10px 15px;
+        background: #0ff;
+        color: #000;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    button:hover {
+        background: #00f;
+        color: #fff;
+    }
+</style>
