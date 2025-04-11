@@ -1,29 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paper Trading Bot</title>
-  <link rel="stylesheet" href="paper.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crypto Wallet</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="header">
-    <button onclick="switchTab('wallet')">Wallet</button>
-    <button onclick="switchTab('explore')">Explore</button>
-  </div>
-  <div class="wallet-header" id="wallet-balance">Wallet Balance: $0.00</div>
+  <div class="app">
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" id="exploreTab">Explore</button>
+      <button class="tab" id="portfolioTab">Portfolio</button>
+    </div>
 
-  <div id="wallet-tab" class="tab-section"></div>
-  <div id="explore-tab" class="tab-section"></div>
+    <!-- Wallet Balance -->
+    <div class="balance-card">
+      <p class="balance-label">Wallet Balance</p>
+      <h1 class="balance-amount">₹<span id="walletBalance">0.00</span></h1>
+    </div>
 
-  <div id="coin-modal" class="modal hidden">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <div id="modal-body"></div>
+    <!-- Actions -->
+    <div class="actions">
+      <button class="action-btn">Send</button>
+      <button class="action-btn" onclick="showDeposit()">Deposit</button>
+      <button class="action-btn">Exchange</button>
+      <button class="action-btn">P2P Market</button>
+    </div>
+
+    <!-- Explore Section -->
+    <div id="exploreSection" class="content-section">
+      <h2 class="section-title">Trending</h2>
+      <div class="coin-grid" id="trendingCoins">
+        <!-- JS will load trending coins here -->
+      </div>
+    </div>
+
+    <!-- Portfolio Section -->
+    <div id="portfolioSection" class="content-section hidden">
+      <div class="portfolio-list" id="portfolioList">
+        <!-- JS will load owned coins here -->
+      </div>
     </div>
   </div>
 
-  <script src="paper.js"></script>
+  <!-- Deposit Modal -->
+  <div class="modal hidden" id="depositModal">
+    <div class="modal-content">
+      <h3>Add Tether (USDT)</h3>
+      <input type="number" id="depositAmount" placeholder="Enter amount"/>
+      <button onclick="addTether()">Add</button>
+      <button onclick="closeDeposit()">Close</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
