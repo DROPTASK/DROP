@@ -1,69 +1,72 @@
 const exploreTab = document.getElementById('exploreTab');
 const portfolioTab = document.getElementById('portfolioTab');
-const exploreSection = document.getElementById('explore');
-const portfolioSection = document.getElementById('portfolio');
-const balanceDisplay = document.getElementById('balance');
+const explore = document.getElementById('explore');
+const portfolio = document.getElementById('portfolio');
 const coinGrid = document.getElementById('coinGrid');
 const portfolioList = document.getElementById('portfolioList');
+const balanceEl = document.getElementById('balance');
 const depositBtn = document.getElementById('depositBtn');
 const modal = document.getElementById('modal');
 const modalContent = document.getElementById('modalContent');
 
-let tetherBalance = 0;
+let balance = 0;
 let portfolio = {};
+let coins = [];
 
 exploreTab.addEventListener('click', () => {
   exploreTab.classList.add('active');
   portfolioTab.classList.remove('active');
-  exploreSection.classList.remove('hidden');
-  portfolioSection.classList.add('hidden');
+  explore.classList.remove('hidden');
+  portfolio.classList.add('hidden');
 });
 
 portfolioTab.addEventListener('click', () => {
   portfolioTab.classList.add('active');
   exploreTab.classList.remove('active');
-  portfolioSection.classList.remove('hidden');
-  exploreSection.classList.add('hidden');
+  explore.classList.add('hidden');
+  portfolio.classList.remove('hidden');
+  renderPortfolio();
 });
 
 depositBtn.addEventListener('click', () => {
   modalContent.innerHTML = `
-    <h3>Secret Key</h3>
-    <input type="password" id="secretKey" placeholder="Enter secret">
-    <h3>Enter amount</h3>
-    <input type="number" id="amountInput" placeholder="Amount in Tether">
+    <h3>Enter Secret to Deposit</h3>
+    <input type="text" id="secret" placeholder="Secret code" />
+    <input type="number" id="amount" placeholder="Amount in Tether" />
     <button onclick="addTether()">Add</button>
-    <button onclick="closeModal()">Cancel</button>
   `;
-  modal.style.display = 'flex';
+  modal.classList.remove('hidden');
 });
 
-function closeModal() {
-  modal.style.display = 'none';
-}
+modal.addEventListener('click', e => {
+  if (e.target === modal) {
+    modal.classList.add('hidden');
+  }
+});
 
 function addTether() {
-  const secret = document.getElementById('secretKey').value;
-  const amount = parseFloat(document.getElementById('amountInput').value);
-  if (secret !== 'telewallet') {
-    alert('Invalid secret');
-    return;
-  }
-  if (!isNaN(amount) && amount > 0) {
-    tetherBalance += amount;
+  const secret = document.getElementById('secret').value;
+  const amount = parseFloat(document.getElementById('amount').value);
+  if (secret === 'telewallet' && amount > 0) {
+    balance += amount;
     updateBalance();
-    closeModal();
+    modal.classList.add('hidden');
+  } else {
+    alert('Wrong secret or amount');
   }
 }
 
 function updateBalance() {
-  balanceDisplay.textContent = `₹${tetherBalance.toFixed(2)}`;
+  balanceEl.textContent = `₹${balance.toFixed(2)}`;
 }
 
-function updatePortfolioUI() {
+function renderPortfolio() {
   portfolioList.innerHTML = '';
-  for (const symbol in portfolio) {
-    const coin = portfolio[symbol];
+  Object.keys(portfolio).forEach(id => {
+    const coin = coins.find(c => c.id === id);
+    const holding = portfolio[id];
+    const value = holding.amount * coin.current_price;
+
     const card = document.createElement('div');
     card.className = 'portfolio-card';
     card.innerHTML = `
@@ -71,59 +74,66 @@ function updatePortfolioUI() {
         <img src="${coin.image}" />
         <div class="portfolio-text">
           <span class="name">${coin.name}</span>
-          <span class="amount">${coin.amount.toFixed(4)} ${symbol}</span>
-          <span class="value">₹${(coin.amount * coin.price).toFixed(2)}</span>
+          <span class="amount">${holding.amount.toFixed(4)} ${coin.symbol.toUpperCase()}</span>
+          <span class="value">₹${value.toFixed(2)}</span>
         </div>
       </div>
     `;
     portfolioList.appendChild(card);
-  }
+  });
 }
 
-function showCoinDetails(coin) {
-  const amount = parseFloat(prompt(`Enter amount of ${coin.symbol.toUpperCase()} to buy:`));
-  if (!isNaN(amount) && amount > 0) {
-    const cost = amount * coin.current_price;
-    if (cost > tetherBalance) {
-      alert("Insufficient Tether balance");
-      return;
-    }
-    tetherBalance -= cost;
-    updateBalance();
-    if (!portfolio[coin.symbol]) {
-      portfolio[coin.symbol] = {
-        amount: 0,
-        price: coin.current_price,
-        name: coin.name,
-        image: coin.image
-      };
-    }
-    portfolio[coin.symbol].amount += amount;
-    updatePortfolioUI();
-  }
-}
-
-function fetchTrendingCoins() {
-  fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=10&page=1&sparkline=false')
+function loadCoins() {
+  fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usdt&order=market_cap_desc&per_page=30&page=1&sparkline=false')
     .then(res => res.json())
     .then(data => {
+      coins = data;
       coinGrid.innerHTML = '';
-      data.slice(0, 4).forEach(coin => {
-        const div = document.createElement('div');
-        div.className = 'coin-card';
-        div.innerHTML = `
+      data.forEach(coin => {
+        const card = document.createElement('div');
+        card.className = 'coin-card';
+        card.innerHTML = `
           <img src="${coin.image}" />
-          <div class="coin-name">${coin.symbol.toUpperCase()}</div>
+          <div class="coin-name">${coin.name}</div>
           <div class="coin-price">₹${coin.current_price}</div>
           <div class="coin-change ${coin.price_change_percentage_24h >= 0 ? 'green' : 'red'}">
             ${coin.price_change_percentage_24h.toFixed(2)}%
           </div>
         `;
-        div.onclick = () => showCoinDetails(coin);
-        coinGrid.appendChild(div);
+        card.addEventListener('click', () => {
+          openBuyModal(coin);
+        });
+        coinGrid.appendChild(card);
       });
     });
 }
 
-fetchTrendingCoins();
+function openBuyModal(coin) {
+  modalContent.innerHTML = `
+    <h3>Buy ${coin.name}</h3>
+    <p>Price: ₹${coin.current_price}</p>
+    <input type="number" id="buyAmount" placeholder="Amount in ₹" />
+    <button onclick="buyCoin('${coin.id}')">Buy</button>
+  `;
+  modal.classList.remove('hidden');
+}
+
+function buyCoin(id) {
+  const amountInTether = parseFloat(document.getElementById('buyAmount').value);
+  const coin = coins.find(c => c.id === id);
+  if (amountInTether > 0 && amountInTether <= balance) {
+    const coinAmount = amountInTether / coin.current_price;
+    balance -= amountInTether;
+    if (!portfolio[id]) {
+      portfolio[id] = { amount: 0 };
+    }
+    portfolio[id].amount += coinAmount;
+    updateBalance();
+    modal.classList.add('hidden');
+  } else {
+    alert('Not enough Tether');
+  }
+}
+
+loadCoins();
 updateBalance();
