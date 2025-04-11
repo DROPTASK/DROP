@@ -2,32 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Paper Trading</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paper Trading Bot</title>
   <link rel="stylesheet" href="paper.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <header>
-    <h1>Paper Wallet</h1>
-  </header>
-
-  <nav>
+  <div class="header">
+    <button onclick="switchTab('wallet')">Wallet</button>
     <button onclick="switchTab('explore')">Explore</button>
-    <button onclick="switchTab('portfolio')">Portfolio</button>
-  </nav>
+  </div>
+  <div class="wallet-header" id="wallet-balance">Wallet Balance: $0.00</div>
 
-  <main>
-    <section id="explore-tab">
-      <h2>Explore Coins</h2>
-      <div id="explore-list" class="coin-list"></div>
-    </section>
+  <div id="wallet-tab" class="tab-section"></div>
+  <div id="explore-tab" class="tab-section"></div>
 
-    <section id="portfolio-tab" style="display: none;">
-      <h2>My Portfolio</h2>
-      <div id="wallet-balance">Wallet Balance: ₹0.00</div>
-      <div id="portfolio-list" class="coin-list"></div>
-    </section>
-  </main>
+  <div id="coin-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <div id="modal-body"></div>
+    </div>
+  </div>
 
   <script src="paper.js"></script>
 </body>
