@@ -133,3 +133,6 @@ function scheduleMidnightReset() {
 function openmanage() {
     window.location.href = "manage.html";
 }
+function opentrade() {
+    window.location.href = "paper.html";
+}
