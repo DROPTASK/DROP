@@ -1,35 +1,46 @@
 body {
   margin: 0;
-  font-family: sans-serif;
-  background: #fefefe;
-  color: #000;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f5f7fa;
+  color: #111;
 }
 
 .header {
   display: flex;
   justify-content: space-around;
   padding: 1em;
-  background: #e0e0e0;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   position: sticky;
   top: 0;
   z-index: 10;
+  border-radius: 0 0 16px 16px;
 }
 
 .header button {
-  padding: 0.5em 1em;
+  padding: 0.6em 1.5em;
   border: none;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  background: #f0f0f0;
+  border-radius: 20px;
+  font-weight: 600;
   cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.header button:hover {
+  background: #e0e0e0;
 }
 
 .wallet-header {
   text-align: center;
-  font-size: 1.2em;
+  font-size: 1.3em;
+  font-weight: 600;
   padding: 1em;
-  background: #fafafa;
-  font-weight: bold;
+  background: #fff;
+  margin-top: 0.5em;
+  border-radius: 16px;
+  margin: 0.5em;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
 }
 
 .tab-section {
@@ -41,15 +52,29 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5em;
-  border-bottom: 1px solid #ddd;
+  background: #ffffff;
+  padding: 1em;
+  margin: 0.5em 0;
+  border-radius: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
   cursor: pointer;
 }
 
+.coin:hover {
+  transform: translateY(-2px);
+}
+
 .coin img {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   margin-right: 1em;
+  border-radius: 8px;
+}
+
+.coin div {
+  flex: 1;
+  padding-left: 0.5em;
 }
 
 .modal {
@@ -60,6 +85,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: fadeIn 0.3s ease;
 }
 
 .modal.hidden {
@@ -68,32 +94,58 @@ body {
 
 .modal-content {
   background: white;
-  padding: 1em;
-  border-radius: 10px;
+  padding: 1.5em;
+  border-radius: 20px;
   width: 90%;
   max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes slideUp {
+  from {transform: translateY(30px);}
+  to {transform: translateY(0);}
 }
 
 .modal-content canvas {
   width: 100% !important;
   height: 200px !important;
+  margin-bottom: 1em;
+}
+
+.modal-content h2 {
+  text-align: center;
+  margin-bottom: 1em;
 }
 
 .modal-content button {
-  margin-top: 0.5em;
   width: 48%;
-  padding: 0.5em;
+  padding: 0.6em;
   font-weight: bold;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
+  font-size: 1em;
 }
 
 button.buy {
   background: #4caf50;
   color: white;
+  margin-right: 4%;
 }
 
 button.sell {
   background: #f44336;
   color: white;
+}
+
+.close {
+  float: right;
+  font-size: 1.5em;
+  font-weight: bold;
+  cursor: pointer;
 }
