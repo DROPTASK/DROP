@@ -1,0 +1,72 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  color: #000;
+}
+
+header {
+  background: #007bff;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  background: #f1f1f1;
+  padding: 0.5rem 0;
+}
+
+nav button {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  color: #007bff;
+  border-bottom: 2px solid transparent;
+}
+
+nav button.active {
+  border-bottom: 2px solid #007bff;
+  font-weight: bold;
+}
+
+main {
+  padding: 1rem;
+}
+
+.coin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.coin {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.coin .details {
+  display: flex;
+  flex-direction: column;
+}
+
+.coin .change {
+  font-weight: bold;
+}
+
+.coin.positive .change {
+  color: green;
+}
+.coin.negative .change {
+  color: red;
+}
