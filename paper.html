@@ -2,34 +2,49 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Paper Trading</title>
-  <link rel="stylesheet" href="paper.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crypto Wallet</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="nav">
-    <button id="exploreTab" class="active">Explore</button>
-    <button id="portfolioTab">Portfolio</button>
-  </div>
-
-  <div id="explore" class="tab-content">
-    <h2>Explore Coins</h2>
-    <div id="coinGrid" class="grid"></div>
-  </div>
-
-  <div id="portfolio" class="tab-content hidden">
-    <h2>My Portfolio</h2>
-    <div class="balance-bar">
-      Balance: <span id="balance">₹0.00</span>
-      <button id="depositBtn">Deposit</button>
+  <div class="app">
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" id="exploreTab">Explore</button>
+      <button class="tab" id="portfolioTab">Portfolio</button>
     </div>
-    <div id="portfolioList" class="grid"></div>
+
+    <!-- Wallet Balance -->
+    <div class="balance-card">
+      <p class="balance-label">Wallet Balance</p>
+      <h1 class="balance-amount">₹<span id="walletBalance">0.00</span></h1>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button class="action-btn">Send</button>
+      <button class="action-btn" id="depositBtn">Deposit</button>
+      <button class="action-btn">Exchange</button>
+      <button class="action-btn">P2P Market</button>
+    </div>
+
+    <!-- Explore Section -->
+    <div id="exploreSection" class="content-section">
+      <h2 class="section-title">Trending</h2>
+      <div class="coin-grid" id="coinGrid"></div>
+    </div>
+
+    <!-- Portfolio Section -->
+    <div id="portfolioSection" class="content-section hidden">
+      <div class="portfolio-list" id="portfolioList"></div>
+    </div>
   </div>
 
-  <div id="modal" class="modal hidden">
-    <div class="modal-box" id="modalContent"></div>
+  <!-- Deposit Modal -->
+  <div class="modal hidden" id="modal">
+    <div class="modal-content" id="modalContent"></div>
   </div>
 
-  <script src="paper.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
