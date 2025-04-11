@@ -1,151 +1,207 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: #f5f7fa;
-  color: #111;
+  background: #ffffff;
+  color: #222;
 }
 
-.header {
+.app {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  background: #f2f2f2;
+  border-radius: 50px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.tab {
+  flex: 1;
+  padding: 12px 0;
+  border: none;
+  background: none;
+  color: #888;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.tab.active {
+  background: #fff;
+  color: #000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.balance-card {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.balance-label {
+  color: #888;
+  margin: 0;
+}
+
+.balance-amount {
+  font-size: 36px;
+  margin: 5px 0 0;
+}
+
+.actions {
   display: flex;
   justify-content: space-around;
-  padding: 1em;
-  background: #ffffff;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  border-radius: 0 0 16px 16px;
+  margin-bottom: 25px;
 }
 
-.header button {
-  padding: 0.6em 1.5em;
+.action-btn {
+  background: #e9f0ff;
+  color: #0066ff;
   border: none;
-  background: #f0f0f0;
-  border-radius: 20px;
-  font-weight: 600;
+  border-radius: 50px;
+  padding: 10px 15px;
+  font-size: 14px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  min-width: 70px;
 }
 
-.header button:hover {
-  background: #e0e0e0;
+.section-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
 }
 
-.wallet-header {
+.coin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
+}
+
+.coin-card {
+  border-radius: 15px;
+  background: #f9f9f9;
+  padding: 10px;
   text-align: center;
-  font-size: 1.3em;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.coin-card img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-bottom: 8px;
+}
+
+.coin-name {
+  font-size: 14px;
   font-weight: 600;
-  padding: 1em;
-  background: #fff;
-  margin-top: 0.5em;
-  border-radius: 16px;
-  margin: 0.5em;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
 }
 
-.tab-section {
+.coin-price {
+  font-size: 13px;
+  color: #555;
+}
+
+.coin-change {
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+.coin-change.green {
+  color: #00aa55;
+}
+
+.coin-change.red {
+  color: #d00000;
+}
+
+.hidden {
   display: none;
-  padding: 1em;
 }
 
-.coin {
+.portfolio-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.portfolio-card {
+  background: #f5f5f5;
+  border-radius: 15px;
+  padding: 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #ffffff;
-  padding: 1em;
-  margin: 0.5em 0;
-  border-radius: 16px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  transition: transform 0.2s ease;
-  cursor: pointer;
 }
 
-.coin:hover {
-  transform: translateY(-2px);
+.portfolio-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.coin img {
-  width: 40px;
-  height: 40px;
-  margin-right: 1em;
-  border-radius: 8px;
+.portfolio-info img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
 }
 
-.coin div {
-  flex: 1;
-  padding-left: 0.5em;
+.portfolio-text {
+  display: flex;
+  flex-direction: column;
 }
 
+.portfolio-text .name {
+  font-weight: bold;
+}
+
+.portfolio-text .value,
+.portfolio-text .amount {
+  font-size: 13px;
+  color: #666;
+}
+
+/* Deposit Modal */
 .modal {
   position: fixed;
   top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.5);
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.4);
   display: flex;
-  align-items: center;
   justify-content: center;
-  animation: fadeIn 0.3s ease;
-}
-
-.modal.hidden {
-  display: none;
+  align-items: center;
+  z-index: 10;
 }
 
 .modal-content {
   background: white;
-  padding: 1.5em;
-  border-radius: 20px;
-  width: 90%;
-  max-width: 400px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  animation: slideUp 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
-}
-
-@keyframes slideUp {
-  from {transform: translateY(30px);}
-  to {transform: translateY(0);}
-}
-
-.modal-content canvas {
-  width: 100% !important;
-  height: 200px !important;
-  margin-bottom: 1em;
-}
-
-.modal-content h2 {
+  border-radius: 15px;
+  padding: 20px;
   text-align: center;
-  margin-bottom: 1em;
+  width: 80%;
+  max-width: 300px;
+}
+
+.modal-content input {
+  padding: 10px;
+  margin: 10px 0;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 }
 
 .modal-content button {
-  width: 48%;
-  padding: 0.6em;
-  font-weight: bold;
+  padding: 8px 14px;
+  margin: 5px;
   border: none;
-  border-radius: 10px;
-  font-size: 1em;
-}
-
-button.buy {
-  background: #4caf50;
+  background: #007bff;
   color: white;
-  margin-right: 4%;
-}
-
-button.sell {
-  background: #f44336;
-  color: white;
-}
-
-.close {
-  float: right;
-  font-size: 1.5em;
-  font-weight: bold;
+  border-radius: 8px;
   cursor: pointer;
 }
