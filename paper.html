@@ -2,41 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Telegram Wallet Style - Paper Trading</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paper Trading</title>
   <link rel="stylesheet" href="paper.css" />
 </head>
 <body>
-  <div class="app">
-    <div class="tabs">
-      <button id="exploreTab" class="tab active">Explore</button>
-      <button id="portfolioTab" class="tab">Portfolio</button>
-    </div>
-
-    <!-- Portfolio Section -->
-    <div id="portfolio" class="hidden">
-      <div class="balance-card">
-        <p class="balance-label">Your Balance</p>
-        <h1 class="balance-amount" id="balance">₹0.00</h1>
-      </div>
-      <div class="actions">
-        <button class="action-btn" id="depositBtn">Deposit</button>
-        <button class="action-btn">Withdraw</button>
-      </div>
-      <h2 class="section-title">Your Coins</h2>
-      <div id="portfolioList" class="portfolio-list"></div>
-    </div>
-
-    <!-- Explore Section -->
-    <div id="explore">
-      <h2 class="section-title">Trending Coins</h2>
-      <div id="coinGrid" class="coin-grid"></div>
-    </div>
+  <div class="nav">
+    <button id="exploreTab" class="active">Explore</button>
+    <button id="portfolioTab">Portfolio</button>
   </div>
 
-  <!-- Deposit Modal -->
+  <div id="explore" class="tab-content">
+    <h2>Explore Coins</h2>
+    <div id="coinGrid" class="grid"></div>
+  </div>
+
+  <div id="portfolio" class="tab-content hidden">
+    <h2>My Portfolio</h2>
+    <div class="balance-bar">
+      Balance: <span id="balance">₹0.00</span>
+      <button id="depositBtn">Deposit</button>
+    </div>
+    <div id="portfolioList" class="grid"></div>
+  </div>
+
   <div id="modal" class="modal hidden">
-    <div class="modal-content" id="modalContent"></div>
+    <div class="modal-box" id="modalContent"></div>
   </div>
 
   <script src="paper.js"></script>
